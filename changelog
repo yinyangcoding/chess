@@ -1,0 +1,25 @@
+06/15/20 - Matt
+Example Change
+Files Changed: ...
+Note: ...
+(Always Name Message "CHANGELOG RECORD DD/MM/YY")
+
+06/15/20 - Jayden
+Files Changed: Board (Both), King (Both), Pawn (Both), Coordinate (Both), Piece (Both)
+Note: Many many changes but most prominent is Board::refresh and King::update. Realized Major Issue.
+
+6/16/20 - Matt
+Files Changed: Board (Both), King (Both), Piece (Both)
+New Files: resources/Constants.h, importHierachry
+Notes:
+- Made Constants.h (.h since it is in c, not cpp) to store all constants so that there are no dependency problems with imports
+- Made importHierachry to show which files must be imported as dependencies. Not done yet
+- New methods in Piece: is_blank() to check if piece is blank, make_blank() to make a piece blank
+- Changed NULL calls to blank
+
+6/16/20 - Matt
+Files Changed: Tools.hpp, Move (both), Constants.h
+Notes:
+- Give Move basic update layout
+- Make tools static
+- Establish DEBUG constant

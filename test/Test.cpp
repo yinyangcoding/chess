@@ -1,18 +1,18 @@
 #include <iostream>
 
-#include "../src/resources/Constants.h"
-#include "../src/objects/Coordinate.hpp"
-#include "../src/objects/Piece.hpp"
-#include "../src/objects/pieces/King.hpp"
-#include "../src/objects/pieces/Queen.hpp"
-#include "../src/objects/pieces/Bishop.hpp"
-#include "../src/objects/pieces/Knight.hpp"
-#include "../src/objects/pieces/Rook.hpp"
-#include "../src/objects/pieces/Pawn.hpp"
-#include "../src/resources/Tools.hpp"
-#include "../src/objects/Board.hpp"
-#include "../src/objects/Player.hpp"
-#include "../src/objects/Move.hpp"
+#include "../include/resources/Constants.h"
+#include "../include/objects/Coordinate.hpp"
+#include "../include/objects/Piece.hpp"
+#include "../include/objects/pieces/King.hpp"
+#include "../include/objects/pieces/Queen.hpp"
+#include "../include/objects/pieces/Bishop.hpp"
+#include "../include/objects/pieces/Knight.hpp"
+#include "../include/objects/pieces/Rook.hpp"
+#include "../include/objects/pieces/Pawn.hpp"
+#include "../include/resources/Tools.hpp"
+#include "../include/objects/Board.hpp"
+#include "../include/objects/Player.hpp"
+#include "../include/objects/Move.hpp"
 
 using namespace std;
 

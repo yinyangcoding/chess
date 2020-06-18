@@ -1,53 +1,53 @@
-# build the bin directory
+# build the build directory
 
-Main: bin bin/Main.o bin/objects/Coordinate.o bin/objects/Move.o bin/objects/Piece.o bin/objects/pieces/King.o bin/objects/pieces/Queen.o bin/objects/pieces/Bishop.o bin/objects/pieces/Knight.o bin/objects/pieces/Rook.o bin/objects/pieces/Pawn.o bin/objects/Board.o bin/objects/Player.o bin/resources/Tools.o
-	g++ bin/Main.o bin/objects/Coordinate.o bin/objects/Move.o bin/objects/Piece.o bin/objects/pieces/King.o bin/objects/pieces/Queen.o bin/objects/pieces/Bishop.o bin/objects/pieces/Knight.o bin/objects/pieces/Rook.o bin/objects/pieces/Pawn.o bin/objects/Board.o bin/objects/Player.o bin/resources/Tools.o -o Main
+Main: build build/Main.o build/objects/Coordinate.o build/objects/Move.o build/objects/Piece.o build/objects/pieces/King.o build/objects/pieces/Queen.o build/objects/pieces/Bishop.o build/objects/pieces/Knight.o build/objects/pieces/Rook.o build/objects/pieces/Pawn.o build/objects/Board.o build/objects/Player.o build/resources/Tools.o
+	g++ build/Main.o build/objects/Coordinate.o build/objects/Move.o build/objects/Piece.o build/objects/pieces/King.o build/objects/pieces/Queen.o build/objects/pieces/Bishop.o build/objects/pieces/Knight.o build/objects/pieces/Rook.o build/objects/pieces/Pawn.o build/objects/Board.o build/objects/Player.o build/resources/Tools.o -o bin/Main
 
-bin/Main.o: bin src/Main.cpp
-	g++ -c src/Main.cpp -o bin/Main.o
+build/Main.o: build src/Main.cpp
+	g++ -c src/Main.cpp -o build/Main.o
 
-bin/objects/Coordinate.o: bin src/objects/Coordinate.cpp src/objects/Coordinate.hpp
-	g++ -c src/objects/Coordinate.cpp -o bin/objects/Coordinate.o
+build/objects/Coordinate.o: build src/objects/Coordinate.cpp include/objects/Coordinate.hpp
+	g++ -c src/objects/Coordinate.cpp -o build/objects/Coordinate.o
 
-bin/objects/Move.o: bin src/objects/Move.cpp src/objects/Move.hpp
-	g++ -c src/objects/Move.cpp -o bin/objects/Move.o
+build/objects/Move.o: build src/objects/Move.cpp include/objects/Move.hpp
+	g++ -c src/objects/Move.cpp -o build/objects/Move.o
 
-bin/objects/Piece.o: bin src/objects/Piece.cpp src/objects/Piece.hpp
-	g++ -c src/objects/Piece.cpp -o bin/objects/Piece.o
+build/objects/Piece.o: build src/objects/Piece.cpp include/objects/Piece.hpp
+	g++ -c src/objects/Piece.cpp -o build/objects/Piece.o
 
-bin/objects/Board.o: bin src/objects/Board.cpp src/objects/Board.hpp
-	g++ -c src/objects/Board.cpp -o bin/objects/Board.o
+build/objects/Board.o: build src/objects/Board.cpp include/objects/Board.hpp
+	g++ -c src/objects/Board.cpp -o build/objects/Board.o
 
-bin/objects/Player.o: bin src/objects/Player.cpp src/objects/Player.hpp
-	g++ -c src/objects/Player.cpp -o bin/objects/Player.o
-
-
-bin/objects/pieces/King.o: bin src/objects/pieces/King.cpp src/objects/pieces/King.hpp
-	g++ -c src/objects/pieces/King.cpp -o bin/objects/pieces/King.o
-
-bin/objects/pieces/Queen.o: bin src/objects/pieces/Queen.cpp src/objects/pieces/Queen.hpp
-	g++ -c src/objects/pieces/Queen.cpp -o bin/objects/pieces/Queen.o
-
-bin/objects/pieces/Bishop.o: bin src/objects/pieces/Bishop.cpp src/objects/pieces/Bishop.hpp
-	g++ -c src/objects/pieces/Bishop.cpp -o bin/objects/pieces/Bishop.o
-
-bin/objects/pieces/Knight.o: bin src/objects/pieces/Knight.cpp src/objects/pieces/Knight.hpp
-	g++ -c src/objects/pieces/Knight.cpp -o bin/objects/pieces/Knight.o
-
-bin/objects/pieces/Rook.o: bin src/objects/pieces/Rook.cpp src/objects/pieces/Rook.hpp
-	g++ -c src/objects/pieces/Rook.cpp -o bin/objects/pieces/Rook.o
-
-bin/objects/pieces/Pawn.o: bin src/objects/pieces/Pawn.cpp src/objects/pieces/Pawn.hpp
-	g++ -c src/objects/pieces/Pawn.cpp -o bin/objects/pieces/Pawn.o
+build/objects/Player.o: build src/objects/Player.cpp include/objects/Player.hpp
+	g++ -c src/objects/Player.cpp -o build/objects/Player.o
 
 
-bin/resources/Tools.o: bin src/resources/Tools.cpp src/resources/Tools.hpp
-	g++ -c src/resources/Tools.cpp -o bin/resources/Tools.o
+build/objects/pieces/King.o: build src/objects/pieces/King.cpp include/objects/pieces/King.hpp
+	g++ -c src/objects/pieces/King.cpp -o build/objects/pieces/King.o
+
+build/objects/pieces/Queen.o: build src/objects/pieces/Queen.cpp include/objects/pieces/Queen.hpp
+	g++ -c src/objects/pieces/Queen.cpp -o build/objects/pieces/Queen.o
+
+build/objects/pieces/Bishop.o: build src/objects/pieces/Bishop.cpp include/objects/pieces/Bishop.hpp
+	g++ -c src/objects/pieces/Bishop.cpp -o build/objects/pieces/Bishop.o
+
+build/objects/pieces/Knight.o: build src/objects/pieces/Knight.cpp include/objects/pieces/Knight.hpp
+	g++ -c src/objects/pieces/Knight.cpp -o build/objects/pieces/Knight.o
+
+build/objects/pieces/Rook.o: build src/objects/pieces/Rook.cpp include/objects/pieces/Rook.hpp
+	g++ -c src/objects/pieces/Rook.cpp -o build/objects/pieces/Rook.o
+
+build/objects/pieces/Pawn.o: build src/objects/pieces/Pawn.cpp include/objects/pieces/Pawn.hpp
+	g++ -c src/objects/pieces/Pawn.cpp -o build/objects/pieces/Pawn.o
 
 
-bin:
-	mkdir -p bin/objects/pieces
-	mkdir -p bin/resources
+build/resources/Tools.o: build src/resources/Tools.cpp include/resources/Tools.hpp
+	g++ -c src/resources/Tools.cpp -o build/resources/Tools.o
+
+
+build:
+	mkdir -p build/objects/pieces
+	mkdir -p build/resources
 
 clean:
-	rm Main bin/objects/*.o bin/objects/pieces/*.o bin/resources/*.o bin/*.o
+	rm bin/Main build/objects/*.o build/objects/pieces/*.o build/resources/*.o build/*.o

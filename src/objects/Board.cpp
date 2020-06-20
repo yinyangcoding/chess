@@ -5,6 +5,9 @@ using namespace std;
 // ============= Constructors ==============
 // if true create basic board : if false create blank board
 Board::Board(bool basic) {
+    if(DEBUG) {
+        printf("Board::Board()\n");
+    }
     // if not a basic Board (Blank Board) fill board with blank pieces
     if (!basic) {
         for (int i = 0; i < SIZE; i++) {
@@ -93,6 +96,9 @@ void Board::set_piece(Piece p, Coordinate c) {
 // ============= Debug ==============
 // This will print the board
 void Board::print_board() {
+    if(DEBUG) {
+        printf("Board::print_board()\n");
+    }
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             // Check if it's blank and print a space

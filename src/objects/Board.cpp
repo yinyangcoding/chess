@@ -97,7 +97,7 @@ void Board::print_board() {
         for (int j = 0; j < SIZE; j++) {
             // Check if it's blank and print a space
             if (board[i][j].is_blank()) {
-                printf(" ");
+                printf("-");
                 continue;
             }
 

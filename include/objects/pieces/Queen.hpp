@@ -5,7 +5,8 @@
 #include "../Board.hpp"
 
 class Queen : public Piece {
-    Queen(char c);
+    public:
+        Queen(char c);
 };
 
 #endif

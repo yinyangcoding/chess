@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-	cout << "Hello World!" << endl;
+	Board b(true);
 	
 	return 0;
 }

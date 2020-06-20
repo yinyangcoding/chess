@@ -5,6 +5,14 @@
 
 #include "../resources/Constants.h"
 #include "Piece.hpp"
+#include "pieces/Pawn.hpp"
+#include "pieces/Knight.hpp"
+#include "pieces/Bishop.hpp"
+#include "pieces/Rook.hpp"
+#include "pieces/Queen.hpp"
+#include "pieces/King.hpp"
+
+
 
 // Declares unchangeable size
 // #define SIZE 8

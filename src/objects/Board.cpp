@@ -16,38 +16,38 @@ Board::Board(bool basic) {
         // Adds all white pieces first
         // line of white pawns
         for (int i = 0; i < SIZE; i++) {
-            board[SIZE - 2][i] = Piece(1, 'w');
+            board[SIZE - 2][i] = Pawn('w');
         }
         // white rooks
-        board[SIZE - 1][0] = Piece(4, 'w');
-        board[SIZE - 1][SIZE - 1] = Piece(4, 'w');
+        board[SIZE - 1][0] = Rook('w');
+        board[SIZE - 1][SIZE - 1] = Rook('w');
         // white knights
-        board[SIZE - 1][1] = Piece(2, 'w');
-        board[SIZE - 1][SIZE - 2] = Piece(2, 'w');
+        board[SIZE - 1][1] = Knight('w');
+        board[SIZE - 1][SIZE - 2] = Knight('w');
         // white bishops
-        board[SIZE - 1][2] = Piece(3, 'w');
-        board[SIZE - 1][SIZE - 3] = Piece(3, 'w');
+        board[SIZE - 1][2] = Bishop('w');
+        board[SIZE - 1][SIZE - 3] = Bishop('w');
         // white king and queen
-        board[SIZE - 1][3] = Piece(5, 'w'); // white queen
-        board[SIZE - 1][SIZE - 4] = Piece(6, 'w'); // white king
+        board[SIZE - 1][3] = Queen('w'); // white queen
+        board[SIZE - 1][SIZE - 4] = King('w'); // white king
 
         // Adds all black pieces after
         // line of black pawns
         for (int i = 0; i < SIZE; i++) {
-            board[1][i] = Piece(1, 'b');
+            board[1][i] = Pawn('b');
         }
         // black rooks
-        board[0][0] = Piece(4, 'b');
-        board[0][SIZE - 1] = Piece(4, 'b');
+        board[0][0] = Rook('b');
+        board[0][SIZE - 1] = Rook('b');
         // black knights
-        board[0][1] = Piece(2, 'b');
-        board[0][SIZE - 2] = Piece(2, 'b');
+        board[0][1] = Knight('b');
+        board[0][SIZE - 2] = Knight('b');
         // black bishops
-        board[0][2] = Piece(3, 'b');
-        board[0][SIZE - 3] = Piece(3, 'b');
+        board[0][2] = Bishop('b');
+        board[0][SIZE - 3] = Bishop('b');
         // black king and queen
-        board[0][3] = Piece(5, 'b'); // black queen
-        board[0][SIZE - 4] = Piece(6, 'b'); // black king
+        board[0][3] = Queen('b'); // black queen
+        board[0][SIZE - 4] = King('b'); // black king
 
         // makes all the remaining space blank pieces
         for (int i = 2; i < (SIZE - 2); i++) {

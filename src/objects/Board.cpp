@@ -71,25 +71,25 @@ Piece Board::refresh(Piece moving, Coordinate n){
     Piece temp;
     
     // WHY DOES THIS NOT WORK
-    if (!board[n.get_x()][n.get_y()].is_blank()) {
-        temp.copy_from(board[n.get_x()][n.get_y()]);
+    if (!board[n.get_y()][n.get_x()].is_blank()) {
+        temp.copy_from(board[n.get_y()][n.get_x()]);
         // makes location (-1, -1) indicating offBoard
         temp.set_location(Coordinate(-1, -1));
     }
 
     // old location of the moving Piece is set to blank
-    board[moving.get_location().get_x()][moving.get_location().get_y()].make_blank();
+    board[moving.get_location().get_y()][moving.get_location().get_x()].make_blank();
     // new Coordinate is set to the moving Piece
-    board[n.get_x()][n.get_y()].copy_from(moving);
+    board[n.get_y()][n.get_x()].copy_from(moving);
     // updates location of moving Piece
-    board[n.get_x()][n.get_y()].set_location(Coordinate(n.get_x(), n.get_y()));
+    board[n.get_y()][n.get_x()].set_location(Coordinate(n.get_y(), n.get_x()));
     // Returns Piece Captured and blank if none
     return temp;
 }
 
 // Sets a space to a piece
 void Board::set_piece(Piece p, Coordinate c) {
-    board[c.get_x()][c.get_y()].copy_from(p);
+    board[c.get_y()][c.get_x()].copy_from(p);
 }
 
 // Returns piece at location (i,j)

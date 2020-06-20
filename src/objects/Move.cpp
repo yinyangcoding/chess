@@ -51,28 +51,28 @@ void Move::update_pawn(Board board, Piece piece) {
         increment = -1;
     }
     // if space in front of pawn is on board and is blank
-    if (Move::on_board(loc.get_y() + increment) // on board
-        && (board.get_piece(loc.get_x(), loc.get_y() + increment).is_blank())) { // is blank
+    if (Move::on_board(loc.get_x() + increment) // on board
+        && (board.get_piece(loc.get_y(), loc.get_x() + increment).is_blank())) { // is blank
         // add space in front of pawn to hold
-        hold.push_back(Coordinate(loc.get_x(), loc.get_y() + increment));
+        hold.push_back(Coordinate(loc.get_y(), loc.get_x() + increment));
         // if pawn is still in starting position and space 2 spaces in front of pawn is blank
-        if ((((increment == 1) && (loc.get_y() == 1)) || ((increment == -1) && (loc.get_y() == (SIZE - 2)))) // starting position
-        && (board.get_piece(loc.get_x(), loc.get_y() + (2 * increment)).is_blank())) { // is blank
+        if ((((increment == 1) && (loc.get_x() == 1)) || ((increment == -1) && (loc.get_x() == (SIZE - 2)))) // starting position
+        && (board.get_piece(loc.get_y(), loc.get_x() + (2 * increment)).is_blank())) { // is blank
             // add space 2 spaces in front of pawn to hold
-            hold.push_back(Coordinate(loc.get_x(), (loc.get_y() + (2 * increment))));
+            hold.push_back(Coordinate(loc.get_y(), (loc.get_x() + (2 * increment))));
         }
     }
     // if space in front of pawn to the left is on board and is not blank
-    if (Move::on_board(loc.get_x() - 1, loc.get_y() + increment) // on board
-        && (!board.get_piece(loc.get_x() - 1, loc.get_y() + increment).is_blank())) { // is not blank
+    if (Move::on_board(loc.get_y() - 1, loc.get_x() + increment) // on board
+        && (!board.get_piece(loc.get_y() - 1, loc.get_x() + increment).is_blank())) { // is not blank
         // add space in front of pawn to the left to hold
-        hold.push_back(Coordinate(loc.get_x() - 1, loc.get_y() + increment));
+        hold.push_back(Coordinate(loc.get_y() - 1, loc.get_x() + increment));
     }
     // if space in front of pawn to the right is on board and is not blank
-    if (Move::on_board(loc.get_x() + 1, loc.get_y() + increment) // on board
-        && (!board.get_piece(loc.get_x() + 1, loc.get_y() + increment).is_blank())) { // is not blank
+    if (Move::on_board(loc.get_y() + 1, loc.get_x() + increment) // on board
+        && (!board.get_piece(loc.get_y() + 1, loc.get_x() + increment).is_blank())) { // is not blank
         // add space in front of pawn to the right to hold
-        hold.push_back(Coordinate(loc.get_x() + 1, loc.get_y() + increment));
+        hold.push_back(Coordinate(loc.get_y() + 1, loc.get_x() + increment));
     }
     piece.set_moves(hold);
 }
@@ -101,19 +101,19 @@ void Move::update_bishop(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING UP-LEFT
-    for (int i = loc.get_x() - 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+    for (int i = loc.get_y() - 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING UP-RIGHT
-    for (int i = loc.get_x() + 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+    for (int i = loc.get_y() + 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING DOWN-LEFT
-    for (int i = loc.get_x() - 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+    for (int i = loc.get_y() - 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING DOWN-RIGHT
-    for (int i = loc.get_x() + 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+    for (int i = loc.get_y() + 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
         hold.push_back(Coordinate(i, j));
     }
     piece.set_moves(hold);
@@ -136,20 +136,20 @@ void Move::update_rook(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING LEFT
-    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i--) {
-        hold.push_back(Coordinate(i, loc.get_y()));
+    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_x()).get_color() != color); i--) {
+        hold.push_back(Coordinate(i, loc.get_x()));
     }
     // MOVING RIGHT
-    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i++) {
-        hold.push_back(Coordinate(i, loc.get_y()));
+    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_x()).get_color() != color); i++) {
+        hold.push_back(Coordinate(i, loc.get_x()));
     }
     // MOVING UP
-    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i--) {
-        hold.push_back(Coordinate(loc.get_x(), i));
+    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i).get_color() != color); i--) {
+        hold.push_back(Coordinate(loc.get_y(), i));
     }
     // MOVING DOWN
-    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i++) {
-        hold.push_back(Coordinate(loc.get_x(), i));
+    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i).get_color() != color); i++) {
+        hold.push_back(Coordinate(loc.get_y(), i));
     }
     piece.set_moves(hold);
 }
@@ -171,35 +171,35 @@ void Move::update_queen(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING LEFT
-    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i--) {
-        hold.push_back(Coordinate(i, loc.get_y()));
+    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_x()).get_color() != color); i--) {
+        hold.push_back(Coordinate(i, loc.get_x()));
     }
     // MOVING RIGHT
-    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i++) {
-        hold.push_back(Coordinate(i, loc.get_y()));
+    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_x()).get_color() != color); i++) {
+        hold.push_back(Coordinate(i, loc.get_x()));
     }
     // MOVING UP
-    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i--) {
-        hold.push_back(Coordinate(loc.get_x(), i));
+    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i).get_color() != color); i--) {
+        hold.push_back(Coordinate(loc.get_y(), i));
     }
     // MOVING DOWN
-    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i++) {
-        hold.push_back(Coordinate(loc.get_x(), i));
+    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i).get_color() != color); i++) {
+        hold.push_back(Coordinate(loc.get_y(), i));
     }
     // MOVING UP-LEFT
-    for (int i = loc.get_x() - 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+    for (int i = loc.get_y() - 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING UP-RIGHT
-    for (int i = loc.get_x() + 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+    for (int i = loc.get_y() + 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING DOWN-LEFT
-    for (int i = loc.get_x() - 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+    for (int i = loc.get_y() - 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
         hold.push_back(Coordinate(i, j));
     }
     // MOVING DOWN-RIGHT
-    for (int i = loc.get_x() + 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+    for (int i = loc.get_y() + 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
         hold.push_back(Coordinate(i, j));
     }
     piece.set_moves(hold);
@@ -216,13 +216,13 @@ void Move::update_king(Board board, Piece piece) {
     // makes holder vector for moves
     vector<Coordinate> hold;
     // Runs through x-position to the left, current, and to the right of current location
-    for (int x = loc.get_x() - 1; x <= loc.get_x() + 1; x++) {
+    for (int x = loc.get_y() - 1; x <= loc.get_y() + 1; x++) {
         // Proceeds to next x-position if x is not on board
         if (Move::on_board(x)) {
             // Runs through y-position to the left, current, and to the right of current location
-            for (int y = loc.get_y() - 1; y <= loc.get_y() + 1; y++) {
+            for (int y = loc.get_x() - 1; y <= loc.get_x() + 1; y++) {
                 // Proceeds to next y-position if current position is current location
-                if ((x != loc.get_x()) || (y != loc.get_y())) {
+                if ((x != loc.get_y()) || (y != loc.get_x())) {
                     // Proceeds to next y-position if y is not on board
                     if (Move::on_board(y)) {
                         // MUST ALSO CHECK IF MOVE PUTS KING IN DANGER

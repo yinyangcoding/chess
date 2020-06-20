@@ -8,6 +8,9 @@
 class Pawn : public Piece {
 	public:
 		Pawn(char c);
+
+		// ============== Methods ================
+		void update();
 };
 
 #endif

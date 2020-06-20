@@ -31,6 +31,18 @@ Piece::Piece() {
 void Piece::set_location(Coordinate a) {
     location.copy_from(a);
 }
+void Piece::set_id(int i) {
+    id = i;
+}
+void Piece::set_point(int i) {
+    point = i;
+}
+void Piece::set_type(int i) {
+    type = i;
+}
+void Piece::set_color(char c) {
+    color = c;
+}
 
 // ============== Getters ================
 // Returns id
@@ -100,13 +112,6 @@ void Piece::copy_from(Piece a) {
     point = a.get_point();
 }
 
-// Moves piece returns if successful
-// bool Piece::move(Move m) {
-//     // Needs ability to check if move is legal
-//     // Needs to check if it takes a piece in move
-//     return true;
-// }
-
 // Returns if the piece is a blank placeholder
 bool Piece::is_blank() {
     // Checks for all traits of a blank piece
@@ -119,6 +124,25 @@ void Piece::make_blank() {
     type = -1;
     color = 'n';
     point = -1;
+}
+
+// swaps pieces
+void Piece::swap(Piece a) {
+    Piece temp;
+    temp.copy_from(a);
+
+    // Set all of a's to this'
+    a.set_id(id);
+    a.set_point(point);
+    a.set_type(type);
+    a.set_color(color);
+
+    // Set all of this' to a
+    id = temp.get_id();
+    point = temp.get_point();
+    type = temp.get_type();
+    color = temp.get_color();
+    
 }
 
 // Sets idCount to 0 to allow incrementing

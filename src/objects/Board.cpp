@@ -3,13 +3,57 @@
 using namespace std;
 
 // ============= Constructors ==============
-// Defines Empty New Board
-Board::Board() {
-    // Fill board with blank pieces
-    for(int i = 0; i < SIZE; i++) {
-        for(int j = 0; j < SIZE; j++) {
-            Piece blank;
-            board[i][j] = blank;
+// if true create basic board : if false create blank board
+Board::Board(bool basic) {
+    // if not a basic Board (Blank Board) fill board with blank pieces
+    if (!basic) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j].make_blank();
+            }
+        }
+    } else { // if it is a basic Board make board a basic board
+        // Adds all white pieces first
+        // line of white pawns
+        for (int i = 0; i < SIZE; i++) {
+            board[SIZE - 2][i] = Piece(1, 'w');
+        }
+        // white rooks
+        board[SIZE - 1][0] = Piece(4, 'w');
+        board[SIZE - 1][SIZE - 1] = Piece(4, 'w');
+        // white knights
+        board[SIZE - 1][1] = Piece(2, 'w');
+        board[SIZE - 1][SIZE - 2] = Piece(2, 'w');
+        // white bishops
+        board[SIZE - 1][2] = Piece(3, 'w');
+        board[SIZE - 1][SIZE - 3] = Piece(3, 'w');
+        // white king and queen
+        board[SIZE - 1][3] = Piece(5, 'w'); // white queen
+        board[SIZE - 1][SIZE - 4] = Piece(6, 'w'); // white king
+
+        // Adds all black pieces after
+        // line of black pawns
+        for (int i = 0; i < SIZE; i++) {
+            board[1][i] = Piece(1, 'b');
+        }
+        // black rooks
+        board[0][0] = Piece(4, 'b');
+        board[0][SIZE - 1] = Piece(4, 'b');
+        // black knights
+        board[0][1] = Piece(2, 'b');
+        board[0][SIZE - 2] = Piece(2, 'b');
+        // black bishops
+        board[0][2] = Piece(3, 'b');
+        board[0][SIZE - 3] = Piece(3, 'b');
+        // black king and queen
+        board[0][3] = Piece(5, 'b'); // black queen
+        board[0][SIZE - 4] = Piece(6, 'b'); // black king
+
+        // makes all the remaining space blank pieces
+        for (int i = 2; i < (SIZE - 2); i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j].make_blank();
+            }
         }
     }
 }

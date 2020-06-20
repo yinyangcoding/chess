@@ -20,10 +20,8 @@ class Board {
         Piece board[SIZE][SIZE];
 
         // ============= Constructors ==============
-        // New layout board
-        Board();
-        // New empty board
-        Board(bool);
+        // if true create basic board : if false create blank board
+        Board(bool basic);
 
         // ============= Methods ==============
         // Moves Piece a to new Coordinate n on Board

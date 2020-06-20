@@ -84,6 +84,28 @@ void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
     }
+    // makes holder vector for moves
+    vector<Coordinate> hold;
+    // stores piece location so does not have to keep referencing for speed enhancements
+    int x = piece.get_location().get_x();
+    int y = piece.get_location().get_y();
+    // stores piece color
+    int color = piece.get_color();
+
+    // i = -1, 1
+    for (int i = -1; i <= 1; i += 2) {
+        // j = -2, 2
+        for (int j = -2; j <= 2; j += 4) {
+            // checks if pos (x + i, y + j) is on board and the piece there is not the same color 
+            if (Move::on_board(x + i, y + j) && board.get_piece(x + i, y + j).get_color() != color) {
+                hold.push_back(Coordinate(x + i, y + j));
+            }
+            // checks if pos (x + j, y + i) is on board and the piece there is not the same color 
+            if (Move::on_board(x + j, y + i) && board.get_piece(x + j, y + i).get_color() != color) {
+                hold.push_back(Coordinate(x + j, y + i));
+            }
+        }
+    }
 }
 
 

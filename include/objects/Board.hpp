@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../resources/Constants.h"
+#include "../resources/Tools.hpp"
 #include "Piece.hpp"
 
 // Declares unchangeable size
@@ -29,6 +30,15 @@ class Board {
         // --> Return is useful for updating Player vectors: captured, onBoard, lost
         // WILL BE USED AFTER EVERY MOVE
         Piece refresh(Piece a, Coordinate n);
+        
+        // Sets a space to a piece
+        void set_piece(Piece p, Coordinate c);
+
+
+        // ============= Debug ==============
+        // This will print the board
+        void print_board();
+
 
 };
 

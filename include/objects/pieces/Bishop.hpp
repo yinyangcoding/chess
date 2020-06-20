@@ -5,7 +5,8 @@
 #include "../Board.hpp"
 
 class Bishop : public Piece {
-    Bishop(char c);
+    public:
+        Bishop(char c);
     
 };
 

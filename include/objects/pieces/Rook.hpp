@@ -5,7 +5,8 @@
 #include "../Board.hpp"
 
 class Rook : public Piece {
-    Rook(char c);
+    public:
+        Rook(char c);
 };
 
 #endif

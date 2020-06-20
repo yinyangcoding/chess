@@ -83,3 +83,71 @@ Piece Board::refresh(Piece moving, Coordinate n){
     // Returns Piece Captured and blank if none
     return temp;
 }
+
+// Sets a space to a piece
+void Board::set_piece(Piece p, Coordinate c) {
+    board[c.get_x()][c.get_y()].copy_from(p);
+}
+
+
+// ============= Debug ==============
+// This will print the board
+void Board::print_board() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            // Check if it's blank and print a space
+            if (board[i][j].is_blank()) {
+                printf("-");
+                continue;
+            }
+
+            // Processes pieces char
+            // starting letter, cap for black, n for knight
+            Piece ij;
+            ij.copy_from(board[i][j]);
+
+            bool cap;
+            if (ij.get_color() == 'w') {
+                cap = false;
+            }
+            else if (ij.get_color() == 'b'){
+                cap = true;
+            }
+            
+            // Find out what piece it is
+            char c;
+            switch (ij.get_type()) {
+                case 1:
+                    c = 'p';
+                    break;
+                case 2:
+                    c = 'n';
+                    break;
+                case 3:
+                    c = 'b';
+                    break;
+                case 4:
+                    c = 'r';
+                    break;
+                case 5:
+                    c = 'q';
+                    break;
+                case 6:
+                    c = 'k';
+                    break;
+                default:
+                    break;
+            }
+            
+            // Print out depending on cap
+            if(cap) {
+                printf("%c", Tools::to_upper(c));
+            }
+            else {
+                printf("%c", Tools::to_lower(c));
+            }
+        }
+        // Make new line
+        printf("\n");
+    }
+}

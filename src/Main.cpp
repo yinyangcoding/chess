@@ -18,6 +18,7 @@ using namespace std;
 
 int main() {
 	Board b(true);
-	
+	b.print_board();
+  
 	return 0;
 }

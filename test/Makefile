@@ -52,6 +52,7 @@ dependencies: ../build ../build/test/Test.o ../build/objects/Coordinate.o ../bui
 ../build:
 	mkdir -p ../build/objects/pieces
 	mkdir -p ../build/resources
+	mkdir -p ../bin/test
 
 clean:
 	rm ../build/objects/*.o ../build/test/*.o ../build/objects/pieces/*.o ../build/resources/*.o ../build/*.o

@@ -48,6 +48,7 @@ build/resources/Tools.o: build src/resources/Tools.cpp include/resources/Tools.h
 build:
 	mkdir -p build/objects/pieces
 	mkdir -p build/resources
+	mkdir -p bin/test
 
 clean:
 	rm bin/Main build/objects/*.o build/objects/pieces/*.o build/resources/*.o build/*.o

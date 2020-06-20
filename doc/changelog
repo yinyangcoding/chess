@@ -8,7 +8,7 @@ Note: ...
 Files Changed: Board (Both), King (Both), Pawn (Both), Coordinate (Both), Piece (Both)
 Note: Many many changes but most prominent is Board::refresh and King::update. Realized Major Issue.
 
-6/16/20 - Matt
+06/16/20 - Matt
 Files Changed: Board (Both), King (Both), Piece (Both)
 New Files: resources/Constants.h, importHierachry
 Notes:
@@ -17,9 +17,15 @@ Notes:
 - New methods in Piece: is_blank() to check if piece is blank, make_blank() to make a piece blank
 - Changed NULL calls to blank
 
-6/16/20 - Matt
-Files Changed: Tools.hpp, Move (both), Constants.h
+06/16/20 - Matt
+Files Changed: Tools.hpp, Move (Both), Constants.h
 Notes:
 - Give Move basic update layout
 - Make tools static
 - Establish DEBUG constant
+
+06/19/20 - Matt & Jayden
+Files Changed: Board (Both)
+Notes: 
+- Made Board(bool basic) constructor that makes basic and blank boards [Jayden]
+- Made print_board() method that displays board on the command line using printf (temporary until graphics) [Matt]

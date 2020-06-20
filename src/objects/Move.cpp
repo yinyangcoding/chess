@@ -50,7 +50,7 @@ void Move::update_pawn(Board board, Piece piece) {
         increment = -1;
     }
     // if space in front of pawn is on board and is blank
-    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1)  // on board
+    if (Move::on_board(loc.get_y() + increment) // onboard
         && (board.get_piece(loc.get_x(), loc.get_y() + increment).is_blank())) { // is blank
         // add space in front of pawn to hold
         hold.push_back(Coordinate(loc.get_x(), loc.get_y() + increment));
@@ -62,21 +62,20 @@ void Move::update_pawn(Board board, Piece piece) {
         }
     }
     // if space in front of pawn to the left is on board and is not blank
-    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1) // on board (y)
-        && ((loc.get_x() - 1) < SIZE) && ((loc.get_x() - 1) > -1) // on board (x)
+    if (Move::on_board(loc.get_x() - 1, loc.get_y() + increment) // onboard
         && (!board.get_piece(loc.get_x() - 1, loc.get_y() + increment).is_blank())) { // is not blank
         // add space in front of pawn to the left to hold
         hold.push_back(Coordinate(loc.get_x() - 1, loc.get_y() + increment));
     }
     // if space in front of pawn to the right is on board and is not blank
-    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1) // on board (y)
-        && ((loc.get_x() + 1) < SIZE) && ((loc.get_x() + 1) > -1) // on board (x)
+    if (Move::on_board(loc.get_x() + 1, loc.get_y() + increment) // onboard
         && (!board.get_piece(loc.get_x() + 1, loc.get_y() + increment).is_blank())) { // is not blank
         // add space in front of pawn to the right to hold
         hold.push_back(Coordinate(loc.get_x() + 1, loc.get_y() + increment));
     }
     piece.set_moves(hold);
 }
+
 void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
@@ -91,6 +90,10 @@ void Move::update_rook(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_rook()\n");
     }
+    // stores piece location so does not have to keep referencing for speed enhancements
+    Coordinate loc = piece.get_location();
+    // makes holder vector for moves
+    vector<Coordinate> hold;
 }
 void Move::update_queen(Board board, Piece piece) {
     if(DEBUG) {
@@ -108,14 +111,14 @@ void Move::update_king(Board board, Piece piece) {
     vector<Coordinate> hold;
     // Runs through x-position to the left, current, and to the right of current location
     for (int x = loc.get_x() - 1; x <= loc.get_x() + 1; x++) {
-        // Proceeds to next x-position if current x-position is out of bounds
-        if ((x > -1) && (x < SIZE)) {
+        // Proceeds to next x-position if x is not onboard
+        if (Move::on_board(x)) {
             // Runs through y-position to the left, current, and to the right of current location
             for (int y = loc.get_y() - 1; y <= loc.get_y() + 1; y++) {
                 // Proceeds to next y-position if current position is current location
                 if ((x != loc.get_x()) || (y != loc.get_y())) {
-                    // Proceeds to next y-position if current y-position is out of bounds
-                    if ((y > -1) && (y < SIZE)) {
+                    // Proceeds to next y-position if y is not onboard
+                    if (Move::on_board(y)) {
                         // MUST ALSO CHECK IF MOVE PUTS KING IN DANGER
                         // Add coordinate(x,y) to possible moves if it passed all checks
                         hold.push_back(Coordinate(x, y));
@@ -125,4 +128,12 @@ void Move::update_king(Board board, Piece piece) {
         } 
     }
     piece.set_moves(hold);
+}
+// checks if one pos is btwn -1 and SIZE
+bool Move::on_board(int c) {
+    return ((c > -1) && (c < SIZE));
+}
+// checks if both pos are btwn -1 and SIZE
+bool Move::on_board(int x, int y) {
+    return ((x > -1) && (x < SIZE) && (y > -1) && (y < SIZE));
 }

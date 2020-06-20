@@ -30,6 +30,7 @@ void Move::update_moves(Board b, Piece p) {
     }
 }
 
+
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Piece specific updates, private
 
@@ -76,16 +77,49 @@ void Move::update_pawn(Board board, Piece piece) {
     piece.set_moves(hold);
 }
 
+
 void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
     }
 }
+
+
 void Move::update_bishop(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_bishop()\n");
     }
+    // stores piece location so does not have to keep referencing for speed enhancements
+    Coordinate loc = piece.get_location();
+    // makes holder vector for moves
+    vector<Coordinate> hold;
+    // stores piece color
+    int color = piece.get_color();
+
+    // Outline for all directions: 
+    // if on board and the piece at location is not the same color -->
+    // add that location and keep checking positions in that direction
+
+    // MOVING UP-LEFT
+    for (int i = loc.get_x() - 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING UP-RIGHT
+    for (int i = loc.get_x() + 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING DOWN-LEFT
+    for (int i = loc.get_x() - 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING DOWN-RIGHT
+    for (int i = loc.get_x() + 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+        hold.push_back(Coordinate(i, j));
+    }
+    piece.set_moves(hold);
 }
+
+
 void Move::update_rook(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_rook()\n");
@@ -94,7 +128,7 @@ void Move::update_rook(Board board, Piece piece) {
     Coordinate loc = piece.get_location();
     // makes holder vector for moves
     vector<Coordinate> hold;
-    // sets current piece type
+    // stores piece color
     int color = piece.get_color();
 
     // Outline for all directions: 
@@ -117,12 +151,61 @@ void Move::update_rook(Board board, Piece piece) {
     for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i++) {
         hold.push_back(Coordinate(loc.get_x(), i));
     }
+    piece.set_moves(hold);
 }
+
+
 void Move::update_queen(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_queen()\n");
     }
+    // stores piece location so does not have to keep referencing for speed enhancements
+    Coordinate loc = piece.get_location();
+    // makes holder vector for moves
+    vector<Coordinate> hold;
+    // stores piece color
+    int color = piece.get_color();
+
+    // Outline for all directions: 
+    // if on board and the piece at location is not the same color -->
+    // add that location and keep checking positions in that direction
+
+    // MOVING LEFT
+    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i--) {
+        hold.push_back(Coordinate(i, loc.get_y()));
+    }
+    // MOVING RIGHT
+    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_y()).get_color() != color); i++) {
+        hold.push_back(Coordinate(i, loc.get_y()));
+    }
+    // MOVING UP
+    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i--) {
+        hold.push_back(Coordinate(loc.get_x(), i));
+    }
+    // MOVING DOWN
+    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(loc.get_x(), i).get_color() != color); i++) {
+        hold.push_back(Coordinate(loc.get_x(), i));
+    }
+    // MOVING UP-LEFT
+    for (int i = loc.get_x() - 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING UP-RIGHT
+    for (int i = loc.get_x() + 1, j = loc.get_y() - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING DOWN-LEFT
+    for (int i = loc.get_x() - 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+        hold.push_back(Coordinate(i, j));
+    }
+    // MOVING DOWN-RIGHT
+    for (int i = loc.get_x() + 1, j = loc.get_y() + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+        hold.push_back(Coordinate(i, j));
+    }
+    piece.set_moves(hold);
 }
+
+
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_king(Board board, Piece piece) {
     if(DEBUG) {
@@ -152,10 +235,14 @@ void Move::update_king(Board board, Piece piece) {
     }
     piece.set_moves(hold);
 }
+
+
 // checks if one pos is btwn -1 and SIZE
 bool Move::on_board(int c) {
     return ((c > -1) && (c < SIZE));
 }
+
+
 // checks if both pos are btwn -1 and SIZE
 bool Move::on_board(int x, int y) {
     return ((x > -1) && (x < SIZE) && (y > -1) && (y < SIZE));

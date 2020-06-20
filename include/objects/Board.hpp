@@ -24,8 +24,7 @@ using namespace std;
 class Board {
     public:
         // Creates a 2d array to represent a board
-        // NULL means no piece there
-        // Does this initialize all players to NULL???
+        // blank piece means no piece there
         Piece board[SIZE][SIZE];
 
         // ============= Constructors ==============
@@ -42,6 +41,8 @@ class Board {
         // Sets a space to a piece
         void set_piece(Piece p, Coordinate c);
 
+        // Returns piece at location (i,j)
+        Piece get_piece(int i, int j);
 
         // ============= Debug ==============
         // This will print the board

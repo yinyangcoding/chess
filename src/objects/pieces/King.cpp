@@ -4,7 +4,7 @@ King::King(char c) : Piece::Piece(6, c) {
 
 }
 
-// For King especially, much more must be done to update possible moves considering check
+/* For King especially, much more must be done to update possible moves considering check
 void King::update() {
     // Resets possible moves
     moves.clear();
@@ -27,3 +27,4 @@ void King::update() {
         } 
     }
 }
+*/

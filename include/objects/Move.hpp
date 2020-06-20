@@ -19,6 +19,10 @@ class Move {
         static void update_rook(Board board, Piece piece);
         static void update_queen(Board board, Piece piece);
         static void update_king(Board board, Piece piece);
+        // checks if one pos is btwn -1 and SIZE
+        static bool on_board(int c);
+        // checks if both pos are btwn -1 and SIZE
+        static bool on_board(int x, int y);
 
     public:
         // ============= Methods =============

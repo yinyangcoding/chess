@@ -57,8 +57,32 @@ void Move::update_queen(Board board, Piece piece) {
         printf("Move::update_queen()\n");
     }
 }
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_king(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_king()\n");
     }
+    // stores piece location so does not have to keep referencing for speed enhancements
+    Coordinate loc = piece.get_location();
+    // makes holder vector for moves
+    vector<Coordinate> hold;
+    // Runs through x-position to the left, current, and to the right of current location
+    for (int x = loc.get_x() - 1; x <= loc.get_x() + 1; x++) {
+        // Proceeds to next x-position if current x-position is out of bounds
+        if ((x > -1) && (x < SIZE)) {
+            // Runs through y-position to the left, current, and to the right of current location
+            for (int y = loc.get_y() - 1; y <= loc.get_y() + 1; y++) {
+                // Proceeds to next y-position if current position is current location
+                if ((x != loc.get_x()) || (y != loc.get_y())) {
+                    // Proceeds to next y-position if current y-position is out of bounds
+                    if ((y > -1) && (y < SIZE)) {
+                        // MUST ALSO CHECK IF MOVE PUTS KING IN DANGER
+                        // Add coordinate(x,y) to possible moves if it passed all checks
+                        hold.push_back(Coordinate(x, y));
+                    }
+                }
+            }
+        } 
+    }
+    piece.set_moves(hold);
 }

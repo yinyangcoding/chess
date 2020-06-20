@@ -97,7 +97,7 @@ void Board::print_board() {
         for (int j = 0; j < SIZE; j++) {
             // Check if it's blank and print a space
             if (board[i][j].is_blank()) {
-                printf("-");
+                printf("- ");
                 continue;
             }
 
@@ -141,10 +141,10 @@ void Board::print_board() {
             
             // Print out depending on cap
             if(cap) {
-                printf("%c", Tools::to_upper(c));
+                printf("%c ", Tools::to_upper(c));
             }
             else {
-                printf("%c", Tools::to_lower(c));
+                printf("%c ", Tools::to_lower(c));
             }
         }
         // Make new line

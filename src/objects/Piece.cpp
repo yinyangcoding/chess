@@ -32,6 +32,10 @@ void Piece::set_location(Coordinate a) {
     location.copy_from(a);
 }
 
+void Piece::set_moves(vector<Coordinate> a) {
+    moves = a;
+}
+
 // ============== Getters ================
 // Returns id
 int Piece::get_id() {

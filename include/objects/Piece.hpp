@@ -54,6 +54,8 @@ class Piece {
         // ============= Setters ==============
         void set_location(Coordinate a);
 
+        void set_moves(vector<Coordinate> a);
+
         // ============= Methods ==============
         // Returns if a equals this by id
         bool equals(Piece a);
@@ -63,12 +65,6 @@ class Piece {
 
         // Copies a traits to this
         void copy_from(Piece a);
-
-        // Moves piece returns if successful
-        // bool move(Move m);
-
-        // Updates possible moves vector specific to each piece
-        void update();
 
         // Returns if the piece is a blank placeholder
         bool is_blank();

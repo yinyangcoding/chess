@@ -34,6 +34,7 @@ void Move::update_moves(Board b, Piece p) {
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Piece specific updates, private
 
+
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_pawn(Board board, Piece piece) {
     if(DEBUG) {
@@ -78,6 +79,7 @@ void Move::update_pawn(Board board, Piece piece) {
 }
 
 
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
@@ -85,6 +87,7 @@ void Move::update_knight(Board board, Piece piece) {
 }
 
 
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_bishop(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_bishop()\n");
@@ -120,6 +123,7 @@ void Move::update_bishop(Board board, Piece piece) {
 }
 
 
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_rook(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_rook()\n");
@@ -155,6 +159,7 @@ void Move::update_rook(Board board, Piece piece) {
 }
 
 
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_queen(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_queen()\n");

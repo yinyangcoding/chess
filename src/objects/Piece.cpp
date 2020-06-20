@@ -131,7 +131,7 @@ void Piece::make_blank() {
 }
 
 // swaps pieces
-void Piece::swap(Piece a) {
+void Piece::swap(Piece &a) {
     Piece temp;
     temp.copy_from(a);
 

@@ -80,8 +80,8 @@ class Piece {
         // Makes the piece a blank placeholder
         void make_blank();
 
-        // swaps pieces
-        void swap(Piece a);
+        // swaps pieces NOT PREFERED USE
+        void swap(Piece &a);
 };
 
 #endif

@@ -6,13 +6,8 @@
 
 // REMINDER: Need method to turn pawn to another Piece when reached end of Board but keep same ID
 class Pawn : public Piece {
-	private: 
-		// indicates if first move was done
-		bool first;
-	
 	public:
 		Pawn(char c);
-		void update();
 };
 
 #endif

@@ -92,6 +92,10 @@ void Board::set_piece(Piece p, Coordinate c) {
     board[c.get_x()][c.get_y()].copy_from(p);
 }
 
+// Returns piece at location (i,j)
+Piece Board::get_piece(int i, int j) {
+    return board[i][j];
+}
 
 // ============= Debug ==============
 // This will print the board

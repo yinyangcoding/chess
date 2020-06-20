@@ -9,7 +9,6 @@
 class King : public Piece {
     public:
         King(char c);
-        void update();
 };
 
 #endif

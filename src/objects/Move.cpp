@@ -32,10 +32,50 @@ void Move::update_moves(Board b, Piece p) {
 
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Piece specific updates, private
+
+// STILL MUST COMPUTE FOR CHECK
 void Move::update_pawn(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_pawn()\n");
     }
+    // stores piece location so does not have to keep referencing for speed enhancements
+    Coordinate loc = piece.get_location();
+    // makes holder vector for moves
+    vector<Coordinate> hold;
+    // increment (the y-direction pawn moves in) is set based on color
+    int increment;
+    if (piece.get_color() == 'b') {
+        increment = 1;
+    } else {
+        increment = -1;
+    }
+    // if space in front of pawn is on board and is blank
+    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1)  // on board
+        && (board.get_piece(loc.get_x(), loc.get_y() + increment).is_blank())) { // is blank
+        // add space in front of pawn to hold
+        hold.push_back(Coordinate(loc.get_x(), loc.get_y() + increment));
+        // if pawn is still in starting position and space 2 spaces in front of pawn is blank
+        if ((((increment == 1) && (loc.get_y() == 1)) || ((increment == -1) && (loc.get_y() == (SIZE - 2)))) // starting position
+        && (board.get_piece(loc.get_x(), loc.get_y() + (2 * increment)).is_blank())) { // is blank
+            // add space 2 spaces in front of pawn to hold
+            hold.push_back(Coordinate(loc.get_x(), (loc.get_y() + (2 * increment))));
+        }
+    }
+    // if space in front of pawn to the left is on board and is not blank
+    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1) // on board (y)
+        && ((loc.get_x() - 1) < SIZE) && ((loc.get_x() - 1) > -1) // on board (x)
+        && (!board.get_piece(loc.get_x() - 1, loc.get_y() + increment).is_blank())) { // is not blank
+        // add space in front of pawn to the left to hold
+        hold.push_back(Coordinate(loc.get_x() - 1, loc.get_y() + increment));
+    }
+    // if space in front of pawn to the right is on board and is not blank
+    if (((loc.get_y() + increment) < SIZE) && ((loc.get_y() + increment) > -1) // on board (y)
+        && ((loc.get_x() + 1) < SIZE) && ((loc.get_x() + 1) > -1) // on board (x)
+        && (!board.get_piece(loc.get_x() + 1, loc.get_y() + increment).is_blank())) { // is not blank
+        // add space in front of pawn to the right to hold
+        hold.push_back(Coordinate(loc.get_x() + 1, loc.get_y() + increment));
+    }
+    piece.set_moves(hold);
 }
 void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {

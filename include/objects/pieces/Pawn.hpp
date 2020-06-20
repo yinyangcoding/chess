@@ -9,8 +9,10 @@ class Pawn : public Piece {
 	private: 
 		// indicates if first move was done
 		bool first;
-	Pawn(char c);
-	void update();
+	
+	public:
+		Pawn(char c);
+		void update();
 };
 
 #endif

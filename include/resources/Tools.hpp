@@ -16,6 +16,10 @@ class Tools {
         // Grabs the index of a piece from a piece vector
         static int index(vector<Piece> v, Piece p);
 
+        // Toupper and tolower for chars
+        static char to_upper(char c);
+        static char to_lower(char c);
+
 };
 
 #endif

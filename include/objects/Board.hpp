@@ -20,8 +20,10 @@ class Board {
         Piece board[SIZE][SIZE];
 
         // ============= Constructors ==============
-        // Defines Empty New Board
+        // New layout board
         Board();
+        // New empty board
+        Board(bool);
 
         // ============= Methods ==============
         // Moves Piece a to new Coordinate n on Board
@@ -29,6 +31,7 @@ class Board {
         // --> Return is useful for updating Player vectors: captured, onBoard, lost
         // WILL BE USED AFTER EVERY MOVE
         Piece refresh(Piece a, Coordinate n);
+
 
 };
 

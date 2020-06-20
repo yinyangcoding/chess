@@ -21,8 +21,8 @@ class Board {
         Piece board[SIZE][SIZE];
 
         // ============= Constructors ==============
-        // Defines Empty New Board
-        Board();
+        // if true create basic board : if false create blank board
+        Board(bool basic);
 
         // ============= Methods ==============
         // Moves Piece a to new Coordinate n on Board
@@ -38,6 +38,7 @@ class Board {
         // ============= Debug ==============
         // This will print the board
         void print_board();
+
 
 
 };

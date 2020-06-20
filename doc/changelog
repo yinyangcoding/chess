@@ -29,3 +29,9 @@ Files Changed: Board (Both)
 Notes: 
 - Made Board(bool basic) constructor that makes basic and blank boards [Jayden]
 - Made print_board() method that displays board on the command line using printf (temporary until graphics) [Matt]
+
+6/20/20 - Matt
+Files Changed: Piece.hpp, Piece.cpp
+Notes:
+- Added swap method to the piece object. This allows to swap all attributes
+- Check functionality with inheritance

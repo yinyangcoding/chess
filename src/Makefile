@@ -1,5 +1,5 @@
-Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/objects/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o
-	g++ ../build/Main.o ../build/objects/Coordinate.o ../build/objects/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o -o Main
+Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o
+	g++ ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o -o Main
 
 ../build/Main.o: ../build ../src/Main.cpp
 	g++ -c ../src/Main.cpp -o ../build/Main.o
@@ -7,8 +7,8 @@ Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/objects/Mo
 ../build/objects/Coordinate.o: ../build ../src/objects/Coordinate.cpp ../include/objects/Coordinate.hpp
 	g++ -c ../src/objects/Coordinate.cpp -o ../build/objects/Coordinate.o
 
-../build/objects/Move.o: ../build ../src/objects/Move.cpp ../include/objects/Move.hpp
-	g++ -c ../src/objects/Move.cpp -o ../build/objects/Move.o
+../build/resources/Move.o: ../build ../src/resources/Move.cpp ../include/resources/Move.hpp
+	g++ -c ../src/resources/Move.cpp -o ../build/resources/Move.o
 
 ../build/objects/Piece.o: ../build ../src/objects/Piece.cpp ../include/objects/Piece.hpp
 	g++ -c ../src/objects/Piece.cpp -o ../build/objects/Piece.o

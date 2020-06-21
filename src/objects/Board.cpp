@@ -153,10 +153,10 @@ void Board::print_board() {
             
             // Print out depending on cap
             if(cap) {
-                printf("%c ", Tools::to_upper(c));
+                printf("%c ", BTools::to_upper(c));
             }
             else {
-                printf("%c ", Tools::to_lower(c));
+                printf("%c ", BTools::to_lower(c));
             }
         }
         // Make new line

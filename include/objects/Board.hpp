@@ -5,6 +5,7 @@
 
 #include "../resources/Constants.h"
 #include "../resources/Tools.hpp"
+#include "../resources/BlandTools.hpp"
 #include "Piece.hpp"
 #include "pieces/Pawn.hpp"
 #include "pieces/Knight.hpp"

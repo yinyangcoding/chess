@@ -51,6 +51,14 @@ class Board {
 
         // Returns piece at location (i,j)
         Piece *get_piece(int i, int j);
+        // From coord
+        Piece *get_piece(Coordinate c);
+
+
+        // Returns true or false if there is a piece there
+        bool has_piece(int i, int j);
+        bool has_piece(Coordinate c);
+
 
         // ============= Debug ==============
         // This will print the board

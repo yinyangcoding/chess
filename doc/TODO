@@ -3,3 +3,5 @@ BUILD MOVESET
 Make tool that sees if a piece is at location(x,y) by looking through board
 
 CHECK BOARD REFRESH
+
+CHECK IF RETURN LOCATION OF PIECE MUST BE RETURNING A REFERENCE

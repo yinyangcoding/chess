@@ -12,11 +12,10 @@ Coordinate::Coordinate(char c, int y) {
     // Process coords from standard chess
     c = BTools::to_upper(c);
     int x = c - 65;
-    y--;
     
     // build standard coord
     this->x = x;
-    this->y = SIZE - y - 1;
+    this->y = SIZE - y;
 }
 
 // Build coord as origin

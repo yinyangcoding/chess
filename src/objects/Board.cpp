@@ -72,25 +72,19 @@ Board::Board(bool basic) {
 // --> Return should be used to update Player vectors: captured, onBoard, lost
 // WILL BE USED AFTER EVERY MOVE
 
-// CHECK
 Piece Board::refresh(Piece moving, Coordinate n){
-    // temp set to the value of the Piece at the new Coordinate and NULL if no piece there
+    // stores piece at n into temp
     Piece temp;
-    
-    // WHY DOES THIS NOT WORK
-    if (!board[n.get_y()][n.get_x()].is_blank()) {
-        temp.copy_from(board[n.get_y()][n.get_x()]);
-        // makes location (-1, -1) indicating offBoard
-        temp.set_location(Coordinate(-1, -1));
-    }
-
-    // old location of the moving Piece is set to blank
+    temp.copy_from(board[n.get_y()][n.get_x()]);
+    // makes location of temp (-1, -1) indicating offBoard
+    temp.set_location(Coordinate(-1, -1));
+    // sets old location of moving piece to blank
     board[moving.get_location().get_y()][moving.get_location().get_x()].make_blank();
-    // new Coordinate is set to the moving Piece
+    // sets coordinate n to moving Piece
     board[n.get_y()][n.get_x()].copy_from(moving);
     // updates location of moving Piece
     board[n.get_y()][n.get_x()].set_location(Coordinate(n.get_y(), n.get_x()));
-    // Returns Piece Captured and blank if none
+    // Returns temp -> (Piece captured and blank Piece if none)
     return temp;
 }
 

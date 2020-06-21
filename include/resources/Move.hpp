@@ -34,6 +34,14 @@ class Move {
         // From coords
         static void swap(Board &board, Coordinate a, Coordinate b);
 
+        // checks if king is in check, checkmate, or stalemate
+        // none = -1, stalemate = 0, check = 1, checkmate = 2
+        static int check_position(Board &board, Coordinate king);
+        // returns true if in check
+        static bool in_check(Board &board, Coordinate king);
+        // return true if Coordinates surrounding king are all in check
+        static bool surrounding_check(Board &board, Coordinate king);
+
 
 
 };

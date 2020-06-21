@@ -66,6 +66,8 @@ Board::Board(bool basic) {
 // Returns the Piece captured if No Piece then blank
 // --> Return should be used to update Player vectors: captured, onBoard, lost
 // WILL BE USED AFTER EVERY MOVE
+
+// CHECK
 Piece Board::refresh(Piece moving, Coordinate n){
     // temp set to the value of the Piece at the new Coordinate and NULL if no piece there
     Piece temp;
@@ -93,8 +95,8 @@ void Board::set_piece(Piece p, Coordinate c) {
 }
 
 // Returns piece at location (i,j)
-Piece Board::get_piece(int i, int j) {
-    return board[i][j];
+Piece *Board::get_piece(int i, int j) {
+    return &board[i][j];
 }
 
 // ============= Debug ==============

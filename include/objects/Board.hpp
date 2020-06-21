@@ -36,13 +36,14 @@ class Board {
         // Returns the Piece Captured if No Piece then Null
         // --> Return is useful for updating Player vectors: captured, onBoard, lost
         // WILL BE USED AFTER EVERY MOVE
+        // CHECK
         Piece refresh(Piece a, Coordinate n);
         
         // Sets a space to a piece
         void set_piece(Piece p, Coordinate c);
 
         // Returns piece at location (i,j)
-        Piece get_piece(int i, int j);
+        Piece *get_piece(int i, int j);
 
         // ============= Debug ==============
         // This will print the board

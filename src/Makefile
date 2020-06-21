@@ -48,5 +48,5 @@ Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/
 	mkdir -p ../build/resources
 
 clean:
-	rm ../bin/Main ../build/objects/*.o ../build/objects/pieces/*.o ../build/resources/*.o ../build/*.o
+	rm ../build/objects/*.o ../build/objects/pieces/*.o ../build/resources/*.o ../build/*.o
 

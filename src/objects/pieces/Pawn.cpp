@@ -1,6 +1,7 @@
 #include "../../../include/objects/pieces/Pawn.hpp"
 
 Pawn::Pawn(char c) : Piece::Piece(1, c) {
+    
 }
 
 void Pawn::update() {

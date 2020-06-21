@@ -274,3 +274,29 @@ bool Move::on_board(int c) {
 bool Move::on_board(int x, int y) {
     return ((x > -1) && (x < SIZE) && (y > -1) && (y < SIZE));
 }
+
+// Swaps two pieces
+// From piece references
+void Move::swap(Piece &a, Piece &b) {
+    // Make a temp holder
+    Piece temp;
+    temp.copy_from(b);
+
+    // Put a traits in b
+    b.set_id(a.get_id());
+    b.set_color(a.get_color());
+    b.set_point(a.get_point());
+    b.set_type(a.get_color());
+
+    // Put temp traits in a
+    a.set_id(temp.get_id());
+    a.set_color(temp.get_color());
+    a.set_point(temp.get_point());
+    a.set_type(temp.get_color());
+
+
+}
+// From coords
+void Move::swap(Board &board, Coordinate a, Coordinate b) {
+    
+}

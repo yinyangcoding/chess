@@ -1,8 +1,6 @@
 BUILD MOVESET
 
-Test lose method in player
-Test methods in move class
-Make size variable in Board class --> and get size method
-Define Board with size --> After every move update board 
-Search correct way to implement Abstract methods in c++ 
+BIG!!!:
+FIND OUT IF PIECE TYPE WILL BE PRESERVED WHEN SAVED IN A PIECE ARRAY
+
 Make tool that sees if a piece is at location(x,y) by looking through board

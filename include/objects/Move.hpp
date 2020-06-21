@@ -10,7 +10,8 @@
 
 // Will represent vector from initial coord to final coord
 class Move {
-    private:
+    public:
+        // ============= Methods =============
         // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
         // Piece specific updates 
         static void update_pawn(Board board, Piece piece);
@@ -24,10 +25,15 @@ class Move {
         // checks if both pos are btwn -1 and SIZE
         static bool on_board(int x, int y);
 
-    public:
-        // ============= Methods =============
         // Switch to decide which piece to operate on
         static void update_moves(Board b, Piece p);
+
+        // Swaps two pieces
+        // From piece references
+        static void swap(Piece &a, Piece &b);
+        // From coords
+        static void swap(Board &board, Coordinate a, Coordinate b);
+
 
 
 };

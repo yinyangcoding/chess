@@ -19,6 +19,13 @@ using namespace std;
 int main() {
 	Board b(true);
 	b.print_board();
-  
+
+	Move::swap(b.board[6][3], b.board[4][3]);
+	Move::swap(b.board[1][0], b.board[3][0]);
+	
+
+	b.print_board();
+	
+
 	return 0;
 }

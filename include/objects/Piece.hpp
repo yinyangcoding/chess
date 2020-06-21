@@ -53,6 +53,11 @@ class Piece {
 
         // ============= Setters ==============
         void set_location(Coordinate a);
+        void set_id(int i);
+        void set_point(int i);
+        void set_type(int i);
+        void set_color(char c);
+
 
         void set_moves(vector<Coordinate> a);
 
@@ -66,12 +71,17 @@ class Piece {
         // Copies a traits to this
         void copy_from(Piece a);
 
+        // Updates possible moves vector specific to each piece
+        void update();
+
         // Returns if the piece is a blank placeholder
         bool is_blank();
 
         // Makes the piece a blank placeholder
         void make_blank();
 
+        // swaps pieces NOT PREFERED USE
+        void swap(Piece &a);
 };
 
 #endif

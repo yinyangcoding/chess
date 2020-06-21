@@ -292,7 +292,7 @@ void Move::swap(Piece &a, Piece &b) {
     a.set_id(temp.get_id());
     a.set_color(temp.get_color());
     a.set_point(temp.get_point());
-    a.set_type(temp.get_color());
+    a.set_type(temp.get_type());
 
 
 }

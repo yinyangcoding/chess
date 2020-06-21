@@ -34,6 +34,12 @@ class Move {
         // From coords
         static void swap(Board &board, Coordinate a, Coordinate b);
 
+        // A captures B
+        // From piece references
+        static void replace(Piece &a, Piece &b);
+        // From coords
+        static void replace(Board &board, Coordinate a, Coordinate b);
+
 
 
 };

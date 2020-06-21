@@ -7,6 +7,18 @@ Coordinate::Coordinate(int x, int y) {
     this->y = y;
 }
 
+// Takes proper chess coord structure
+Coordinate::Coordinate(char c, int y) {
+    // Process coords from standard chess
+    c = BTools::to_upper(c);
+    int x = c - 65;
+    y--;
+    
+    // build standard coord
+    this->x = x;
+    this->y = SIZE - y - 1;
+}
+
 // Build coord as origin
 Coordinate::Coordinate() {
     x = 0;
@@ -59,5 +71,5 @@ void Coordinate::copy_from(Coordinate a) {
 // ================ Debug ================
 // Prints pair in (x, y) format to the command line
 void Coordinate::print_pair() {
-    printf("(%d, %d) ", x, y);
+    printf("(%d, %d)\n", x, y);
 }

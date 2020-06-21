@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 
+#include "../resources/Constants.h"
+#include "../resources/BlandTools.hpp"
+
 using namespace std;
 
 // Will be used to show the coord of the piece
@@ -18,6 +21,9 @@ class Coordinate {
         // ================ Constructors ================
         // Build coord from given x and y
         Coordinate(int x, int y);
+
+        // Takes proper chess coord structure
+        Coordinate(char c, int i);
 
         // Build coord as origin
         Coordinate();

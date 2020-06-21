@@ -32,6 +32,12 @@ class Board {
         // if true create basic board : if false create blank board
         Board(bool basic);
 
+        // ============= Getters ==============
+
+
+        // ============= Setters ==============
+
+
         // ============= Methods ==============
         // Moves Piece a to new Coordinate n on Board
         // Returns the Piece Captured if No Piece then Null

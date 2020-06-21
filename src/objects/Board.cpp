@@ -61,6 +61,11 @@ Board::Board(bool basic) {
     }
 }
 
+// ============= Getters ==============
+
+
+// ============= Setters ==============
+
 // ============= Methods ==============
 // Moves Piece a to new Coordinate n on Board
 // Returns the Piece captured if No Piece then blank

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "../resources/Constants.h"
-#include "Coordinate.hpp"
+#include "../objects/Coordinate.hpp"
 #include "../objects/Piece.hpp"
 #include "../objects/Board.hpp"
 

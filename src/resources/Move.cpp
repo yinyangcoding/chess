@@ -1,4 +1,4 @@
-#include "../../include/objects/Move.hpp"
+#include "../../include/resources/Move.hpp"
 
 // ============= Methods =============
 // Switch to decide which piece to operate on

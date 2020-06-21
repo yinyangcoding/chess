@@ -12,7 +12,7 @@
 #include "../include/resources/Tools.hpp"
 #include "../include/objects/Board.hpp"
 #include "../include/objects/Player.hpp"
-#include "../include/objects/Move.hpp"
+#include "../include/resources/Move.hpp"
 
 using namespace std;
 

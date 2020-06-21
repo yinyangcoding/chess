@@ -296,7 +296,12 @@ void Move::swap(Piece &a, Piece &b) {
 
 
 }
+
 // From coords
 void Move::swap(Board &board, Coordinate a, Coordinate b) {
-    
+    Piece *from = &board.board[a.get_y()][a.get_x()];
+    Piece *to = &board.board[b.get_y()][b.get_x()];
+
+    Move::swap(*to, *from);
+
 }

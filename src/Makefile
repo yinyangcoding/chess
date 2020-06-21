@@ -1,5 +1,5 @@
-Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o
-	g++ ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o -o Main
+Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o ../build/resources/BlandTools.o
+	g++ ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/pieces/King.o ../build/objects/pieces/Queen.o ../build/objects/pieces/Bishop.o ../build/objects/pieces/Knight.o ../build/objects/pieces/Rook.o ../build/objects/pieces/Pawn.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o ../build/resources/BlandTools.o -o Main
 
 ../build/Main.o: ../build ../src/Main.cpp
 	g++ -c ../src/Main.cpp -o ../build/Main.o
@@ -41,6 +41,9 @@ Main: ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/
 
 ../build/resources/Tools.o: ../build ../src/resources/Tools.cpp ../include/resources/Tools.hpp
 	g++ -c ../src/resources/Tools.cpp -o ../build/resources/Tools.o
+
+../build/resources/BlandTools.o: ../build ../src/resources/BlandTools.cpp ../include/resources/BlandTools.hpp
+	g++ -c ../src/resources/BlandTools.cpp -o ../build/resources/BlandTools.o
 
 
 ../build:

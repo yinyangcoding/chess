@@ -49,7 +49,7 @@ class Piece {
         Coordinate get_location();
 
         // Returns possible moves
-        vector<Coordinate> get_moves();
+        vector<Coordinate> *get_moves();
 
         // ============= Setters ==============
         void set_location(Coordinate a);

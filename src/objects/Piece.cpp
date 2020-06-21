@@ -75,8 +75,8 @@ Coordinate Piece::get_location() {
 }
 
 // Returns possible moves
-vector<Coordinate> Piece::get_moves() {
-    return moves;
+vector<Coordinate> *Piece::get_moves() {
+    return &moves;
 }
 
 // ============= Methods ==============

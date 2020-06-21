@@ -314,3 +314,64 @@ void Move::replace(Board &board, Coordinate a, Coordinate b) {
 
     Move::replace(*from, *to);
 }
+
+
+// Main Move function that will consider all needed methods
+// Returns a piece if captured. Returns blank if not
+// Moves from a to b
+Piece Move::move(Board &board, Coordinate a, Coordinate b) {
+    Piece blank; // Makes blank piece for future return needs
+    bool capture = false; // True if the move is a capture
+    bool canMove = false; // If it can move there
+
+    // Exit if there's no piece to move
+    if(!board.has_piece(a)) {
+        return blank;
+
+    }
+
+    Piece moving = *board.get_piece(a);
+    Piece cap;
+
+    if(board.has_piece(b)) {
+        capture = true;
+        cap = *board.get_piece(b);
+
+    }
+
+    // Check if move is legal and within movese
+    vector<Coordinate> moves = *moving.get_moves();
+    for(int i = 0; i < moves.size(); i++) {
+        if(moves[i].equals(b)) {
+            canMove = true;
+        }
+    }
+
+    // Exit if it can't move
+    if(!canMove) {
+        return blank;
+    }
+    
+    if(capture) {
+        // Capture the piece
+        Move::replace(moving, cap);
+
+        // ADD IT TO CAPTURING PLAYER'S TAKEN AND OTHER PLAYER'S LOST
+
+
+
+        return cap;
+
+    }
+    else {
+        // Swap the piece if it doesn't need to capture
+        // Move the piece
+        Move::swap(board, a, b);
+
+        // Update the moving piece's moves
+        Move::update_moves(board, moving);
+        return blank;
+    }
+
+
+}

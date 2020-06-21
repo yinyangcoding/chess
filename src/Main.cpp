@@ -20,14 +20,7 @@ int main() {
 	Board b(true);
 	b.print_board();
 
-	// Move::swap(b.board[6][3], b.board[4][3]);
-	// Move::swap(b.board[1][0], b.board[3][0]);
-
 	Move::swap(b, Coordinate('a', 7), Coordinate('a', 5));
-	printf("====================\n");
-	Coordinate('g', 1).print_pair();
-	Coordinate('f', 3).print_pair();
-	printf("====================\n");
 	Move::swap(b, Coordinate('g', 1), Coordinate('f', 3));
 
 	

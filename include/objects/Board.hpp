@@ -13,6 +13,7 @@
 #include "pieces/Rook.hpp"
 #include "pieces/Queen.hpp"
 #include "pieces/King.hpp"
+#include "Player.hpp"
 
 
 
@@ -23,6 +24,10 @@ using namespace std;
 
 // NOTE: White on Bottom of Board (Starting y = 6,7) / Black on Top (Starting y = 0,1)
 class Board {
+    private:
+        Player white('w');
+        Player black('b');
+
     public:
         // Creates a 2d array to represent a board
         // blank piece means no piece there
@@ -31,6 +36,9 @@ class Board {
         // ============= Constructors ==============
         // if true create basic board : if false create blank board
         Board(bool basic);
+
+        // Create board with players
+        Board(Player w, Player b);
 
         // ============= Getters ==============
 

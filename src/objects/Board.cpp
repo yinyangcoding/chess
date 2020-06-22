@@ -6,7 +6,7 @@ using namespace std;
 // if true create basic board : if false create blank board
 Board::Board(bool basic) {
     if(DEBUG) {
-        printf("Board::Board()\n");
+        printf("Board::Board(bool)\n");
     }
     // if not a basic Board (Blank Board) fill board with blank pieces
     if (!basic) {
@@ -15,7 +15,8 @@ Board::Board(bool basic) {
                 board[i][j].make_blank();
             }
         }
-    } else { // if it is a basic Board make board a basic board
+    }
+    else { // if it is a basic Board make board a basic board
         // Adds all white pieces first
         // line of white pawns
         for (int i = 0; i < SIZE; i++) {
@@ -57,6 +58,57 @@ Board::Board(bool basic) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j].make_blank();
             }
+        }
+    }
+}
+
+// Create board with players
+Board::Board(Player w, Player b) {
+    if(DEBUG) {
+        printf("Board::Board(Player, Player)\n");
+    }
+
+    // if it is a basic Board make board a basic board
+    // Adds all white pieces first
+    // line of white pawns
+    for (int i = 0; i < SIZE; i++) {
+        board[SIZE - 2][i] = Pawn('w');
+    }
+    // white rooks
+    board[SIZE - 1][0] = Rook('w');
+    board[SIZE - 1][SIZE - 1] = Rook('w');
+    // white knights
+    board[SIZE - 1][1] = Knight('w');
+    board[SIZE - 1][SIZE - 2] = Knight('w');
+    // white bishops
+    board[SIZE - 1][2] = Bishop('w');
+    board[SIZE - 1][SIZE - 3] = Bishop('w');
+    // white king and queen
+    board[SIZE - 1][3] = Queen('w'); // white queen
+    board[SIZE - 1][SIZE - 4] = King('w'); // white king
+
+    // Adds all black pieces after
+    // line of black pawns
+    for (int i = 0; i < SIZE; i++) {
+        board[1][i] = Pawn('b');
+    }
+    // black rooks
+    board[0][0] = Rook('b');
+    board[0][SIZE - 1] = Rook('b');
+    // black knights
+    board[0][1] = Knight('b');
+    board[0][SIZE - 2] = Knight('b');
+    // black bishops
+    board[0][2] = Bishop('b');
+    board[0][SIZE - 3] = Bishop('b');
+    // black king and queen
+    board[0][3] = Queen('b'); // black queen
+    board[0][SIZE - 4] = King('b'); // black king
+
+    // makes all the remaining space blank pieces
+    for (int i = 2; i < (SIZE - 2); i++) {
+        for (int j = 0; j < SIZE; j++) {
+            board[i][j].make_blank();
         }
     }
 }

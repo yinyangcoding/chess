@@ -25,9 +25,21 @@ Board::Board(Player &w, Player &b) {
 }
 
 // ============= Getters ==============
+// Returns piece at location (i,j)
+Piece *Board::get_piece(int i, int j) {
+    return &board[i][j];
+}
+// From coord
+Piece *Board::get_piece(Coordinate c) {
+    return Board::get_piece(c.get_y(), c.get_x());
+}
 
 
 // ============= Setters ==============
+// Sets a space to a piece
+void Board::set_piece(Piece p, Coordinate c) {
+    board[c.get_y()][c.get_x()].copy_from(p);
+}
 
 // ============= Methods ==============
 void Board::build_board(bool basic) {
@@ -105,93 +117,6 @@ void Board::build_board(bool basic) {
     }
 }
 
-// <<<<<<< HEAD
-// Create board with players
-Board::Board(Player &w, Player &b) {
-    if(DEBUG) {
-        printf("Board::Board(Player, Player)\n");
-    }
-
-    white = &w;
-    black = &b;
-
-    // if it is a basic Board make board a basic board
-    // Adds all white pieces first
-    // line of white pawns
-    for (int i = 0; i < SIZE; i++) {
-        board[SIZE - 2][i] = Pawn('w');
-        board[SIZE - 2][i].set_location(Coordinate(SIZE - 2, i));
-    }
-    // white rooks
-    board[SIZE - 1][0] = Rook('w');
-    board[SIZE - 1][0].set_location(Coordinate(SIZE - 1, 0));
-    board[SIZE - 1][SIZE - 1] = Rook('w');
-    board[SIZE - 1][SIZE - 1].set_location(Coordinate(SIZE - 1, SIZE - 1));
-    // white knights
-    board[SIZE - 1][1] = Knight('w');
-    board[SIZE - 1][1].set_location(Coordinate(SIZE - 1, 1));
-    board[SIZE - 1][SIZE - 2] = Knight('w');
-    board[SIZE - 1][SIZE - 2].set_location(Coordinate(SIZE - 1, SIZE - 2));
-    // white bishops
-    board[SIZE - 1][2] = Bishop('w');
-    board[SIZE - 1][2].set_location(Coordinate(SIZE - 1, 2));
-    board[SIZE - 1][SIZE - 3] = Bishop('w');
-    board[SIZE - 1][SIZE - 3].set_location(Coordinate(SIZE - 1, SIZE - 3));
-    // white king and queen
-    board[SIZE - 1][3] = Queen('w'); // white queen
-    board[SIZE - 1][3].set_location(Coordinate(SIZE - 1, 3));
-    board[SIZE - 1][SIZE - 4] = King('w'); // white king
-    board[SIZE - 1][SIZE - 4].set_location(Coordinate(SIZE - 1, SIZE - 4));
-
-    // Adds all black pieces after
-    // line of black pawns
-    for (int i = 0; i < SIZE; i++) {
-        board[1][i] = Pawn('b');
-        board[1][i].set_location(Coordinate(1, i));
-    }
-    // black rooks
-    board[0][0] = Rook('b');
-    board[0][0].set_location(Coordinate(0, 0));
-    board[0][SIZE - 1] = Rook('b');
-    board[0][SIZE - 1].set_location(Coordinate(0, SIZE - 1));
-    // black knights
-    board[0][1] = Knight('b');
-    board[0][1].set_location(Coordinate(0, 1));
-    board[0][SIZE - 2] = Knight('b');
-    board[0][SIZE - 2].set_location(Coordinate(0, SIZE - 2));
-    // black bishops
-    board[0][2] = Bishop('b');
-    board[0][2].set_location(Coordinate(0, 2));
-    board[0][SIZE - 3] = Bishop('b');
-    board[0][SIZE - 3].set_location(Coordinate(0, SIZE - 3));
-    // black king and queen
-    board[0][3] = Queen('b'); // black queen
-    board[0][3].set_location(Coordinate(0, 3));
-    board[0][SIZE - 4] = King('b'); // black king
-    board[0][SIZE - 4].set_location(Coordinate(0, SIZE - 4));
-
-    // makes all the remaining space blank pieces
-    for (int i = 2; i < (SIZE - 2); i++) {
-        for (int j = 0; j < SIZE; j++) {
-            board[i][j].make_blank();
-            board[i][j].set_location(Coordinate(i, j));
-        }
-    }
-}
-
-// ============= Getters ==============
-
-
-// ============= Setters ==============
-
-// ============= Methods ==============
-// =======
-// >>>>>>> 54b7eb687f54e803cee8c9972f967e07d7b0e12a
-// Moves Piece a to new Coordinate n on Board
-// Returns the Piece captured if No Piece then blank
-// --> Return should be used to update Player vectors: captured, onBoard, lost
-// WILL BE USED AFTER EVERY MOVE
-
 Piece Board::refresh(Piece moving, Coordinate n){
     // stores piece at n into temp
     Piece temp;
@@ -206,20 +131,6 @@ Piece Board::refresh(Piece moving, Coordinate n){
     board[n.get_y()][n.get_x()].set_location(Coordinate(n.get_y(), n.get_x()));
     // Returns temp -> (Piece captured and blank Piece if none)
     return temp;
-}
-
-// Sets a space to a piece
-void Board::set_piece(Piece p, Coordinate c) {
-    board[c.get_y()][c.get_x()].copy_from(p);
-}
-
-// Returns piece at location (i,j)
-Piece *Board::get_piece(int i, int j) {
-    return &board[i][j];
-}
-// From coord
-Piece *Board::get_piece(Coordinate c) {
-    return Board::get_piece(c.get_y(), c.get_x());
 }
 
 // Returns true or false if there is a piece there

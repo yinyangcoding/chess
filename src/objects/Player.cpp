@@ -17,13 +17,9 @@ bool Player::lose(Piece a) {
         temp.copy_from(onBoard[index]);
 
         vector<Piece>::iterator it = onBoard.begin() + index;
-        vector<int>::iterator iit = ionBoard.begin() + index;
 
         onBoard.erase(it);
         lost.push_back(temp);
-
-        ilost.push_back(ionBoard[index]);
-        ionBoard.erase(iit);
 
         return true;
     }

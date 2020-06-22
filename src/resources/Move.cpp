@@ -40,10 +40,12 @@ void Move::update_pawn(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_pawn()\n");
     }
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    Coordinate loc = piece.get_location();
-    // makes holder vector for moves
-    vector<Coordinate> hold;
+    int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
     // increment (the y-direction pawn moves in) is set based on color
     int increment;
     if (piece.get_color() == 'b') {
@@ -51,31 +53,30 @@ void Move::update_pawn(Board board, Piece piece) {
     } else {
         increment = -1;
     }
+
     // if space in front of pawn is on board and is blank
-    if (Move::on_board(loc.get_x() + increment) // on board
-        && (board.get_piece(loc.get_y(), loc.get_x() + increment)->is_blank())) { // is blank
+    if (Move::on_board(y + increment) && (board.get_piece(y + increment, x)->is_blank())) {
         // add space in front of pawn to hold
-        hold.push_back(Coordinate(loc.get_y(), loc.get_x() + increment));
+        moves->push_back(Coordinate(y + increment, x));
         // if pawn is still in starting position and space 2 spaces in front of pawn is blank
-        if ((((increment == 1) && (loc.get_x() == 1)) || ((increment == -1) && (loc.get_x() == (SIZE - 2)))) // starting position
-        && (board.get_piece(loc.get_y(), loc.get_x() + (2 * increment))->is_blank())) { // is blank
+        if ((((increment == 1) && (y == 1)) || ((increment == -1) && (y == (SIZE - 2)))) // starting position
+        && (board.get_piece(y + (2 * increment), x)->is_blank())) { // is blank
             // add space 2 spaces in front of pawn to hold
-            hold.push_back(Coordinate(loc.get_y(), (loc.get_x() + (2 * increment))));
+            moves->push_back(Coordinate(y + (2 * increment), x));
         }
     }
     // if space in front of pawn to the left is on board and is not blank
-    if (Move::on_board(loc.get_y() - 1, loc.get_x() + increment) // on board
-        && (!board.get_piece(loc.get_y() - 1, loc.get_x() + increment)->is_blank())) { // is not blank
+    if (Move::on_board(y + increment, x - 1) // on board
+        && (!board.get_piece(y + increment, x - 1)->is_blank())) { // is not blank
         // add space in front of pawn to the left to hold
-        hold.push_back(Coordinate(loc.get_y() - 1, loc.get_x() + increment));
+        moves->push_back(Coordinate(y + increment, x - 1));
     }
     // if space in front of pawn to the right is on board and is not blank
-    if (Move::on_board(loc.get_y() + 1, loc.get_x() + increment) // on board
-        && (!board.get_piece(loc.get_y() + 1, loc.get_x() + increment)->is_blank())) { // is not blank
-        // add space in front of pawn to the right to hold
-        hold.push_back(Coordinate(loc.get_y() + 1, loc.get_x() + increment));
+    if (Move::on_board(y + increment, x + 1) // on board
+        && (!board.get_piece(y + increment, x + 1)->is_blank())) { // is not blank
+        // add space in front of pawn to the left to hold
+        moves->push_back(Coordinate(y + increment, x + 1));
     }
-    piece.set_moves(hold);
 }
 
 
@@ -84,11 +85,12 @@ void Move::update_knight(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
     }
-    // makes holder vector for moves
-    vector<Coordinate> hold;
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    int x = piece.get_location().get_x();
     int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
     // stores piece color
     int color = piece.get_color();
 
@@ -97,12 +99,12 @@ void Move::update_knight(Board board, Piece piece) {
         // j = -2, 2
         for (int j = -2; j <= 2; j += 4) {
             // checks if pos (x + i, y + j) is on board and the piece there is not the same color 
-            if (Move::on_board(x + i, y + j) && board.get_piece(x + i, y + j)->get_color() != color) {
-                hold.push_back(Coordinate(x + i, y + j));
+            if (Move::on_board(y + i, x + j) && board.get_piece(y + i, x + j)->get_color() != color) {
+                moves->push_back(Coordinate(y + i, x + j));
             }
             // checks if pos (x + j, y + i) is on board and the piece there is not the same color 
-            if (Move::on_board(x + j, y + i) && board.get_piece(x + j, y + i)->get_color() != color) {
-                hold.push_back(Coordinate(x + j, y + i));
+            if (Move::on_board(y + j, x + i) && board.get_piece(y + j, x + i)->get_color() != color) {
+                moves->push_back(Coordinate(y + j, x + i));
             }
         }
     }
@@ -114,10 +116,12 @@ void Move::update_bishop(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_bishop()\n");
     }
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    Coordinate loc = piece.get_location();
-    // makes holder vector for moves
-    vector<Coordinate> hold;
+    int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
     // stores piece color
     int color = piece.get_color();
 
@@ -126,22 +130,21 @@ void Move::update_bishop(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING UP-LEFT
-    for (int i = loc.get_y() - 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING UP-RIGHT
-    for (int i = loc.get_y() + 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING DOWN-LEFT
-    for (int i = loc.get_y() - 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING DOWN-RIGHT
-    for (int i = loc.get_y() + 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
+        moves->push_back(Coordinate(i, j));
     }
-    piece.set_moves(hold);
 }
 
 
@@ -150,10 +153,12 @@ void Move::update_rook(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_rook()\n");
     }
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    Coordinate loc = piece.get_location();
-    // makes holder vector for moves
-    vector<Coordinate> hold;
+    int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
     // stores piece color
     int color = piece.get_color();
 
@@ -161,23 +166,22 @@ void Move::update_rook(Board board, Piece piece) {
     // if on board and the piece at location is not the same color -->
     // add that location and keep checking positions in that direction
 
-    // MOVING LEFT
-    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_x())->get_color() != color); i--) {
-        hold.push_back(Coordinate(i, loc.get_x()));
-    }
-    // MOVING RIGHT
-    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_x())->get_color() != color); i++) {
-        hold.push_back(Coordinate(i, loc.get_x()));
-    }
     // MOVING UP
-    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i)->get_color() != color); i--) {
-        hold.push_back(Coordinate(loc.get_y(), i));
+    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i--) {
+        moves->push_back(Coordinate(i, x));
     }
     // MOVING DOWN
-    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i)->get_color() != color); i++) {
-        hold.push_back(Coordinate(loc.get_y(), i));
+    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i++) {
+        moves->push_back(Coordinate(i, x));
     }
-    piece.set_moves(hold);
+    // MOVING LEFT
+    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i--) {
+        moves->push_back(Coordinate(y, i));
+    }
+    // MOVING RIGHT
+    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i++) {
+        moves->push_back(Coordinate(y, i));
+    }
 }
 
 
@@ -186,10 +190,12 @@ void Move::update_queen(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_queen()\n");
     }
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    Coordinate loc = piece.get_location();
-    // makes holder vector for moves
-    vector<Coordinate> hold;
+    int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
     // stores piece color
     int color = piece.get_color();
 
@@ -197,39 +203,38 @@ void Move::update_queen(Board board, Piece piece) {
     // if on board and the piece at location is not the same color -->
     // add that location and keep checking positions in that direction
 
-    // MOVING LEFT
-    for (int i = loc.get_y() - 1; (Move::on_board(i) && board.get_piece(i, loc.get_x())->get_color() != color); i--) {
-        hold.push_back(Coordinate(i, loc.get_x()));
-    }
-    // MOVING RIGHT
-    for (int i = loc.get_y() + 1; (Move::on_board(i) && board.get_piece(i, loc.get_x())->get_color() != color); i++) {
-        hold.push_back(Coordinate(i, loc.get_x()));
-    }
     // MOVING UP
-    for (int i = loc.get_x() - 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i)->get_color() != color); i--) {
-        hold.push_back(Coordinate(loc.get_y(), i));
+    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i--) {
+        moves->push_back(Coordinate(i, x));
     }
     // MOVING DOWN
-    for (int i = loc.get_x() + 1; (Move::on_board(i) && board.get_piece(loc.get_y(), i)->get_color() != color); i++) {
-        hold.push_back(Coordinate(loc.get_y(), i));
+    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i++) {
+        moves->push_back(Coordinate(i, x));
+    }
+    // MOVING LEFT
+    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i--) {
+        moves->push_back(Coordinate(y, i));
+    }
+    // MOVING RIGHT
+    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i++) {
+        moves->push_back(Coordinate(y, i));
     }
     // MOVING UP-LEFT
-    for (int i = loc.get_y() - 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING UP-RIGHT
-    for (int i = loc.get_y() + 1, j = loc.get_x() - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING DOWN-LEFT
-    for (int i = loc.get_y() - 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
+        moves->push_back(Coordinate(i, j));
     }
     // MOVING DOWN-RIGHT
-    for (int i = loc.get_y() + 1, j = loc.get_x() + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
-        hold.push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
+        moves->push_back(Coordinate(i, j));
     }
-    piece.set_moves(hold);
 }
 
 
@@ -238,29 +243,31 @@ void Move::update_king(Board board, Piece piece) {
     if(DEBUG) {
         printf("Move::update_king()\n");
     }
+    // gets address of moves and clears it
+    vector<Coordinate> *moves = piece.get_moves();
+    moves->clear();
     // stores piece location so does not have to keep referencing for speed enhancements
-    Coordinate loc = piece.get_location();
-    // makes holder vector for moves
-    vector<Coordinate> hold;
-    // Runs through x-position to the left, current, and to the right of current location
-    for (int x = loc.get_y() - 1; x <= loc.get_y() + 1; x++) {
-        // Proceeds to next x-position if x is not on board
-        if (Move::on_board(x)) {
-            // Runs through y-position to the left, current, and to the right of current location
-            for (int y = loc.get_x() - 1; y <= loc.get_x() + 1; y++) {
-                // Proceeds to next y-position if current position is current location
-                if ((x != loc.get_y()) || (y != loc.get_x())) {
-                    // Proceeds to next y-position if y is not on board
-                    if (Move::on_board(y)) {
+    int y = piece.get_location().get_y();
+    int x = piece.get_location().get_x();
+
+    // Runs through y-position to the up, current, and down of current location
+    for (int i = y - 1; i <= y + 1; i++) {
+        // Checks if y is on board
+        if (Move::on_board(i)) {
+            // Runs through x-position to the left, current, and to the right of current location
+            for (int j = x - 1; j <= x + 1; j++) {
+                // Makes sure (i, j) is not current location
+                if ((i != y) || (j != x)) {
+                    // Checks if x is on board
+                    if (Move::on_board(j)) {
                         // MUST ALSO CHECK IF MOVE PUTS KING IN DANGER
-                        // Add coordinate(x,y) to possible moves if it passed all checks
-                        hold.push_back(Coordinate(x, y));
+                        // Add coordinate (y, x) to possible moves if it passed all checks
+                        moves->push_back(Coordinate(i, j));
                     }
                 }
             }
         } 
     }
-    piece.set_moves(hold);
 }
 
 
@@ -288,7 +295,6 @@ void Move::swap(Piece &a, Piece &b) {
     // Put temp traits in a
     a.copy_from(temp);
 
-
 }
 
 // From coords
@@ -298,6 +304,83 @@ void Move::swap(Board &board, Coordinate a, Coordinate b) {
 
     Move::swap(*to, *from);
 
+}
+
+// checks if king is in check, checkmate, or stalemate
+// none = -1, stalemate = 0, check = 1, checkmate = 2
+int Move::check_position(Board &board, Coordinate king) {
+    bool check = Move::in_check(board, king);
+    bool surround = Move::surrounding_check(board, king);
+    if (!check && !surround) {
+        return -1;
+    } else if (check && !surround) {
+        return 0;
+    } else if (!check && surround) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
+
+
+// returns true if in check
+bool Move::in_check(Board &board, Coordinate king) {
+    // holds the moves vector for each piece
+    vector<Coordinate> *moves;
+    // stores piece location so does not have to keep referencing for speed enhancements
+    int y = king.get_y();
+    int x = king.get_x();
+
+    // runs through all pieces on board 
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {            
+            // skips blank pieces
+            if (!board.get_piece(i, j)->is_blank()) {
+                // makes sure it does not check the king
+                if ((i != y) || (j != x)) {
+                    // grabs moves vector from piece
+                    moves = board.get_piece(i, j)->get_moves();
+                    // runs through all Coordinates in moves vector
+                    for (int m = 0; m < moves->size(); m++) {
+                        // sees if Coordinate king and the Coordinate from moves are the same
+                        if (king.equals(moves->at(m))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
+// return true if Coordinates surrounding king are all in check
+bool Move::surrounding_check(Board &board, Coordinate king) {
+    // stores piece location so does not have to keep referencing for speed enhancements
+    int y = king.get_y();
+    int x = king.get_x();
+
+    // Runs through y-position to the up, current, and down of current location
+    for (int i = y - 1; i <= y + 1; i++) {
+        // Checks if y is on board
+        if (Move::on_board(i)) {
+            // Runs through x-position to the left, current, and to the right of current location
+            for (int j = x - 1; j <= x + 1; j++) {
+                // Makes sure (i, j) is not current location
+                if ((i != y) || (j != x)) {
+                    // Checks if x is on board
+                    if (Move::on_board(j)) {
+                        // if (i,j) is not in check exit returning false
+                        if (!Move::in_check(board, Coordinate(i, j))) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } 
+    }
+    return true;
 }
 
 // A captures B

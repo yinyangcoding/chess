@@ -58,9 +58,6 @@ class Piece {
         void set_type(int i);
         void set_color(char c);
 
-
-        void set_moves(vector<Coordinate> a);
-
         // ============= Methods ==============
         // Returns if a equals this by id
         bool equals(Piece a);

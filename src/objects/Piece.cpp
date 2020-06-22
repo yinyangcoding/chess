@@ -44,10 +44,6 @@ void Piece::set_color(char c) {
     color = c;
 }
 
-void Piece::set_moves(vector<Coordinate> a) {
-    moves = a;
-}
-
 // ============== Getters ================
 // Returns id
 int Piece::get_id() {

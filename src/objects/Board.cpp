@@ -8,6 +8,29 @@ Board::Board(bool basic) {
     if(DEBUG) {
         printf("Board::Board(bool)\n");
     }
+    Board::build_board(basic);
+
+}
+
+// Create board with players
+Board::Board(Player &w, Player &b) {
+    if(DEBUG) {
+        printf("Board::Board(Player, Player)\n");
+    }
+
+    white = &w;
+    black = &b;
+
+    Board::build_board(true);
+}
+
+// ============= Getters ==============
+
+
+// ============= Setters ==============
+
+// ============= Methods ==============
+void Board::build_board(bool basic) {
     // if not a basic Board (Blank Board) fill board with blank pieces
     if (!basic) {
         for (int i = 0; i < SIZE; i++) {
@@ -82,6 +105,7 @@ Board::Board(bool basic) {
     }
 }
 
+// <<<<<<< HEAD
 // Create board with players
 Board::Board(Player &w, Player &b) {
     if(DEBUG) {
@@ -161,6 +185,8 @@ Board::Board(Player &w, Player &b) {
 // ============= Setters ==============
 
 // ============= Methods ==============
+// =======
+// >>>>>>> 54b7eb687f54e803cee8c9972f967e07d7b0e12a
 // Moves Piece a to new Coordinate n on Board
 // Returns the Piece captured if No Piece then blank
 // --> Return should be used to update Player vectors: captured, onBoard, lost

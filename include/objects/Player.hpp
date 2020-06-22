@@ -20,11 +20,6 @@ class Player {
         vector<Piece> onBoard; // Pieces they have on board
         vector<Piece> lost; // Pieces they have lost
 
-        // contains ids
-        vector<int> icaptured;
-        vector<int> ionBoard;
-        vector<int> ilost;
-
         // ================ Constructors ================
         // Sets given color: b or w
         Player(char c);

@@ -287,13 +287,18 @@ bool Move::on_board(int x, int y) {
 void Move::swap(Piece &a, Piece &b) {
     // Make a temp holder
     Piece temp;
+    Coordinate loc;
+
     temp.copy_from(b);
+    loc.set_coord(b.get_location().get_y(), b.get_location().get_x());
 
     // Put a traits in b
     b.copy_from(a);
+    b.set_location(a.get_location());
 
     // Put temp traits in a
     a.copy_from(temp);
+    a.set_location(loc);
 
 }
 
@@ -387,6 +392,7 @@ bool Move::surrounding_check(Board &board, Coordinate king) {
 // From piece references
 void Move::replace(Piece &a, Piece &b) {
     b.copy_from(a);
+    b.set_location(a.get_location());
     a.make_blank();
 }
 

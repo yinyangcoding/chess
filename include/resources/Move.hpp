@@ -2,6 +2,7 @@
 #define MOVE_GUARD
 
 #include <iostream>
+#include <vector>
 
 #include "../resources/Constants.h"
 #include "../objects/Coordinate.hpp"
@@ -47,6 +48,10 @@ class Move {
         static void replace(Piece &a, Piece &b);
         // From coords
         static void replace(Board &board, Coordinate a, Coordinate b);
+
+        // Main Move function that will consider all needed methods
+        // Returns a piece if captured. Returns blank if not
+        static Piece move(Board &board, Coordinate a, Coordinate b);
 
 
 };

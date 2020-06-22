@@ -35,3 +35,10 @@ Files Changed: Piece.hpp, Piece.cpp
 Notes:
 - Added swap method to the piece object. This allows to swap all attributes
 - Check functionality with inheritance
+
+6/21/20 - Matt
+Files Changed: Board (both), Move (both), Main.cpp
+New Files: test/hasPiece.cpp, test/Replace.cpp
+Notes:
+- Made new test source files
+- Began work on Move::move, needs more work

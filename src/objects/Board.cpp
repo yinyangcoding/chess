@@ -97,6 +97,18 @@ void Board::set_piece(Piece p, Coordinate c) {
 Piece *Board::get_piece(int i, int j) {
     return &board[i][j];
 }
+// From coord
+Piece *Board::get_piece(Coordinate c) {
+    return Board::get_piece(c.get_y(), c.get_x());
+}
+
+// Returns true or false if there is a piece there
+bool Board::has_piece(int i, int j) {
+    return !board[i][j].is_blank();
+}
+bool Board::has_piece(Coordinate c) {
+    return Board::has_piece(c.get_y(), c.get_x());
+}
 
 // ============= Debug ==============
 // This will print the board

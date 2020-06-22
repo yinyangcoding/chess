@@ -41,9 +41,6 @@ class Move {
         static bool in_check(Board &board, Coordinate king);
         // return true if Coordinates surrounding king are all in check
         static bool surrounding_check(Board &board, Coordinate king);
-
-
-
 };
 
 #endif

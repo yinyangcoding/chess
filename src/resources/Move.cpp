@@ -416,6 +416,7 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     Piece moving = *board.get_piece(a);
     Piece cap = *board.get_piece(b);
 
+    // Update the moving piece's moves
     Move::update_moves(board, moving);
 
 
@@ -454,8 +455,6 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
         // Move the piece
         Move::swap(moving, cap);
 
-        // Update the moving piece's moves
-        Move::update_moves(board, moving);
         return blank;
     }
 

@@ -416,6 +416,9 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     Piece moving = *board.get_piece(a);
     Piece cap = *board.get_piece(b);
 
+    Move::update_moves(board, moving);
+
+
     if(!cap.is_blank()) {
         capture = true;
 

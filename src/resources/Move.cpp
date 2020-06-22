@@ -290,16 +290,11 @@ void Move::swap(Piece &a, Piece &b) {
     temp.copy_from(b);
 
     // Put a traits in b
-    b.set_id(a.get_id());
-    b.set_color(a.get_color());
-    b.set_point(a.get_point());
-    b.set_type(a.get_color());
+    b.copy_from(a);
 
     // Put temp traits in a
-    a.set_id(temp.get_id());
-    a.set_color(temp.get_color());
-    a.set_point(temp.get_point());
-    a.set_type(temp.get_type());
+    a.copy_from(temp);
+
 }
 
 // From coords
@@ -310,7 +305,6 @@ void Move::swap(Board &board, Coordinate a, Coordinate b) {
     Move::swap(*to, *from);
 
 }
-
 
 // checks if king is in check, checkmate, or stalemate
 // none = -1, stalemate = 0, check = 1, checkmate = 2
@@ -387,4 +381,19 @@ bool Move::surrounding_check(Board &board, Coordinate king) {
         } 
     }
     return true;
+}
+
+// A captures B
+// From piece references
+void Move::replace(Piece &a, Piece &b) {
+    b.copy_from(a);
+    a.make_blank();
+}
+
+// From coords
+void Move::replace(Board &board, Coordinate a, Coordinate b) {
+    Piece *from = &board.board[a.get_y()][a.get_x()];
+    Piece *to = &board.board[b.get_y()][b.get_x()];
+
+    Move::replace(*from, *to);
 }

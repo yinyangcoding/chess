@@ -21,7 +21,9 @@ int main() {
 	b.print_board();
 
 	Move::swap(b, Coordinate('a', 7), Coordinate('a', 5));
-	Move::swap(b, Coordinate('g', 1), Coordinate('f', 3));
+	Move::swap(b, Coordinate('b', 2), Coordinate('b', 4));
+
+	Move::replace(b, Coordinate('b', 4), Coordinate('a', 5));
 
 	
 

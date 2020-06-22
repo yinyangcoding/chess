@@ -427,6 +427,7 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     for(int i = 0; i < moves.size(); i++) {
         if(moves[i].equals(b)) {
             canMove = true;
+            break;
         }
     }
 

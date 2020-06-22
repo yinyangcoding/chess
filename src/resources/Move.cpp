@@ -331,18 +331,19 @@ int Move::check_position(Board &board, Coordinate king) {
 
 // returns true if in check
 bool Move::in_check(Board &board, Coordinate king) {
-    // runs through all pieces on board
+    // holds the moves vector for each piece
     vector<Coordinate> *moves;
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = king.get_y();
     int x = king.get_x();
 
+    // runs through all pieces on board 
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            // makes sure it does not check the king
-            if ((i != y) || (j != x)) {
-                // skips blank pieces
-                if (!board.get_piece(i, j)->is_blank()) {
+        for (int j = 0; j < SIZE; j++) {            
+            // skips blank pieces
+            if (!board.get_piece(i, j)->is_blank()) {
+                // makes sure it does not check the king
+                if ((i != y) || (j != x)) {
                     // grabs moves vector from piece
                     moves = board.get_piece(i, j)->get_moves();
                     // runs through all Coordinates in moves vector

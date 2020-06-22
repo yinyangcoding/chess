@@ -50,6 +50,9 @@ class Board {
 
 
         // ============= Methods ==============
+        // Builds starting board
+        void build_board(bool basic);
+
         // Moves Piece a to new Coordinate n on Board
         // Returns the Piece Captured if No Piece then Null
         // --> Return is useful for updating Player vectors: captured, onBoard, lost

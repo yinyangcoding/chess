@@ -20,7 +20,7 @@ class Coordinate {
     
         // ================ Constructors ================
         // Build coord from given x and y
-        Coordinate(int x, int y);
+        Coordinate(int y, int x);
 
         // Takes proper chess coord structure
         Coordinate(char c, int i);
@@ -36,7 +36,7 @@ class Coordinate {
         void set_y(int y);
 
         // Saves given x and y value
-        void set_coord(int x, int y);
+        void set_coord(int y, int x);
 
         // ================ Gets ================
         // Returns x value

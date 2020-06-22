@@ -2,7 +2,7 @@
 
 // ================ Constructors ================
 // Build coord from given x and y
-Coordinate::Coordinate(int x, int y) {
+Coordinate::Coordinate(int y, int x) {
     this->x = x;
     this->y = y;
 }
@@ -36,7 +36,7 @@ void Coordinate::set_y(int y) {
 }
 
 // Saves given x and y value
-void Coordinate::set_coord(int x, int y) {
+void Coordinate::set_coord(int y, int x) {
     this->x = x;
     this->y = y;
 }
@@ -70,5 +70,5 @@ void Coordinate::copy_from(Coordinate a) {
 // ================ Debug ================
 // Prints pair in (x, y) format to the command line
 void Coordinate::print_pair() {
-    printf("(%d, %d)\n", x, y);
+    printf("(%d, %d)\n", y, x);
 }

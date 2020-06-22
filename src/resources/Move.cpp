@@ -414,11 +414,10 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     }
 
     Piece moving = *board.get_piece(a);
-    Piece cap;
+    Piece cap = *board.get_piece(b);
 
-    if(board.has_piece(b)) {
+    if(!cap.is_blank()) {
         capture = true;
-        cap = *board.get_piece(b);
 
     }
 
@@ -450,7 +449,7 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     else {
         // Swap the piece if it doesn't need to capture
         // Move the piece
-        Move::swap(board, a, b);
+        Move::swap(moving, cap);
 
         // Update the moving piece's moves
         Move::update_moves(board, moving);

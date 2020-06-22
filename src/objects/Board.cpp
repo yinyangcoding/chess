@@ -63,10 +63,13 @@ Board::Board(bool basic) {
 }
 
 // Create board with players
-Board::Board(Player w, Player b) {
+Board::Board(Player &w, Player &b) {
     if(DEBUG) {
         printf("Board::Board(Player, Player)\n");
     }
+
+    white = &w;
+    black = &b;
 
     // if it is a basic Board make board a basic board
     // Adds all white pieces first

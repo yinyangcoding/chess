@@ -25,8 +25,11 @@ using namespace std;
 // NOTE: White on Bottom of Board (Starting y = 6,7) / Black on Top (Starting y = 0,1)
 class Board {
     private:
-        Player white('w');
-        Player black('b');
+        Player *white;
+        Player *black;
+
+        vector<Coordinate> blackMoves;
+        vector<Coordinate> whiteMoves;
 
     public:
         // Creates a 2d array to represent a board
@@ -38,7 +41,7 @@ class Board {
         Board(bool basic);
 
         // Create board with players
-        Board(Player w, Player b);
+        Board(Player &w, Player &b);
 
         // ============= Getters ==============
 

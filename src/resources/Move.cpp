@@ -3,13 +3,13 @@
 // ============= Methods =============
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Player specific updates
-void Move::update_player(Board& board, char color) {
-    vector<Piece>& alive = board.get_player(color).get_onBoard();
-    for (Piece& piece : alive) {
-        int y = 
-        Move::update_moves(board, board.get_piece())
-    }
-}
+// void Move::update_player(Board& board, char color) {
+//     vector<Piece>& alive = board.get_player(color).get_onBoard();
+//     for (Piece& piece : alive) {
+//         int y = 
+//         Move::update_moves(board, board.get_piece())
+//     }
+// }
 
 // Switch to decide which piece to operate on
 void Move::update_moves(Board& b, Piece& p) {
@@ -362,35 +362,35 @@ int Move::check_position(Board& board, Coordinate king) {
 
 
 // returns true if in check
-bool Move::in_check(Board& board, Coordinate king) {
-    // holds the moves vector for each piece
-    vector<Coordinate> *moves;
-    // stores piece location so does not have to keep referencing for speed enhancements
-    int y = king.get_y();
-    int x = king.get_x();
+// bool Move::in_check(Board& board, Coordinate king) {
+//     // holds the moves vector for each piece
+//     vector<Coordinate> *moves;
+//     // stores piece location so does not have to keep referencing for speed enhancements
+//     int y = king.get_y();
+//     int x = king.get_x();
 
-    // runs through all pieces on board 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {            
-            // skips blank pieces
-            if (!board.get_piece(i, j)->is_blank()) {
-                // makes sure it does not check the king
-                if ((i != y) || (j != x)) {
-                    // grabs moves vector from piece
-                    moves = board.get_piece(i, j)->get_moves();
-                    // runs through all Coordinates in moves vector
-                    for (int m = 0; m < moves->size(); m++) {
-                        // sees if Coordinate king and the Coordinate from moves are the same
-                        if (king.equals(moves->at(m))) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
+//     // runs through all pieces on board 
+//     for (int i = 0; i < SIZE; i++) {
+//         for (int j = 0; j < SIZE; j++) {            
+//             // skips blank pieces
+//             if (!board.get_piece(i, j)->is_blank()) {
+//                 // makes sure it does not check the king
+//                 if ((i != y) || (j != x)) {
+//                     // grabs moves vector from piece
+//                     moves = board.get_piece(i, j)->get_moves();
+//                     // runs through all Coordinates in moves vector
+//                     for (int m = 0; m < moves->size(); m++) {
+//                         // sees if Coordinate king and the Coordinate from moves are the same
+//                         if (king.equals(moves->at(m))) {
+//                             return true;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     return false;
+// }
 
 
 // return true if Coordinates surrounding king are all in check

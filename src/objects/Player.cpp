@@ -25,20 +25,20 @@ int Player::get_points() const {
     return points;
 }
 
-// Returns captured vector
-vector<Piece>& Player::get_captured() {
-    return captured;
-}
+// // Returns captured vector
+// vector<Piece>& Player::get_captured() {
+//     return captured;
+// }
 
-// Returns onBoard vector
-vector<Piece>& Player::get_onBoard() {
-    return onBoard;
-}
+// // Returns onBoard vector
+// vector<Piece>& Player::get_onBoard() {
+//     return onBoard;
+// }
 
-// Returns lost vector
-vector<Piece>& Player::get_lost() {
-    return lost;
-}
+// // Returns lost vector
+// vector<Piece>& Player::get_lost() {
+//     return lost;
+// }
 
 
 // ============== Setters ================
@@ -55,19 +55,19 @@ void Player::set_points(int p) {
 
 // ================ Methods ================
 // Removes piece from onBoard and puts it in taken. Returns if successful
-bool Player::lose(Piece& a) {
-    if(Tools::contains(onBoard, a)) {
-        int index = Tools::index(onBoard, a);
+// bool Player::lose(Piece& a) {
+//     if(Tools::contains(onBoard, a)) {
+//         int index = Tools::index(onBoard, a);
 
-        Piece temp;
-        temp.copy_from(onBoard[index]);
+//         Piece temp;
+//         temp.copy_from(onBoard[index]);
 
-        vector<Piece>::iterator it = onBoard.begin() + index;
+//         vector<Piece>::iterator it = onBoard.begin() + index;
 
-        onBoard.erase(it);
-        lost.push_back(temp);
+//         onBoard.erase(it);
+//         lost.push_back(temp);
 
-        return true;
-    }
-    return false;
-}
+//         return true;
+//     }
+//     return false;
+// }

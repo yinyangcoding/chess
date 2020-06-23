@@ -13,3 +13,10 @@ char BTools::to_lower(char c) {
     }
     return c;
 }
+
+// Easy debug step
+void BTools::debug(std::string s) {
+    if(DEBUG) {
+        std::cout << s << std::endl;
+    }
+}

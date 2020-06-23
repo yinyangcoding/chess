@@ -466,6 +466,7 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     // Check if move is legal and within movese
     vector<Coordinate>& moves = moving.get_moves();
     for(int i = 0; i < moves.size(); i++) {
+        // moves[i].print_pair();
         if(moves[i].equals(b)) {
             canMove = true;
             break;

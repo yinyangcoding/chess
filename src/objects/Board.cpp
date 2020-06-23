@@ -6,9 +6,7 @@ using namespace std;
 // if true create basic board : if false create blank board
 // Players constructed automatically
 Board::Board(bool basic) {
-    if(DEBUG) {
-        printf("Board::Board(bool)\n");
-    }
+    BTools::debug("Board::Board(bool)");
     white = Player('w');
     black = Player('b');
     Board::build_board(basic);

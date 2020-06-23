@@ -4,7 +4,8 @@
 #include <iostream>
 #include <vector>
 
-#include "../resources/Constants.h"
+#include "Constants.h"
+#include "BlandTools.hpp"
 #include "../objects/Coordinate.hpp"
 #include "../objects/Piece.hpp"
 #include "../objects/Board.hpp"

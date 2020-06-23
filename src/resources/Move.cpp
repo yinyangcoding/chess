@@ -1,8 +1,18 @@
 #include "../../include/resources/Move.hpp"
 
 // ============= Methods =============
+// pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
+// Player specific updates
+void Move::update_player(Board& board, char color) {
+    vector<Piece>& alive = board.get_player(color).get_onBoard();
+    for (Piece& piece : alive) {
+        int y = 
+        Move::update_moves(board, board.get_piece())
+    }
+}
+
 // Switch to decide which piece to operate on
-void Move::update_moves(Board b, Piece p) {
+void Move::update_moves(Board& b, Piece& p) {
     if(DEBUG) {
         printf("Move::update_moves()\n");
     }
@@ -36,13 +46,15 @@ void Move::update_moves(Board b, Piece p) {
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_pawn(Board board, Piece piece) {
+void Move::update_pawn(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_pawn()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 4 spots (MAX possible moves for pawn)
+    moves.reserve(4);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
@@ -55,39 +67,43 @@ void Move::update_pawn(Board board, Piece piece) {
     }
 
     // if space in front of pawn is on board and is blank
-    if (Move::on_board(y + increment) && (board.get_piece(y + increment, x)->is_blank())) {
+    if (Move::on_board(y + increment) && (board.get_piece(y + increment, x).is_blank())) {
         // add space in front of pawn to hold
-        moves->push_back(Coordinate(y + increment, x));
+        moves.emplace_back(y + increment, x);
         // if pawn is still in starting position and space 2 spaces in front of pawn is blank
         if ((((increment == 1) && (y == 1)) || ((increment == -1) && (y == (SIZE - 2)))) // starting position
-        && (board.get_piece(y + (2 * increment), x)->is_blank())) { // is blank
+        && (board.get_piece(y + (2 * increment), x).is_blank())) { // is blank
             // add space 2 spaces in front of pawn to hold
-            moves->push_back(Coordinate(y + (2 * increment), x));
+            moves.emplace_back(y + (2 * increment), x);
         }
     }
     // if space in front of pawn to the left is on board and is not blank
     if (Move::on_board(y + increment, x - 1) // on board
-        && (!board.get_piece(y + increment, x - 1)->is_blank())) { // is not blank
+        && (!board.get_piece(y + increment, x - 1).is_blank())) { // is not blank
         // add space in front of pawn to the left to hold
-        moves->push_back(Coordinate(y + increment, x - 1));
+        moves.emplace_back(y + increment, x - 1);
     }
     // if space in front of pawn to the right is on board and is not blank
     if (Move::on_board(y + increment, x + 1) // on board
-        && (!board.get_piece(y + increment, x + 1)->is_blank())) { // is not blank
+        && (!board.get_piece(y + increment, x + 1).is_blank())) { // is not blank
         // add space in front of pawn to the left to hold
-        moves->push_back(Coordinate(y + increment, x + 1));
+        moves.emplace_back(y + increment, x + 1);
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_knight(Board board, Piece piece) {
+void Move::update_knight(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_knight()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 8 spots (MAX possible moves for knight)
+    moves.reserve(8);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
@@ -95,30 +111,34 @@ void Move::update_knight(Board board, Piece piece) {
     int color = piece.get_color();
 
     // i = -1, 1
-    for (int i = -1; i <= 1; i += 2) {
+    for (int i = -1; i < 2; i += 2) {
         // j = -2, 2
-        for (int j = -2; j <= 2; j += 4) {
+        for (int j = -2; j < 3; j += 4) {
             // checks if pos (x + i, y + j) is on board and the piece there is not the same color 
-            if (Move::on_board(y + i, x + j) && board.get_piece(y + i, x + j)->get_color() != color) {
-                moves->push_back(Coordinate(y + i, x + j));
+            if (Move::on_board(y + i, x + j) && board.get_piece(y + i, x + j).get_color() != color) {
+                moves.emplace_back(y + i, x + j);
             }
             // checks if pos (x + j, y + i) is on board and the piece there is not the same color 
-            if (Move::on_board(y + j, x + i) && board.get_piece(y + j, x + i)->get_color() != color) {
-                moves->push_back(Coordinate(y + j, x + i));
+            if (Move::on_board(y + j, x + i) && board.get_piece(y + j, x + i).get_color() != color) {
+                moves.emplace_back(y + j, x + i);
             }
         }
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_bishop(Board board, Piece piece) {
+void Move::update_bishop(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_bishop()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 13 spots (MAX possible moves for bishop)
+    moves.reserve(13);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
@@ -130,32 +150,36 @@ void Move::update_bishop(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING UP-LEFT
-    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+        moves.emplace_back(i, j);
     }
     // MOVING UP-RIGHT
-    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+        moves.emplace_back(i, j);
     }
     // MOVING DOWN-LEFT
-    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+        moves.emplace_back(i, j);
     }
     // MOVING DOWN-RIGHT
-    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+        moves.emplace_back(i, j);
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_rook(Board board, Piece piece) {
+void Move::update_rook(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_rook()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 14 spots (MAX possible moves for rook)
+    moves.reserve(14);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
@@ -167,32 +191,36 @@ void Move::update_rook(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING UP
-    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i--) {
-        moves->push_back(Coordinate(i, x));
+    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i--) {
+        moves.emplace_back(i, x);
     }
     // MOVING DOWN
-    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i++) {
-        moves->push_back(Coordinate(i, x));
+    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i++) {
+        moves.emplace_back(i, x);
     }
     // MOVING LEFT
-    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i--) {
-        moves->push_back(Coordinate(y, i));
+    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i--) {
+        moves.emplace_back(y, i);
     }
     // MOVING RIGHT
-    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i++) {
-        moves->push_back(Coordinate(y, i));
+    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i++) {
+        moves.emplace_back(y, i);
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_queen(Board board, Piece piece) {
+void Move::update_queen(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_queen()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 27 spots (MAX possible moves for queen)
+    moves.reserve(27);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
@@ -204,70 +232,76 @@ void Move::update_queen(Board board, Piece piece) {
     // add that location and keep checking positions in that direction
 
     // MOVING UP
-    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i--) {
-        moves->push_back(Coordinate(i, x));
+    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i--) {
+        moves.emplace_back(i, x);
     }
     // MOVING DOWN
-    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x)->get_color() != color); i++) {
-        moves->push_back(Coordinate(i, x));
+    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i++) {
+        moves.emplace_back(i, x);
     }
     // MOVING LEFT
-    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i--) {
-        moves->push_back(Coordinate(y, i));
+    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i--) {
+        moves.emplace_back(y, i);
     }
     // MOVING RIGHT
-    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i)->get_color() != color); i++) {
-        moves->push_back(Coordinate(y, i));
+    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i++) {
+        moves.emplace_back(y, i);
     }
     // MOVING UP-LEFT
-    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j--) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
+        moves.emplace_back(i, j);
     }
     // MOVING UP-RIGHT
-    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i--, j++) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
+        moves.emplace_back(i, j);
     }
     // MOVING DOWN-LEFT
-    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j--) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
+        moves.emplace_back(i, j);
     }
     // MOVING DOWN-RIGHT
-    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j)->get_color() != color); i++, j++) {
-        moves->push_back(Coordinate(i, j));
+    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
+        moves.emplace_back(i, j);
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
 // STILL MUST COMPUTE FOR CHECK
-void Move::update_king(Board board, Piece piece) {
+void Move::update_king(Board& board, Piece& piece) {
     if(DEBUG) {
         printf("Move::update_king()\n");
     }
     // gets address of moves and clears it
-    vector<Coordinate> *moves = piece.get_moves();
-    moves->clear();
+    vector<Coordinate>& moves = piece.get_moves();
+    moves.clear();
+    // reserves 8 spots (MAX possible moves for king)
+    moves.reserve(8);
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = piece.get_location().get_y();
     int x = piece.get_location().get_x();
 
     // Runs through y-position to the up, current, and down of current location
-    for (int i = y - 1; i <= y + 1; i++) {
+    for (int i = y - 1; i < y + 2; i++) {
         // Checks if y is on board
         if (Move::on_board(i)) {
             // Runs through x-position to the left, current, and to the right of current location
-            for (int j = x - 1; j <= x + 1; j++) {
-                // Makes sure (i, j) is not current location
-                if ((i != y) || (j != x)) {
-                    // Checks if x is on board
+            for (int j = x - 1; j < x + 2; j++) {
+                // Checks if x is on board
                     if (Move::on_board(j)) {
+                    // Makes sure (i, j) is not current location
+                    if ((i != y) || (j != x)) {
                         // MUST ALSO CHECK IF MOVE PUTS KING IN DANGER
                         // Add coordinate (y, x) to possible moves if it passed all checks
-                        moves->push_back(Coordinate(i, j));
+                        moves.emplace_back(i, j);
                     }
                 }
             }
         } 
     }
+    // readjusts moves to its correct size
+    moves.shrink_to_fit();
 }
 
 
@@ -278,13 +312,13 @@ bool Move::on_board(int c) {
 
 
 // checks if both pos are btwn -1 and SIZE
-bool Move::on_board(int x, int y) {
-    return ((x > -1) && (x < SIZE) && (y > -1) && (y < SIZE));
+bool Move::on_board(int y, int x) {
+    return ((y > -1) && (y < SIZE) && (x > -1) && (x < SIZE));
 }
 
 // Swaps two pieces
 // From piece references
-void Move::swap(Piece &a, Piece &b) {
+void Move::swap(Piece& a, Piece& b) {
     // Make a temp holder
     Piece temp;
     Coordinate loc;
@@ -303,17 +337,16 @@ void Move::swap(Piece &a, Piece &b) {
 }
 
 // From coords
-void Move::swap(Board &board, Coordinate a, Coordinate b) {
-    Piece *from = &board.board[a.get_y()][a.get_x()];
-    Piece *to = &board.board[b.get_y()][b.get_x()];
+void Move::swap(Board& board, Coordinate a, Coordinate b) {
+    Piece& from = board.board[a.get_y()][a.get_x()];
+    Piece& to = board.board[b.get_y()][b.get_x()];
 
-    Move::swap(*to, *from);
-
+    Move::swap(to, from);
 }
 
 // checks if king is in check, checkmate, or stalemate
 // none = -1, stalemate = 0, check = 1, checkmate = 2
-int Move::check_position(Board &board, Coordinate king) {
+int Move::check_position(Board& board, Coordinate king) {
     bool check = Move::in_check(board, king);
     bool surround = Move::surrounding_check(board, king);
     if (!check && !surround) {
@@ -329,7 +362,7 @@ int Move::check_position(Board &board, Coordinate king) {
 
 
 // returns true if in check
-bool Move::in_check(Board &board, Coordinate king) {
+bool Move::in_check(Board& board, Coordinate king) {
     // holds the moves vector for each piece
     vector<Coordinate> *moves;
     // stores piece location so does not have to keep referencing for speed enhancements
@@ -361,7 +394,7 @@ bool Move::in_check(Board &board, Coordinate king) {
 
 
 // return true if Coordinates surrounding king are all in check
-bool Move::surrounding_check(Board &board, Coordinate king) {
+bool Move::surrounding_check(Board& board, Coordinate king) {
     // stores piece location so does not have to keep referencing for speed enhancements
     int y = king.get_y();
     int x = king.get_x();
@@ -390,25 +423,25 @@ bool Move::surrounding_check(Board &board, Coordinate king) {
 
 // A captures B
 // From piece references
-void Move::replace(Piece &a, Piece &b) {
+void Move::replace(Piece& a, Piece& b) {
     b.copy_from(a);
     b.set_location(a.get_location());
     a.make_blank();
 }
 
 // From coords
-void Move::replace(Board &board, Coordinate a, Coordinate b) {
-    Piece *from = &board.board[a.get_y()][a.get_x()];
-    Piece *to = &board.board[b.get_y()][b.get_x()];
+void Move::replace(Board& board, Coordinate a, Coordinate b) {
+    Piece from = board.board[a.get_y()][a.get_x()];
+    Piece to = board.board[b.get_y()][b.get_x()];
 
-    Move::replace(*from, *to);
+    Move::replace(from, to);
 }
 
 
 // Main Move function that will consider all needed methods
 // Returns a piece if captured. Returns blank if not
 // Moves from a to b
-Piece Move::move(Board &board, Coordinate a, Coordinate b) {
+Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
     bool canMove = false; // If it can move there
@@ -416,11 +449,10 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     // Exit if there's no piece to move
     if(!board.has_piece(a)) {
         return blank;
-
     }
 
-    Piece moving = *board.get_piece(a);
-    Piece cap = *board.get_piece(b);
+    Piece moving = board.get_piece(a);
+    Piece cap = board.get_piece(b);
 
     // Update the moving piece's moves
     Move::update_moves(board, moving);
@@ -432,7 +464,7 @@ Piece Move::move(Board &board, Coordinate a, Coordinate b) {
     }
 
     // Check if move is legal and within movese
-    vector<Coordinate> moves = *moving.get_moves();
+    vector<Coordinate>& moves = moving.get_moves();
     for(int i = 0; i < moves.size(); i++) {
         if(moves[i].equals(b)) {
             canMove = true;

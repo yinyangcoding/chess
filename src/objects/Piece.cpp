@@ -6,20 +6,23 @@ using namespace std;
 // Creates piece with given type
 Piece::Piece(int t) {
     type = t;
-    idCount++;
-    id = idCount;
-
     assign_point();
+    id = 0;
 }
 
 // Creates piece with given type and given color
 Piece::Piece(int t, char c) {
     type = t;
-    idCount++;
-    id = idCount;
-
     assign_point();
     color = c;
+    if (c == 'w') {
+        idCountW++;
+        id = idCountW;
+    }
+    else {
+        idCountB--;
+        id = idCountB;
+    }    
 }
 
 // Creates blank piece
@@ -46,33 +49,33 @@ void Piece::set_color(char c) {
 
 // ============== Getters ================
 // Returns id
-int Piece::get_id() {
+int Piece::get_id() const {
     return id;
 }
 
 // Returns point val
-int Piece::get_point() {
+int Piece::get_point() const {
     return point;
 }
 
 // Returns type num
-int Piece::get_type() {
+int Piece::get_type() const {
     return type;
 }
 
 // Returns color char
-char Piece::get_color() {
+char Piece::get_color() const {
     return color;
 }
 
 // Returns location Coordinate
-Coordinate Piece::get_location() {
+Coordinate Piece::get_location() const {
     return location;
 }
 
 // Returns possible moves
-vector<Coordinate> *Piece::get_moves() {
-    return &moves;
+vector<Coordinate>& Piece::get_moves() {
+    return moves;
 }
 
 // ============= Methods ==============
@@ -115,12 +118,12 @@ void Piece::copy_from(Piece a) {
 // Returns if the piece is a blank placeholder
 bool Piece::is_blank() {
     // Checks for all traits of a blank piece
-    return id == -1;
+    return id == 0;
 }
 
 // Makes the piece a blank placeholder
 void Piece::make_blank() {
-    id = -1;
+    id = 0;
     type = -1;
     color = 'n';
     point = -1;
@@ -146,4 +149,6 @@ void Piece::swap(Piece &a) {
 }
 
 // Sets idCount to 0 to allow incrementing
-int Piece::idCount {};
+int Piece::idCountW {};
+// Sets idCount to 0 to allow decrementing
+int Piece::idCountB {};

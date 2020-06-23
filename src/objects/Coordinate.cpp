@@ -3,8 +3,8 @@
 // ================ Constructors ================
 // Build coord from given x and y
 Coordinate::Coordinate(int y, int x) {
-    this->x = x;
     this->y = y;
+    this->x = x;
 }
 
 // Takes proper chess coord structure
@@ -14,48 +14,48 @@ Coordinate::Coordinate(char c, int y) {
     int x = c - 65;
     
     // build standard coord
-    this->x = x;
     this->y = SIZE - y;
+    this->x = x;
 }
 
 // Build coord as origin
 Coordinate::Coordinate() {
-    x = 0;
     y = 0;
+    x = 0;
 }
 
 // ================ Sets ================
-// Saves given x value
-void Coordinate::set_x(int x) {
-    this->x = x;
-}
-
 // Saves given y value
 void Coordinate::set_y(int y) {
     this->y = y;
 }
 
+// Saves given x value
+void Coordinate::set_x(int x) {
+    this->x = x;
+}
+
 // Saves given x and y value
 void Coordinate::set_coord(int y, int x) {
-    this->x = x;
     this->y = y;
+    this->x = x;
 }
 
 // ================ Gets ================
-// Returns x value
-int Coordinate::get_x() {
-    return x;
+// Returns y value
+int Coordinate::get_y() const {
+    return y;
 }
 
-// Returns y value
-int Coordinate::get_y() {
-    return y;
+// Returns x value
+int Coordinate::get_x() const {
+    return x;
 }
 
 // ============ Methods ===============
 // Returns if this and b are equal
 bool Coordinate::equals(Coordinate b) {
-    if(this->x == b.get_x() && this->y == b.get_y()) {
+    if(this->y == b.get_y() && this->x == b.get_x()) {
         return true;
     }
     return false;
@@ -63,8 +63,8 @@ bool Coordinate::equals(Coordinate b) {
 
 // Copies from a to this
 void Coordinate::copy_from(Coordinate a) {
-    x = a.get_x();
     y = a.get_y();
+    x = a.get_x();
 }
 
 // ================ Debug ================

@@ -5,6 +5,7 @@ using namespace std;
 // ============= Constructors ==============
 // Creates piece with given type
 Piece::Piece(int t) {
+    BTools::debug("Piece::Piece(int)");
     type = t;
     assign_point();
     id = 0;
@@ -12,6 +13,7 @@ Piece::Piece(int t) {
 
 // Creates piece with given type and given color
 Piece::Piece(int t, char c) {
+    BTools::debug("Piece::Piece(int, char)");
     type = t;
     assign_point();
     color = c;
@@ -27,60 +29,73 @@ Piece::Piece(int t, char c) {
 
 // Creates blank piece
 Piece::Piece() {
+    BTools::debug("Piece::Piece()");
     make_blank();
 }
 
 // ============= Setters ==============
 void Piece::set_location(Coordinate a) {
+    BTools::debug("void Piece::set_location(Coordinate)");
     location.copy_from(a);
 }
 void Piece::set_id(int i) {
+    BTools::debug("void Piece::set_id(int)");
     id = i;
 }
 void Piece::set_point(int i) {
+    BTools::debug("void Piece::set_id(int)");
     point = i;
 }
 void Piece::set_type(int i) {
+    BTools::debug("void Piece::set_type(int)");
     type = i;
 }
 void Piece::set_color(char c) {
+    BTools::debug("void Piece::set_color(char)");
     color = c;
 }
 
 // ============== Getters ================
 // Returns id
 int Piece::get_id() const {
+    BTools::debug("int Piece::get_id() const");
     return id;
 }
 
 // Returns point val
 int Piece::get_point() const {
+    BTools::debug("int Piece::get_point() const");
     return point;
 }
 
 // Returns type num
 int Piece::get_type() const {
+    BTools::debug("int Piece::get_type() const");
     return type;
 }
 
 // Returns color char
 char Piece::get_color() const {
+    BTools::debug("int Piece::get_color() const");
     return color;
 }
 
 // Returns location Coordinate
 Coordinate Piece::get_location() const {
+    BTools::debug("int Piece::get_location() const");
     return location;
 }
 
 // Returns possible moves
 vector<Coordinate>& Piece::get_moves() {
+    BTools::debug("vector<Coordinate>& Piece::get_moves()");
     return moves;
 }
 
 // ============= Methods ==============
 // Returns if a equals this by id
 bool Piece::equals(Piece a) {
+    BTools::debug("bool Piece::equals(Piece)");
     if(id == a.get_id()) {
         return true;
     }
@@ -89,6 +104,7 @@ bool Piece::equals(Piece a) {
 
 // Sets point val with switch from type
 void Piece::assign_point() {
+    BTools::debug("void Piece::assign_point()");
     switch(type) {
         case 1: point = 1;
             break;
@@ -109,6 +125,7 @@ void Piece::assign_point() {
 
 // Copies a traits to this
 void Piece::copy_from(Piece a) {
+    BTools::debug("void Piece::copy_from(Piece)");
     id = a.get_id();
     type = a.get_type();
     color = a.get_color();
@@ -117,12 +134,14 @@ void Piece::copy_from(Piece a) {
 
 // Returns if the piece is a blank placeholder
 bool Piece::is_blank() {
+    BTools::debug("bool Piece::is_blank()");
     // Checks for all traits of a blank piece
     return id == 0;
 }
 
 // Makes the piece a blank placeholder
 void Piece::make_blank() {
+    BTools::debug("void Piece::make_blank()");
     id = 0;
     type = -1;
     color = 'n';
@@ -131,6 +150,7 @@ void Piece::make_blank() {
 
 // swaps pieces
 void Piece::swap(Piece &a) {
+    BTools::debug("void Piece::swap(Piece &a)");
     Piece temp;
     temp.copy_from(a);
 

@@ -1,9 +1,16 @@
 #include "../../include/objects/Player.hpp"
 
 // ================ Constructors ================
-// Sets given color
+// Default Constructor
+Player::Player() {
+    color = 'n';
+    points = 0;
+}
+
+// Sets given color: b or w / Sets points to 0
 Player::Player(char c) {
     color = c;
+    points = 0;
 }
 
 

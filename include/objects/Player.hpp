@@ -22,7 +22,10 @@ class Player {
         vector<Piece> lost; // Pieces they have lost
 
         // ================ Constructors ================
-        // Sets given color: b or w
+        // Default Constructor
+        Player();
+
+        // Sets given color: b or w / Sets points to 0
         Player(char c);
 
         // ============== Getters ================

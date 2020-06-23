@@ -25,11 +25,11 @@ using namespace std;
 // NOTE: White on Bottom of Board (Starting y = 6,7) / Black on Top (Starting y = 0,1)
 class Board {
     private:
-        Player& white;
-        Player& black;
+        Player white;
+        Player black;
 
-        vector<Coordinate> blackMoves[16];
-        vector<Coordinate> whiteMoves[16];
+        vector<Coordinate>* blackMoves[16];
+        vector<Coordinate>* whiteMoves[16];
 
     public:
         // Creates a 2d array to represent a board
@@ -38,10 +38,8 @@ class Board {
 
         // ============= Constructors ==============
         // if true create basic board : if false create blank board
+        // Players constructed automatically
         Board(bool basic);
-
-        // Create board with players
-        Board(Player &w, Player &b);
 
         // ============= Getters ==============
         // Returns piece at location (i,j)

@@ -15,18 +15,15 @@ Board::Board(bool basic) {
 // ============= Getters ==============
 // Returns piece at location (i,j)
 Piece& Board::get_piece(int i, int j) {
-    BTools::debug("Piece& Board::get_piece(int, int)");
     return board[i][j];
 }
 // From coord
 Piece& Board::get_piece(Coordinate c) {
-    BTools::debug("Piece& Board::get_piece(Coordinate)");
     return Board::get_piece(c.get_y(), c.get_x());
 }
 
 // Returns reference to Player
 Player& Board::get_player(char c) {
-    BTools::debug("Player& Board::get_player(char)");
     if (c == 'w') {
         return white;
     }
@@ -35,17 +32,14 @@ Player& Board::get_player(char c) {
 
 // Returns reference to whiteMoves
 vector<Coordinate>* Board::get_whiteMoves() {
-    BTools::debug("vector<Coordinate>* Board::get_whiteMoves()");
     return *whiteMoves;
 }
 // Returns reference to blackMoves
 vector<Coordinate>* Board::get_blackMoves() {
-    BTools::debug("vector<Coordinate>* Board::get_blackMoves()");
     return *blackMoves;
 }
 // Returns reference to whiteMoves or blackMoves depending on Piece given
 vector<Coordinate>* Board::get_moves(Piece &a) {
-    BTools::debug("vector<Coordinate>* Board::moves()");
     if (a.get_color() == 'w') {
         return *whiteMoves;
     }
@@ -56,7 +50,6 @@ vector<Coordinate>* Board::get_moves(Piece &a) {
 // ============= Setters ==============
 // Sets a space to a piece
 void Board::set_piece(Piece p, Coordinate c) {
-    BTools::debug("void Board::set_piece(Piece, Coordinate)");
     board[c.get_y()][c.get_x()].copy_from(p);
 }
     
@@ -142,11 +135,9 @@ void Board::build_board(bool basic) {
 
 // Returns true or false if there is a piece there
 bool Board::has_piece(int i, int j) {
-    BTools::debug("bool Board::has_piece(int, int)");
     return !board[i][j].is_blank();
 }
 bool Board::has_piece(Coordinate c) {
-    BTools::debug("bool Board::has_piece(Coordinate)");
     return Board::has_piece(c.get_y(), c.get_x());
 }
 

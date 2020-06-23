@@ -35,60 +35,49 @@ Piece::Piece() {
 
 // ============= Setters ==============
 void Piece::set_location(Coordinate a) {
-    BTools::debug("void Piece::set_location(Coordinate)");
     location.copy_from(a);
 }
 void Piece::set_id(int i) {
-    BTools::debug("void Piece::set_id(int)");
     id = i;
 }
 void Piece::set_point(int i) {
-    BTools::debug("void Piece::set_id(int)");
     point = i;
 }
 void Piece::set_type(int i) {
-    BTools::debug("void Piece::set_type(int)");
     type = i;
 }
 void Piece::set_color(char c) {
-    BTools::debug("void Piece::set_color(char)");
     color = c;
 }
 
 // ============== Getters ================
 // Returns id
 int Piece::get_id() const {
-    BTools::debug("int Piece::get_id() const");
     return id;
 }
 
 // Returns point val
 int Piece::get_point() const {
-    BTools::debug("int Piece::get_point() const");
     return point;
 }
 
 // Returns type num
 int Piece::get_type() const {
-    BTools::debug("int Piece::get_type() const");
     return type;
 }
 
 // Returns color char
 char Piece::get_color() const {
-    BTools::debug("int Piece::get_color() const");
     return color;
 }
 
 // Returns location Coordinate
 Coordinate Piece::get_location() const {
-    BTools::debug("int Piece::get_location() const");
     return location;
 }
 
 // Returns possible moves
 vector<Coordinate>& Piece::get_moves() {
-    BTools::debug("vector<Coordinate>& Piece::get_moves()");
     return moves;
 }
 

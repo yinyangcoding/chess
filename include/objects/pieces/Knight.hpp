@@ -1,6 +1,7 @@
 #ifndef KNIGHT_GUARD
 #define KNIGHT_GUARD
 
+#include "../../resources/BlandTools.hpp"
 #include "../Piece.hpp"
 #include "../Board.hpp"
 

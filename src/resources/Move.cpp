@@ -13,9 +13,7 @@
 
 // Switch to decide which piece to operate on
 void Move::update_moves(Board& b, Piece& p) {
-    if(DEBUG) {
-        printf("Move::update_moves()\n");
-    }
+    BTools::debug("void Move::update_moves(Board& b, Piece& p)");
     switch(p.get_type()) {
         case 1:
             update_pawn(b, p);
@@ -47,9 +45,7 @@ void Move::update_moves(Board& b, Piece& p) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_pawn(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_pawn()\n");
-    }
+    BTools::debug("void Move::update_pawn(Board& board, Piece& piece)");
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -96,9 +92,8 @@ void Move::update_pawn(Board& board, Piece& piece) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_knight(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_knight()\n");
-    }
+    BTools::debug("void Move::update_knight(Board& board, Piece& piece)");
+
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -131,9 +126,8 @@ void Move::update_knight(Board& board, Piece& piece) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_bishop(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_bishop()\n");
-    }
+    BTools::debug("void Move::update_bishop(Board& board, Piece& piece)");
+
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -172,9 +166,7 @@ void Move::update_bishop(Board& board, Piece& piece) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_rook(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_rook()\n");
-    }
+    BTools::debug("void Move::update_rook(Board& board, Piece& piece)");
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -213,9 +205,8 @@ void Move::update_rook(Board& board, Piece& piece) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_queen(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_queen()\n");
-    }
+    BTools::debug("void Move::update_queen(Board& board, Piece& piece)");
+
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -270,9 +261,8 @@ void Move::update_queen(Board& board, Piece& piece) {
 
 // STILL MUST COMPUTE FOR CHECK
 void Move::update_king(Board& board, Piece& piece) {
-    if(DEBUG) {
-        printf("Move::update_king()\n");
-    }
+    BTools::debug("void Move::update_king(Board& board, Piece& piece)");
+
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
     moves.clear();
@@ -307,18 +297,22 @@ void Move::update_king(Board& board, Piece& piece) {
 
 // checks if one pos is btwn -1 and SIZE
 bool Move::on_board(int c) {
+    BTools::debug("bool Move::on_board(int c)");
     return ((c > -1) && (c < SIZE));
 }
 
 
 // checks if both pos are btwn -1 and SIZE
 bool Move::on_board(int y, int x) {
+    BTools::debug("bool Move::on_board(int y, int x)");
     return ((y > -1) && (y < SIZE) && (x > -1) && (x < SIZE));
 }
 
 // Swaps two pieces
 // From piece references
 void Move::swap(Piece& a, Piece& b) {
+    BTools::debug("void Move::swap(Piece& a, Piece& b)");
+
     // Make a temp holder
     Piece temp;
     Coordinate loc;
@@ -338,6 +332,8 @@ void Move::swap(Piece& a, Piece& b) {
 
 // From coords
 void Move::swap(Board& board, Coordinate a, Coordinate b) {
+    BTools::debug("void Move::swap(Board& board, Coordinate a, Coordinate b)");
+
     Piece& from = board.board[a.get_y()][a.get_x()];
     Piece& to = board.board[b.get_y()][b.get_x()];
 
@@ -347,6 +343,8 @@ void Move::swap(Board& board, Coordinate a, Coordinate b) {
 // checks if king is in check, checkmate, or stalemate
 // none = -1, stalemate = 0, check = 1, checkmate = 2
 // int Move::check_position(Board& board, Coordinate king) {
+//     BTools::debug("int Move::check_position(Board& board, Coordinate king)");
+
 //     bool check = Move::in_check(board, king);
 //     bool surround = Move::surrounding_check(board, king);
 //     if (!check && !surround) {
@@ -363,6 +361,8 @@ void Move::swap(Board& board, Coordinate a, Coordinate b) {
 
 // returns true if in check
 // bool Move::in_check(Board& board, Coordinate king) {
+//     BTools::debug("bool Move::in_check(Board& board, Coordinate king)");
+
 //     // holds the moves vector for each piece
 //     vector<Coordinate> *moves;
 //     // stores piece location so does not have to keep referencing for speed enhancements
@@ -395,6 +395,7 @@ void Move::swap(Board& board, Coordinate a, Coordinate b) {
 
 // return true if Coordinates surrounding king are all in check
 // bool Move::surrounding_check(Board& board, Coordinate king) {
+//     BTools::debug("bool Move::surrounding_check(Board& board, Coordinate king)");
 //     // stores piece location so does not have to keep referencing for speed enhancements
 //     int y = king.get_y();
 //     int x = king.get_x();
@@ -424,6 +425,8 @@ void Move::swap(Board& board, Coordinate a, Coordinate b) {
 // A captures B
 // From piece references
 void Move::replace(Piece& a, Piece& b) {
+    BTools::debug("void Move::replace(Piece& a, Piece& b)");
+
     b.copy_from(a);
     b.set_location(a.get_location());
     a.make_blank();
@@ -431,6 +434,8 @@ void Move::replace(Piece& a, Piece& b) {
 
 // From coords
 void Move::replace(Board& board, Coordinate a, Coordinate b) {
+    BTools::debug("void Move::replace(Board& board, Coordinate a, Coordinate b)");
+
     Piece from = board.board[a.get_y()][a.get_x()];
     Piece to = board.board[b.get_y()][b.get_x()];
 
@@ -442,7 +447,7 @@ void Move::replace(Board& board, Coordinate a, Coordinate b) {
 // Returns a piece if captured. Returns blank if not
 // Moves from a to b
 Piece Move::move(Board& board, Coordinate a, Coordinate b) {
-    BTools::debug("Move::move");
+    BTools::debug("Piece Move::move(Board& board, Coordinate a, Coordinate b)");
     Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
     bool canMove = false; // If it can move there

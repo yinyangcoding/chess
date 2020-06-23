@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../resources/Tools.hpp"
+#include "../resources/BlandTools.hpp"
 #include "Piece.hpp"
 
 using namespace std;

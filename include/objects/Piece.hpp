@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "Coordinate.hpp"
+#include "../resources/BlandTools.hpp"
+
 // This cannot take board, because Piece must be defined before board
 // #include "Board.hpp"
 

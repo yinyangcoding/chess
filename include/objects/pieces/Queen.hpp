@@ -1,6 +1,8 @@
 #ifndef QUEEN_GUARD
 #define QUEEN_GUARD
 
+
+#include "../../resources/BlandTools.hpp"
 #include "../Piece.hpp"
 #include "../Board.hpp"
 

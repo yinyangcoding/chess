@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "BlandTools.hpp"
 #include "../objects/Piece.hpp"
 #include "../objects/Coordinate.hpp"
 

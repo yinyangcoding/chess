@@ -28,8 +28,8 @@ class Board {
         Player& white;
         Player& black;
 
-        vector<Coordinate>& blackMoves[16];
-        vector<Coordinate>& whiteMoves[16];
+        vector<Coordinate> blackMoves[16];
+        vector<Coordinate> whiteMoves[16];
 
     public:
         // Creates a 2d array to represent a board

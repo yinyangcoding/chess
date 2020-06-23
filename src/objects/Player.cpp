@@ -19,13 +19,11 @@ Player::Player(char c) {
 // ============== Getters ================
 // Returns color
 char Player::get_color() const {
-    BTools::debug("char Player::get_color() const");
     return color;
 }
 
 // Returns points
 int Player::get_points() const {
-    BTools::debug("int Player::get_points() const");
     return points;
 }
 
@@ -48,13 +46,11 @@ int Player::get_points() const {
 // ============== Setters ================
 // Sets color
 void Player::set_color(char c) {
-    BTools::debug("void Player::set_color(char)");
     color = c;
 }
 
 // Sets points
 void Player::set_points(int p) {
-    BTools::debug("void Player::set_points(int)");
     points = p;
 }
 

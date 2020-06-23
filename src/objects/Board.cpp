@@ -33,19 +33,19 @@ Player& Board::get_player(char c) {
 }
 
 // Returns reference to whiteMoves
-vector<Coordinate>** Board::get_whiteMoves() {
-    return whiteMoves;
+vector<Coordinate>* Board::get_whiteMoves() {
+    return *whiteMoves;
 }
 // Returns reference to blackMoves
-vector<Coordinate>** Board::get_blackMoves() {
-    return blackMoves;
+vector<Coordinate>* Board::get_blackMoves() {
+    return *blackMoves;
 }
 // Returns reference to whiteMoves or blackMoves depending on Piece given
-vector<Coordinate>** Board::get_Moves(Piece &a) {
+vector<Coordinate>* Board::get_moves(Piece &a) {
     if (a.get_color() == 'w') {
-        return whiteMoves;
+        return *whiteMoves;
     }
-    return blackMoves;
+    return *blackMoves;
 }
 
 

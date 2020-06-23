@@ -51,11 +51,11 @@ class Board {
         Player& get_player(char c);
 
         // Returns reference to whiteMoves
-        vector<Coordinate>** get_whiteMoves();
+        vector<Coordinate>* get_whiteMoves();
         // Returns reference to blackMoves
-        vector<Coordinate>** get_blackMoves();
+        vector<Coordinate>* get_blackMoves();
         // Returns reference to whiteMoves or blackMoves depending on Piece given
-        vector<Coordinate>** get_Moves(Piece &a);
+        vector<Coordinate>* get_moves(Piece &a);
 
         // ============= Setters ==============
         // Sets a space to a piece

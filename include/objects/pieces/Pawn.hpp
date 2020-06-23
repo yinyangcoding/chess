@@ -1,6 +1,7 @@
 #ifndef PAWN_GUARD
 #define PAWN_GUARD
 
+#include "../../resources/BlandTools.hpp"
 #include "../Piece.hpp"
 #include "../Board.hpp"
 

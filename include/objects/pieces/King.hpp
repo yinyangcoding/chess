@@ -2,6 +2,7 @@
 #define KING_GUARD
 
 #include "../../resources/Constants.h"
+#include "../../resources/BlandTools.hpp"
 #include "../Piece.hpp"
 #include "../Board.hpp"
 

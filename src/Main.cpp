@@ -18,11 +18,16 @@ using namespace std;
 
 int main() {
 	Board b(true);
-	b.print_board();
 
-	printf("%d\n", b.has_piece(Coordinate('a', 1))); // should be 1
-	printf("%d\n", b.has_piece(Coordinate('a', 4))); // should be 0
-	
+	while(true) {
+		int fromI, toI;
+		char fromC, toC;
+		b.print_board();
+		scanf("%c%d %c%d", &fromC, &fromI, &toC, &toI);
+		Move::move(b, Coordinate(fromC, fromI), Coordinate(toC, toI));
+		printf("\n");
+	}
+
 
 	return 0;
 }

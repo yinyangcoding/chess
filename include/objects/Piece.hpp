@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "Coordinate.hpp"
+#include "../resources/BlandTools.hpp"
+
 // This cannot take board, because Piece must be defined before board
 // #include "Board.hpp"
 
@@ -13,7 +15,8 @@ using namespace std;
 // Parent class of each piece
 class Piece {
 	protected:
-        static int idCount; // Needed to increment id
+        static int idCountW; // Increments id for white
+        static int idCountB; // Decrements id for black
         int id; // Unique id for each piece
         int point; // point value
         int type; // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
@@ -34,22 +37,22 @@ class Piece {
 
         // ============== Getters ================
         // Returns id
-        int get_id();
+        int get_id() const;
 
         // Returns point val
-        int get_point();
+        int get_point() const;
 
         // Returns type num
-        int get_type();
+        int get_type() const;
 
         // Returns color char
-        char get_color();
+        char get_color() const;
 
         // Returns location Coordinate
-        Coordinate get_location();
+        Coordinate get_location() const;
 
         // Returns possible moves
-        vector<Coordinate> *get_moves();
+        vector<Coordinate>& get_moves();
 
         // ============= Setters ==============
         void set_location(Coordinate a);

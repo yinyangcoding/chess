@@ -3,6 +3,7 @@
 
 #include "../Piece.hpp"
 #include "../Board.hpp"
+#include "../../resources/BlandTools.hpp"
 
 class Bishop : public Piece {
     public:

@@ -12,9 +12,9 @@ using namespace std;
 // Will be used to show the coord of the piece
 class Coordinate {
     private:
-        // x and y values
-        int x;
+        // y and x values
         int y;
+        int x;
 
     public:
     
@@ -29,21 +29,21 @@ class Coordinate {
         Coordinate();
 
         // ================ Sets ================
-        // Saves given x value
-        void set_x(int x);
-
         // Saves given y value
         void set_y(int y);
 
-        // Saves given x and y value
+        // Saves given x value
+        void set_x(int x);
+
+        // Saves given y and x value
         void set_coord(int y, int x);
 
         // ================ Gets ================
         // Returns x value
-        int get_x();
+        int get_x() const;
 
-        // Returns x value
-        int get_y();
+        // Returns y value
+        int get_y() const;
 
         // ============ Methods ===============
         // Returns if this and b are equal

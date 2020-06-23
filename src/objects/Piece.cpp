@@ -123,7 +123,6 @@ void Piece::copy_from(Piece a) {
 
 // Returns if the piece is a blank placeholder
 bool Piece::is_blank() {
-    BTools::debug("bool Piece::is_blank()");
     // Checks for all traits of a blank piece
     return id == 0;
 }

@@ -442,6 +442,7 @@ void Move::replace(Board& board, Coordinate a, Coordinate b) {
 // Returns a piece if captured. Returns blank if not
 // Moves from a to b
 Piece Move::move(Board& board, Coordinate a, Coordinate b) {
+    BTools::debug("Move::move");
     Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
     bool canMove = false; // If it can move there

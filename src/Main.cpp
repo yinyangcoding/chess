@@ -20,9 +20,8 @@ int main() {
 	Board b(true);
 	b.print_board();
 
-	printf("%d\n", b.has_piece(Coordinate('a', 1))); // should be 1
-	printf("%d\n", b.has_piece(Coordinate('a', 4))); // should be 0
-	
+	Move::move(b, Coordinate('a', 2), Coordinate('a', 3));
+	b.print_board();
 
 	return 0;
 }

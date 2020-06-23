@@ -346,19 +346,19 @@ void Move::swap(Board& board, Coordinate a, Coordinate b) {
 
 // checks if king is in check, checkmate, or stalemate
 // none = -1, stalemate = 0, check = 1, checkmate = 2
-int Move::check_position(Board& board, Coordinate king) {
-    bool check = Move::in_check(board, king);
-    bool surround = Move::surrounding_check(board, king);
-    if (!check && !surround) {
-        return -1;
-    } else if (check && !surround) {
-        return 0;
-    } else if (!check && surround) {
-        return 1;
-    } else {
-        return 2;
-    }
-}
+// int Move::check_position(Board& board, Coordinate king) {
+//     bool check = Move::in_check(board, king);
+//     bool surround = Move::surrounding_check(board, king);
+//     if (!check && !surround) {
+//         return -1;
+//     } else if (check && !surround) {
+//         return 0;
+//     } else if (!check && surround) {
+//         return 1;
+//     } else {
+//         return 2;
+//     }
+// }
 
 
 // returns true if in check
@@ -394,32 +394,32 @@ int Move::check_position(Board& board, Coordinate king) {
 
 
 // return true if Coordinates surrounding king are all in check
-bool Move::surrounding_check(Board& board, Coordinate king) {
-    // stores piece location so does not have to keep referencing for speed enhancements
-    int y = king.get_y();
-    int x = king.get_x();
+// bool Move::surrounding_check(Board& board, Coordinate king) {
+//     // stores piece location so does not have to keep referencing for speed enhancements
+//     int y = king.get_y();
+//     int x = king.get_x();
 
-    // Runs through y-position to the up, current, and down of current location
-    for (int i = y - 1; i <= y + 1; i++) {
-        // Checks if y is on board
-        if (Move::on_board(i)) {
-            // Runs through x-position to the left, current, and to the right of current location
-            for (int j = x - 1; j <= x + 1; j++) {
-                // Makes sure (i, j) is not current location
-                if ((i != y) || (j != x)) {
-                    // Checks if x is on board
-                    if (Move::on_board(j)) {
-                        // if (i,j) is not in check exit returning false
-                        if (!Move::in_check(board, Coordinate(i, j))) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        } 
-    }
-    return true;
-}
+//     // Runs through y-position to the up, current, and down of current location
+//     for (int i = y - 1; i <= y + 1; i++) {
+//         // Checks if y is on board
+//         if (Move::on_board(i)) {
+//             // Runs through x-position to the left, current, and to the right of current location
+//             for (int j = x - 1; j <= x + 1; j++) {
+//                 // Makes sure (i, j) is not current location
+//                 if ((i != y) || (j != x)) {
+//                     // Checks if x is on board
+//                     if (Move::on_board(j)) {
+//                         // if (i,j) is not in check exit returning false
+//                         if (!Move::in_check(board, Coordinate(i, j))) {
+//                             return false;
+//                         }
+//                     }
+//                 }
+//             }
+//         } 
+//     }
+//     return true;
+// }
 
 // A captures B
 // From piece references

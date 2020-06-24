@@ -457,21 +457,21 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
         return blank;
     }
 
-    Piece *moving = &board.get_piece(a);
-    Piece *cap = &board.get_piece(b);
+    Piece& moving = board.get_piece(a);
+    Piece& cap = board.get_piece(b);
 
     // Update the moving piece's moves
-    Move::update_moves(board, *moving);
+    Move::update_moves(board, moving);
 
-    printf("ID = %d\n", cap->get_id());
-    if(!cap->is_blank()) {
+    printf("ID = %d\n", cap.get_id());
+    if(!cap.is_blank()) {
         capture = true;
         printf("RAN\n");
 
     }
 
     // Check if move is legal and within movese
-    vector<Coordinate>& moves = moving->get_moves();
+    vector<Coordinate>& moves = moving.get_moves();
     for(int i = 0; i < moves.size(); i++) {
         // moves[i].print_pair();
         if(moves[i].equals(b)) {
@@ -487,19 +487,19 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     
     if(capture) {
         // Capture the piece
-        Move::replace(*moving, *cap);
+        Move::replace(moving, cap);
 
         // ADD IT TO CAPTURING PLAYER'S TAKEN AND OTHER PLAYER'S LOST
 
 
 
-        return *cap;
+        return cap;
 
     }
     else {
         // Swap the piece if it doesn't need to capture
         // Move the piece
-        Move::swap(*moving, *cap);
+        Move::swap(moving, cap);
 
         return blank;
     }

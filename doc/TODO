@@ -2,4 +2,8 @@ Layout Move::move() to do:
 - Add capture processing
 - Add turn based
 
+Move::update_moves():
+- Fix bishop going through pieces
+- Setup queen to run update_bishop() and update_rook()
+
 Proper coord process

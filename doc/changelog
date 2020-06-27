@@ -42,3 +42,12 @@ New Files: test/hasPiece.cpp, test/Replace.cpp
 Notes:
 - Made new test source files
 - Began work on Move::move, needs more work
+
+6/26/20 - Matt
+Files Changed: Board.cpp, Move (both), Main.cpp
+New Files: Backed up new tests
+Notes:
+- Backed up tests
+- Fixed digestion issue with entered coords
+- Board::print_board() also prints coords
+- Speed enhancements

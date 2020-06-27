@@ -1,29 +1,29 @@
 Main: ../include/resources/Constants.h ../build ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o ../build/resources/BlandTools.o
 	g++ ../build/Main.o ../build/objects/Coordinate.o ../build/resources/Move.o ../build/objects/Piece.o ../build/objects/Board.o ../build/objects/Player.o ../build/resources/Tools.o ../build/resources/BlandTools.o -o Main
 
-../build/Main.o: ../build ../src/Main.cpp
+../build/Main.o: ../build ../src/Main.cpp ../include/resources/Constants.h
 	g++ -c ../src/Main.cpp -o ../build/Main.o
 
-../build/objects/Coordinate.o: ../build ../src/objects/Coordinate.cpp ../include/objects/Coordinate.hpp
+../build/objects/Coordinate.o: ../include/resources/Constants.h ../build ../src/objects/Coordinate.cpp ../include/objects/Coordinate.hpp
 	g++ -c ../src/objects/Coordinate.cpp -o ../build/objects/Coordinate.o
 
-../build/resources/Move.o: ../build ../src/resources/Move.cpp ../include/resources/Move.hpp
+../build/resources/Move.o: ../include/resources/Constants.h ../build ../src/resources/Move.cpp ../include/resources/Move.hpp
 	g++ -c ../src/resources/Move.cpp -o ../build/resources/Move.o
 
-../build/objects/Piece.o: ../build ../src/objects/Piece.cpp ../include/objects/Piece.hpp
+../build/objects/Piece.o: ../include/resources/Constants.h ../build ../src/objects/Piece.cpp ../include/objects/Piece.hpp
 	g++ -c ../src/objects/Piece.cpp -o ../build/objects/Piece.o
 
-../build/objects/Board.o: ../build ../src/objects/Board.cpp ../include/objects/Board.hpp
+../build/objects/Board.o: ../include/resources/Constants.h ../build ../src/objects/Board.cpp ../include/objects/Board.hpp
 	g++ -c ../src/objects/Board.cpp -o ../build/objects/Board.o
 
-../build/objects/Player.o: ../build ../src/objects/Player.cpp ../include/objects/Player.hpp
+../build/objects/Player.o: ../include/resources/Constants.h ../build ../src/objects/Player.cpp ../include/objects/Player.hpp
 	g++ -c ../src/objects/Player.cpp -o ../build/objects/Player.o
 
 
-../build/resources/Tools.o: ../build ../src/resources/Tools.cpp ../include/resources/Tools.hpp
+../build/resources/Tools.o: ../include/resources/Constants.h ../build ../src/resources/Tools.cpp ../include/resources/Tools.hpp
 	g++ -c ../src/resources/Tools.cpp -o ../build/resources/Tools.o
 
-../build/resources/BlandTools.o: ../build ../src/resources/BlandTools.cpp ../include/resources/BlandTools.hpp
+../build/resources/BlandTools.o: ../include/resources/Constants.h ../build ../src/resources/BlandTools.cpp ../include/resources/BlandTools.hpp
 	g++ -c ../src/resources/BlandTools.cpp -o ../build/resources/BlandTools.o
 
 

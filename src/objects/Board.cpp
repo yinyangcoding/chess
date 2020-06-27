@@ -27,7 +27,13 @@ Player& Board::get_player(char c) {
     if (c == 'w') {
         return white;
     }
-    return black;
+    else if (c== 'b') {
+        return black;
+    }
+    else {
+        static Player blank;
+        return blank;
+    }
 }
 
 // Returns reference to whiteMoves
@@ -43,7 +49,11 @@ vector<Coordinate>* Board::get_moves(Piece &a) {
     if (a.get_color() == 'w') {
         return *whiteMoves;
     }
-    return *blackMoves;
+    else if (a.get_color() == 'b') {
+        return *blackMoves;
+    }
+    static vector<Coordinate>* blank;
+    return blank;
 }
 
 

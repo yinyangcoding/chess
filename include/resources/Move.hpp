@@ -9,6 +9,7 @@
 #include "../objects/Coordinate.hpp"
 #include "../objects/Piece.hpp"
 #include "../objects/Board.hpp"
+#include "../objects/Player.hpp"
 
 // Will represent vector from initial coord to final coord
 class Move {

@@ -426,6 +426,7 @@ void Move::move(Board& board, Coordinate a, Coordinate b) {
       
     }
 
+    // Save pieces
     Piece& moving = board.get_piece(a);
     Piece& cap = board.get_piece(b);
 
@@ -452,6 +453,13 @@ void Move::move(Board& board, Coordinate a, Coordinate b) {
         return;
     }
     
+    if (capture) {
+        // clears moving array
+        cap.get_moves().clear();
+
+    }
+
+    // Actually move the piece
     Move::replace(moving, cap);
 
 

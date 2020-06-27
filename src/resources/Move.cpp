@@ -186,18 +186,30 @@ void Move::update_rook(Board& board, Piece& piece) {
     // MOVING UP
     for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i--) {
         moves.emplace_back(i, x);
+        if (!board.get_piece(i, x).is_blank()) {
+            break;
+        }
     }
     // MOVING DOWN
     for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i++) {
         moves.emplace_back(i, x);
+        if (!board.get_piece(i, x).is_blank()) {
+            break;
+        }
     }
     // MOVING LEFT
     for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i--) {
         moves.emplace_back(y, i);
+        if (!board.get_piece(y, i).is_blank()) {
+            break;
+        }
     }
     // MOVING RIGHT
     for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i++) {
         moves.emplace_back(y, i);
+        if (!board.get_piece(y, i).is_blank()) {
+            break;
+        }
     }
     // readjusts moves to its correct size
     moves.shrink_to_fit();

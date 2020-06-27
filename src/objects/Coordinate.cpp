@@ -56,7 +56,7 @@ int Coordinate::get_x() const {
 // Returns if this and b are equal
 bool Coordinate::equals(Coordinate b) {
     BTools::debug("bool Coordinate::equals(Coordinate)");
-    if(this->y == b.get_y() && this->x == b.get_x()) {
+    if (this->y == b.get_y() && this->x == b.get_x()) {
         return true;
     }
     return false;

@@ -144,8 +144,8 @@ bool Board::has_piece(Coordinate c) {
 // ============= Debug ==============
 // This will print board piece ids
 void Board::print_id() {
-    for(int i = 0; i < SIZE; i++) {
-        for(int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
             printf("%d ", board[i][j].get_id());
         }
         printf("\n");
@@ -202,7 +202,7 @@ void Board::print_board() {
             }
             
             // Print out depending on cap
-            if(cap) {
+            if (cap) {
                 printf("%c ", BTools::to_upper(c));
             }
             else {

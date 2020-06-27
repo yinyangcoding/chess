@@ -14,7 +14,7 @@
 // Switch to decide which piece to operate on
 void Move::update_moves(Board& b, Piece& p) {
     BTools::debug("void Move::update_moves(Board& b, Piece& p)");
-    switch(p.get_type()) {
+    switch (p.get_type()) {
         case 1:
             update_pawn(b, p);
             break;
@@ -58,7 +58,8 @@ void Move::update_pawn(Board& board, Piece& piece) {
     int increment;
     if (piece.get_color() == 'b') {
         increment = 1;
-    } else {
+    }
+    else {
         increment = -1;
     }
 
@@ -436,8 +437,8 @@ void Move::replace(Piece& a, Piece& b) {
 void Move::replace(Board& board, Coordinate a, Coordinate b) {
     BTools::debug("void Move::replace(Board& board, Coordinate a, Coordinate b)");
 
-    Piece *from = &board.board[a.get_y()][a.get_x()];
-    Piece *to = &board.board[b.get_y()][b.get_x()];
+    Piece* from = &board.board[a.get_y()][a.get_x()];
+    Piece* to = &board.board[b.get_y()][b.get_x()];
 
     Move::replace(*from, *to);
 }
@@ -453,7 +454,7 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     bool canMove = false; // If it can move there
 
     // Exit if there's no piece to move
-    if(!board.has_piece(a)) {
+    if (!board.has_piece(a)) {
         return blank;
     }
 
@@ -464,7 +465,7 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     Move::update_moves(board, moving);
 
     printf("ID = %d\n", cap.get_id());
-    if(!cap.is_blank()) {
+    if (!cap.is_blank()) {
         capture = true;
         printf("RAN\n");
 
@@ -472,20 +473,20 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Check if move is legal and within movese
     vector<Coordinate>& moves = moving.get_moves();
-    for(int i = 0; i < moves.size(); i++) {
+    for (int i = 0; i < moves.size(); i++) {
         // moves[i].print_pair();
-        if(moves[i].equals(b)) {
+        if (moves[i].equals(b)) {
             canMove = true;
             break;
         }
     }
 
     // Exit if it can't move
-    if(!canMove) {
+    if (!canMove) {
         return blank;
     }
     
-    if(capture) {
+    if (capture) {
         // Capture the piece
         Move::replace(moving, cap);
 

@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
 	Board b(true);
-	while(true) {
+	while (true) {
 		int fromI, toI;
 		char fromC, toC;
 		b.print_board();

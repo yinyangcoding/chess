@@ -85,7 +85,7 @@ vector<Coordinate>& Piece::get_moves() {
 // Returns if a equals this by id
 bool Piece::equals(Piece a) {
     BTools::debug("bool Piece::equals(Piece)");
-    if(id == a.get_id()) {
+    if (id == a.get_id()) {
         return true;
     }
     return false;
@@ -94,7 +94,7 @@ bool Piece::equals(Piece a) {
 // Sets point val with switch from type
 void Piece::assign_point() {
     BTools::debug("void Piece::assign_point()");
-    switch(type) {
+    switch (type) {
         case 1: point = 1;
             break;
         case 2: point = 3;

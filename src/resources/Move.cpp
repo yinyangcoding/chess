@@ -14,7 +14,7 @@
 // Switch to decide which piece to operate on
 void Move::update_moves(Board& b, Piece& p) {
     BTools::debug("void Move::update_moves(Board& b, Piece& p)");
-    switch(p.get_type()) {
+    switch (p.get_type()) {
         case 1:
             update_pawn(b, p);
             break;
@@ -58,7 +58,8 @@ void Move::update_pawn(Board& board, Piece& piece) {
     int increment;
     if (piece.get_color() == 'b') {
         increment = 1;
-    } else {
+    }
+    else {
         increment = -1;
     }
 
@@ -422,6 +423,7 @@ void Move::move(Board& board, Coordinate a, Coordinate b) {
     // Exit if there's no piece to move
     if (!board.has_piece(a)) {
         return;
+      
     }
 
     Piece& moving = board.get_piece(a);

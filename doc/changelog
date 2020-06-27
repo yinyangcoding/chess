@@ -51,3 +51,9 @@ Notes:
 - Fixed digestion issue with entered coords
 - Board::print_board() also prints coords
 - Speed enhancements
+
+6/27/20 - Matt
+Deleted: include/objects/pieces/*, src/objects/pieces/*
+Notes:
+- Faster compile
+- Faster runtime

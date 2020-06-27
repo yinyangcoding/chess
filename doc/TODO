@@ -1,6 +1,5 @@
-BUILD MOVESET
+Layout Move::move() to do:
+- Add capture processing
+- Add turn based
 
-Make tool that sees if a piece is at location(x,y) by looking through board
-
-FINISH MOVE IN MOVE:: \
-MUST UPDATE ABILITY TO CAPTURE
+Proper coord process

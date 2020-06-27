@@ -157,6 +157,6 @@ void Piece::swap(Piece &a) {
 }
 
 // Sets idCount to 0 to allow incrementing
-int Piece::idCountW {};
+int Piece::idCountW = {};
 // Sets idCount to 0 to allow decrementing
-int Piece::idCountB {};
+int Piece::idCountB = {};

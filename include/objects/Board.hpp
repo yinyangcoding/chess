@@ -73,6 +73,9 @@ class Board {
         bool has_piece(Coordinate c);
 
         // ============= Debug ==============
+        // This will print board piece ids
+        void print_id();
+
         // This will print the board
         void print_board();
 

@@ -34,13 +34,6 @@ class Move {
         // checks if both pos are btwn -1 and SIZE
         static bool on_board(int y, int x);
 
-        
-        // Swaps two pieces
-        // From piece references
-        static void swap(Piece& a, Piece& b);
-        // From coords
-        static void swap(Board& board, Coordinate a, Coordinate b);
-
         // checks if king is in check, checkmate, or stalemate
         // none = -1, stalemate = 0, check = 1, checkmate = 2
         static int check_position(Board& board, Coordinate king);
@@ -57,7 +50,7 @@ class Move {
 
         // Main Move function that will consider all needed methods
         // Returns a piece if captured. Returns blank if not
-        static Piece move(Board& board, Coordinate a, Coordinate b);
+        static void move(Board& board, Coordinate a, Coordinate b);
 
 
 };

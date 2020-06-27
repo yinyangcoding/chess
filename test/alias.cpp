@@ -18,17 +18,11 @@ using namespace std;
 
 int main() {
 	Board b(true);
+	Board& board = b;
+	Move::replace(board, Coordinate('a', 2), Coordinate('a', 3));
 	b.print_board();
+	board.print_board();
 
-	Move::swap(b, Coordinate('a', 7), Coordinate('a', 5));
-	Move::swap(b, Coordinate('b', 2), Coordinate('b', 4));
-
-	Move::replace(b, Coordinate('b', 4), Coordinate('a', 5));
-
-	
-
-	b.print_board();
-	
 
 	return 0;
 }

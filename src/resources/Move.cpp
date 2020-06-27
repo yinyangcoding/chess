@@ -309,38 +309,6 @@ bool Move::on_board(int y, int x) {
     return ((y > -1) && (y < SIZE) && (x > -1) && (x < SIZE));
 }
 
-// Swaps two pieces
-// From piece references
-void Move::swap(Piece& a, Piece& b) {
-    BTools::debug("void Move::swap(Piece& a, Piece& b)");
-
-    // Make a temp holder
-    Piece temp;
-    Coordinate loc;
-
-    temp.copy_from(b);
-    loc.set_coord(b.get_location().get_y(), b.get_location().get_x());
-
-    // Put a traits in b
-    b.copy_from(a);
-    b.set_location(a.get_location());
-
-    // Put temp traits in a
-    a.copy_from(temp);
-    a.set_location(loc);
-
-}
-
-// From coords
-void Move::swap(Board& board, Coordinate a, Coordinate b) {
-    BTools::debug("void Move::swap(Board& board, Coordinate a, Coordinate b)");
-
-    Piece& from = board.board[a.get_y()][a.get_x()];
-    Piece& to = board.board[b.get_y()][b.get_x()];
-
-    Move::swap(to, from);
-}
-
 // checks if king is in check, checkmate, or stalemate
 // none = -1, stalemate = 0, check = 1, checkmate = 2
 // int Move::check_position(Board& board, Coordinate king) {
@@ -429,7 +397,6 @@ void Move::replace(Piece& a, Piece& b) {
     BTools::debug("void Move::replace(Piece& a, Piece& b)");
 
     b.copy_from(a);
-    b.set_location(a.get_location());
     a.make_blank();
 }
 
@@ -437,17 +404,17 @@ void Move::replace(Piece& a, Piece& b) {
 void Move::replace(Board& board, Coordinate a, Coordinate b) {
     BTools::debug("void Move::replace(Board& board, Coordinate a, Coordinate b)");
 
-    Piece* from = &board.board[a.get_y()][a.get_x()];
-    Piece* to = &board.board[b.get_y()][b.get_x()];
+    Piece &from = board.board[a.get_y()][a.get_x()];
+    Piece &to = board.board[b.get_y()][b.get_x()];
 
-    Move::replace(*from, *to);
+    Move::replace(from, to);
 }
 
 
 // Main Move function that will consider all needed methods
 // Returns a piece if captured. Returns blank if not
 // Moves from a to b
-Piece Move::move(Board& board, Coordinate a, Coordinate b) {
+void Move::move(Board& board, Coordinate a, Coordinate b) {
     BTools::debug("Piece Move::move(Board& board, Coordinate a, Coordinate b)");
     Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
@@ -455,7 +422,8 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Exit if there's no piece to move
     if (!board.has_piece(a)) {
-        return blank;
+        return;
+      
     }
 
     Piece& moving = board.get_piece(a);
@@ -464,10 +432,8 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
     // Update the moving piece's moves
     Move::update_moves(board, moving);
 
-    printf("ID = %d\n", cap.get_id());
     if (!cap.is_blank()) {
         capture = true;
-        printf("RAN\n");
 
     }
 
@@ -483,27 +449,10 @@ Piece Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Exit if it can't move
     if (!canMove) {
-        return blank;
+        return;
     }
     
-    if (capture) {
-        // Capture the piece
-        Move::replace(moving, cap);
-
-        // ADD IT TO CAPTURING PLAYER'S TAKEN AND OTHER PLAYER'S LOST
-
-
-
-        return cap;
-
-    }
-    else {
-        // Swap the piece if it doesn't need to capture
-        // Move the piece
-        Move::swap(moving, cap);
-
-        return blank;
-    }
+    Move::replace(moving, cap);
 
 
 }

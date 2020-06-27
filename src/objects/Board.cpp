@@ -144,22 +144,26 @@ bool Board::has_piece(Coordinate c) {
 // ============= Debug ==============
 // This will print board piece ids
 void Board::print_id() {
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            printf("%d ", board[i][j].get_id());
+    for(int i = 0; i < SIZE; i++) {
+        for(int j = 0; j < SIZE; j++) {
+            std::printf("%d ", board[i][j].get_id());
         }
-        printf("\n");
+        std::printf("\n");
     }
 }
 
 // This will print the board
 void Board::print_board() {
     BTools::debug("void Board::print_board()");
+
+    std::printf("    A B C D E F G H\n  +-----------------+\n");
+
     for (int i = 0; i < SIZE; i++) {
+        std::printf("%d | ", SIZE - i);
         for (int j = 0; j < SIZE; j++) {
             // Check if it's blank and print a space
             if (board[i][j].is_blank()) {
-                printf("- ");
+                std::printf("- ");
                 continue;
             }
 
@@ -202,14 +206,18 @@ void Board::print_board() {
             }
             
             // Print out depending on cap
-            if (cap) {
-                printf("%c ", BTools::to_upper(c));
+            if(cap) {
+                std::printf("%c ", BTools::to_upper(c));
             }
             else {
-                printf("%c ", BTools::to_lower(c));
+                std::printf("%c ", BTools::to_lower(c));
             }
         }
+        std::printf("| %d", SIZE - i);
         // Make new line
-        printf("\n");
+        std::printf("\n");
     }
+
+    std::printf("  +-----------------+\n    A B C D E F G H\n");
+
 }

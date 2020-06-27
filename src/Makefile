@@ -47,8 +47,10 @@ Main: ../include/resources/Constants.h ../build ../build/Main.o ../build/objects
 
 
 ../build:
-	mkdir -p ../build/objects/pieces
-	mkdir -p ../build/resources
+	mkdir ../build
+	mkdir ../build/objects
+	mkdir ../build/resources
+	mkdir ../build/objects/pieces
 
 clean:
 	rm ../build/objects/*.o ../build/objects/pieces/*.o ../build/resources/*.o ../build/*.o

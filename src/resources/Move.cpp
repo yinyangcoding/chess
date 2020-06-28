@@ -131,7 +131,10 @@ void Move::update_bishop(Board& board, Piece& piece) {
 
     // gets address of moves and clears it
     vector<Coordinate>& moves = piece.get_moves();
-    moves.clear();
+    // Only clear if it's a bishop, this lets queen work
+    if (piece.get_type() == 3) {
+        moves.clear();
+    }
     // reserves 13 spots (MAX possible moves for bishop)
     moves.reserve(13);
     // stores piece location so does not have to keep referencing for speed enhancements
@@ -147,18 +150,30 @@ void Move::update_bishop(Board& board, Piece& piece) {
     // MOVING UP-LEFT
     for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
         moves.emplace_back(i, j);
+        if (!board.get_piece(i, j).is_blank()) {
+            break;
+        }
     }
     // MOVING UP-RIGHT
     for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
         moves.emplace_back(i, j);
+        if (!board.get_piece(i, j).is_blank()) {
+            break;
+        }
     }
     // MOVING DOWN-LEFT
     for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
         moves.emplace_back(i, j);
+        if (!board.get_piece(i, j).is_blank()) {
+            break;
+        }
     }
     // MOVING DOWN-RIGHT
     for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
         moves.emplace_back(i, j);
+        if (!board.get_piece(i, j).is_blank()) {
+            break;
+        }
     }
     // readjusts moves to its correct size
     moves.shrink_to_fit();
@@ -220,55 +235,12 @@ void Move::update_rook(Board& board, Piece& piece) {
 void Move::update_queen(Board& board, Piece& piece) {
     BTools::debug("void Move::update_queen(Board& board, Piece& piece)");
 
-    // gets address of moves and clears it
-    vector<Coordinate>& moves = piece.get_moves();
-    moves.clear();
-    // reserves 27 spots (MAX possible moves for queen)
-    moves.reserve(27);
-    // stores piece location so does not have to keep referencing for speed enhancements
-    int y = piece.get_location().get_y();
-    int x = piece.get_location().get_x();
-    // stores piece color
-    int color = piece.get_color();
+    // Add rook moves
+    Move::update_rook(board, piece);
 
-    // Outline for all directions: 
-    // if on board and the piece at location is not the same color -->
-    // add that location and keep checking positions in that direction
+    // Add bishop moves
+    Move::update_bishop(board, piece);
 
-    // MOVING UP
-    for (int i = y - 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i--) {
-        moves.emplace_back(i, x);
-    }
-    // MOVING DOWN
-    for (int i = y + 1; (Move::on_board(i) && board.get_piece(i, x).get_color() != color); i++) {
-        moves.emplace_back(i, x);
-    }
-    // MOVING LEFT
-    for (int i = x - 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i--) {
-        moves.emplace_back(y, i);
-    }
-    // MOVING RIGHT
-    for (int i = x + 1; (Move::on_board(i) && board.get_piece(y, i).get_color() != color); i++) {
-        moves.emplace_back(y, i);
-    }
-    // MOVING UP-LEFT
-    for (int i = y - 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j--) {
-        moves.emplace_back(i, j);
-    }
-    // MOVING UP-RIGHT
-    for (int i = y - 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i--, j++) {
-        moves.emplace_back(i, j);
-    }
-    // MOVING DOWN-LEFT
-    for (int i = y + 1, j = x - 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j--) {
-        moves.emplace_back(i, j);
-    }
-    // MOVING DOWN-RIGHT
-    for (int i = y + 1, j = x + 1; (Move::on_board(i, j) && board.get_piece(i, j).get_color() != color); i++, j++) {
-        moves.emplace_back(i, j);
-    }
-    // readjusts moves to its correct size
-    moves.shrink_to_fit();
 }
 
 

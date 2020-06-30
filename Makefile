@@ -54,5 +54,9 @@ run: BuildClean
 
 clean:
 	@echo "🧹 Cleaning..."
-	@rm build/*.o
+ifeq ($(OS),Windows_NT)
+	Remove-Item build\*.o
+else
+	rm build/*.o
+endif
 

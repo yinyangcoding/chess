@@ -24,6 +24,8 @@ int main() {
 		cin >> toI;
 
 		Move::move(b, Coordinate(fromC, fromI), Coordinate(toC, toI));
+		cout << "White: " << Move::game_status(b, 'w') << endl;
+		cout << "Black: " << Move::game_status(b, 'b') << endl;
 		printf("\n");
 	}
 

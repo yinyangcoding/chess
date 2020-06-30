@@ -1,6 +1,6 @@
 exec=Chess
 
-Chess: buildAlert include/resources/Constants.h build build/Chess.o build/Coordinate.o build/Move.o build/Piece.o build/Board.o build/Player.o build/Tools.o build/BlandTools.o
+Chess: buildAlert build include/resources/Constants.h build/Chess.o build/Coordinate.o build/Move.o build/Piece.o build/Board.o build/Player.o build/Tools.o build/BlandTools.o
 	g++ build/Chess.o build/Coordinate.o build/Move.o build/Piece.o build/Board.o build/Player.o build/Tools.o build/BlandTools.o -o bin/Chess
 
 buildAlert:

@@ -37,7 +37,7 @@ class Move {
 
         // checks if king is in check, checkmate, or stalemate
         // none = -1, stalemate = 0, check = 1, checkmate = 2
-        static int check_position(Board& board, Coordinate king);
+        static int game_status(Board& board, char c);
         // returns true if in check
         static bool in_check(Board& board, Coordinate king);
         // return true if Coordinates surrounding king are all in check

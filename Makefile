@@ -40,9 +40,9 @@ build:
 BuildClean: Chess clean
 	@echo "🔧 Configuring..."
 ifeq ($(OS),Windows_NT)
-	exec=Chess.exe
+	@exec=Chess.exe
 else
-	exec=Chess
+	@exec=Chess
 endif
 
 run: BuildClean
@@ -50,9 +50,9 @@ run: BuildClean
 	@echo ""
 	@echo "====================="
 	@echo ""
-	./bin/$(exec)
+	@./bin/$(exec)
 
 clean:
 	@echo "🧹 Cleaning..."
-	rm build/*.o
+	@rm build/*.o
 

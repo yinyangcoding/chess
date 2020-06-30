@@ -6,7 +6,7 @@ Chess: buildAlert build include/resources/Constants.h build/Chess.o build/Coordi
 buildAlert:
 	@echo "🚧 Building..."
 
-build/Chess.o: build src/Chess.cpp include/resources/Constants.h
+build/Chess.o: src/Chess.cpp include/resources/Constants.h
 	g++ -c src/Chess.cpp -o build/Chess.o
 
 build/Coordinate.o: include/resources/Constants.h build src/objects/Coordinate.cpp include/objects/Coordinate.hpp

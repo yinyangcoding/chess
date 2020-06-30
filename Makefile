@@ -45,6 +45,13 @@ else
 	@exec=Chess
 endif
 
+runWin: Chess
+	@echo "🚀 Executing..."
+	@echo ""
+	@echo "====================="
+	@echo ""
+	@./bin/Chess.exe
+
 run: BuildClean
 	@echo "🚀 Executing..."
 	@echo ""
@@ -55,7 +62,7 @@ run: BuildClean
 clean:
 	@echo "🧹 Cleaning..."
 ifeq ($(OS),Windows_NT)
-	@echo "Skip over, TEMP"
+	Remove-Item build/*.o
 else
 	rm build/*.o
 endif

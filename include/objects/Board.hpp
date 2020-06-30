@@ -51,6 +51,9 @@ class Board {
         // Returns reference to whiteMoves or blackMoves depending on Piece given
         vector<Coordinate>* get_moves(Piece &a);
 
+        // Returns a reference to king by color provided
+        Piece* get_king(char c);
+
         // ============= Setters ==============
         // Sets a space to a piece
         void set_piece(Piece p, Coordinate c);

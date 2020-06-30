@@ -10,6 +10,9 @@ Board::Board(bool basic) {
     white = Player('w');
     black = Player('b');
     Board::build_board(basic);
+    white.set_king(Board::get_piece(Coordinate('e', 1)));
+    black.set_king(Board::get_piece(Coordinate('e', 8)));
+
 }
 
 // ============= Getters ==============
@@ -54,6 +57,21 @@ vector<Coordinate>* Board::get_moves(Piece &a) {
     }
     static vector<Coordinate>* blank;
     return blank;
+}
+
+// Returns a reference to king by color provided
+Piece* Board::get_king(char c) {
+    Piece blank;
+    if (c == 'w') {
+        return white.get_king();
+    }
+    else if (c == 'b') {
+        return black.get_king();
+    }
+    else {
+        return nullptr;
+    }
+    
 }
 
 

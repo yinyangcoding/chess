@@ -6,6 +6,7 @@ Player::Player() {
     BTools::debug("Player::Player()");
     color = 'n';
     points = 0;
+    king = nullptr;
 }
 
 // Sets given color: b or w / Sets points to 0
@@ -13,6 +14,7 @@ Player::Player(char c) {
     BTools::debug("Player::Player(char)");
     color = c;
     points = 0;
+    king = nullptr;
 }
 
 
@@ -25,6 +27,11 @@ char Player::get_color() const {
 // Returns points
 int Player::get_points() const {
     return points;
+}
+
+// Returns pointer to king
+Piece* Player::get_king() {
+    return king;
 }
 
 // // Returns captured vector
@@ -52,6 +59,11 @@ void Player::set_color(char c) {
 // Sets points
 void Player::set_points(int p) {
     points = p;
+}
+
+// Set king
+void Player::set_king(Piece p) {
+    king = &p;
 }
 
 

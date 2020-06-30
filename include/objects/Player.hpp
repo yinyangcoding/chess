@@ -13,7 +13,9 @@ class Player {
     private:
         char color;
         // Should use a point calculator at the end instead (running point total is unnecessary)
-        int points;      
+        int points;
+
+        Piece* king;    
 
     public:
         // // Can Be Accessed by Other Classes
@@ -36,6 +38,9 @@ class Player {
         // Returns points
         int get_points() const;
 
+        // Returns pointer to king
+        Piece* get_king();
+
         // // Returns captured vector
         // vector<Piece>& get_captured();
 
@@ -51,6 +56,9 @@ class Player {
 
         // Sets points
         void set_points(int p);
+
+        // Set king
+        void set_king(Piece p);
 
         // ================ Methods ================
         // Removes piece from onBoard and puts it in taken. Returns if successful

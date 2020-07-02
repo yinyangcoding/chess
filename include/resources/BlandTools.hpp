@@ -14,6 +14,11 @@ class BTools {
         static char to_upper(char c);
         static char to_lower(char c);
 
+        // Trim functions for strings
+        static std::string trim(std::string str);
+        static std::string ltrim(std::string str);
+        static std::string rtrim(std::string str);
+
         // Easy debug step
         static void debug(std::string s);
 

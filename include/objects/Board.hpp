@@ -22,8 +22,12 @@ class Board {
         Player white;
         Player black;
 
-        vector<Coordinate>* blackMoves[16];
+        Coordinate aliveWhite[16];
+        Coordinate aliveBlack[16];
+
         vector<Coordinate>* whiteMoves[16];
+        vector<Coordinate>* blackMoves[16];
+
 
     public:
         // Creates a 2d array to represent a board
@@ -45,11 +49,22 @@ class Board {
         Player& get_player(char c);
 
         // Returns reference to whiteMoves
-        vector<Coordinate>* get_whiteMoves();
+        vector<Coordinate>** get_whiteMoves();
         // Returns reference to blackMoves
-        vector<Coordinate>* get_blackMoves();
+        vector<Coordinate>** get_blackMoves();
+        // Returns reference to whiteMoves or blackMoves depending on color indicated
+        vector<Coordinate>** get_moves(char c);
         // Returns reference to whiteMoves or blackMoves depending on Piece given
-        vector<Coordinate>* get_moves(Piece &a);
+        vector<Coordinate>** get_moves(Piece& a);
+
+        // Returns aliveWhite
+        Coordinate* get_aliveWhite();
+        // Returns aliveBlack
+        Coordinate* get_aliveBlack();
+        // Returns aliveWhite or aliveBlack depending on color indicated
+        Coordinate* get_alive(char c);
+        // Returns aliveWhite or aliveBlack depending on Piece given
+        Coordinate* get_alive(Piece& a);
 
         // Returns a reference to king by color provided
         Piece* get_king(char c);
@@ -69,12 +84,21 @@ class Board {
         bool has_piece(int i, int j);
         bool has_piece(Coordinate c);
 
+        // Runs through board refreshing whiteMoves and blackMoves + aliveWhite and aliveBlack
+        void refresh_moves();
+
+        // End Game Methods
+        void staleMate();
+        void checkMate(char c);
+
         // ============= Debug ==============
         // This will print board piece ids
         void print_id();
 
         // This will print the board
         void print_board();
+
+
 
 
 

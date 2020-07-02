@@ -30,7 +30,7 @@ Player& Board::get_player(char c) {
     if (c == 'w') {
         return white;
     }
-    else if (c== 'b') {
+    else if (c == 'b') {
         return black;
     }
     else {
@@ -40,24 +40,61 @@ Player& Board::get_player(char c) {
 }
 
 // Returns reference to whiteMoves
-vector<Coordinate>* Board::get_whiteMoves() {
-    return *whiteMoves;
+vector<Coordinate>** Board::get_whiteMoves() {
+    return whiteMoves;
 }
 // Returns reference to blackMoves
-vector<Coordinate>* Board::get_blackMoves() {
-    return *blackMoves;
+vector<Coordinate>** Board::get_blackMoves() {
+    return blackMoves;
 }
-// Returns reference to whiteMoves or blackMoves depending on Piece given
-vector<Coordinate>* Board::get_moves(Piece &a) {
-    if (a.get_color() == 'w') {
-        return *whiteMoves;
+// Returns reference to whiteMoves or blackMoves depending on color indicated
+vector<Coordinate>** Board::get_moves(char c) {
+    if (c == 'w') {
+        return whiteMoves;
     }
-    else if (a.get_color() == 'b') {
-        return *blackMoves;
+    else if (c == 'b') {
+        return blackMoves;
     }
-    static vector<Coordinate>* blank;
+    static vector<Coordinate>** blank;
     return blank;
 }
+// Returns reference to whiteMoves or blackMoves depending on Piece given
+vector<Coordinate>** Board::get_moves(Piece &a) {
+    // Switches color to reflect realistic use of this method
+    char c = a.get_color();
+    if (c == 'w') {
+        c = 'b';
+    } else if (c == 'b') {
+        c = 'w';
+    }
+    return get_moves(c);
+}
+
+
+// Returns aliveWhite
+Coordinate* Board::get_aliveWhite() {
+    return aliveWhite;
+}
+// Returns aliveBlack
+Coordinate* Board::get_aliveBlack() {
+    return aliveBlack;
+}
+// Returns aliveWhite or aliveBlack depending on color indicated
+Coordinate* Board::get_alive(char c) {
+    if (c == 'w') {
+        return aliveWhite;
+    }
+    else if (c == 'b') {
+        return aliveBlack;
+    }
+    static Coordinate blank;
+    return &blank;
+}
+// Returns aliveWhite or aliveBlack depending on Piece given
+Coordinate* Board::get_alive(Piece& a) {
+    return get_alive(a.get_color());
+}
+
 
 // Returns a reference to king by color provided
 Piece* Board::get_king(char c) {
@@ -169,6 +206,91 @@ bool Board::has_piece(Coordinate c) {
     return Board::has_piece(c.get_y(), c.get_x());
 }
 
+
+// Runs through board refreshing whiteMoves and blackMoves + aliveWhite and aliveBlack
+void Board::refresh_moves() {
+    BTools::debug("void Board::refresh_moves()");
+    // Clears aliveWhite and aliveBlack
+    //for (int i = 0; i < 16; i++) {
+    //    aliveWhite[i] = Coordinate(-1, -1);
+    //    aliveBlack[i] = Coordinate(-1, -1);
+    //}
+    // Runs through board
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            // Checks if a piece is blank
+            if (!get_piece(i, j).is_blank()) {
+                // Stores id if piece is not blank
+                int id = get_piece(i, j).get_id();
+                // Sets king variables for both players
+                if (get_piece(i, j).get_type() == 6) {
+                    if (get_piece(i, j).get_color() == 'w'){
+                        get_player('w').set_king(get_piece(i, j));
+                    }
+                    else {
+                        get_player('b').set_king(get_piece(i, j));
+                    }
+                }
+                // Treats piece as a white piece if id > 0
+                if (id > 0) {
+                    // Sets appropriate element of whiteMoves to address of moves vector of that piece
+                    whiteMoves[id - 1] = &get_piece(i, j).get_moves();
+                    // Sets appropriate element of aliveWhite to location of that piece
+                    aliveWhite[id - 1] = get_piece(i, j).get_location();
+                    //printf("WHITE: %d\t", id);
+                    //get_piece(i, j).get_location().print_pair();
+                }
+                 // Treats piece as a black piece if id < 0
+                else {
+                    // Sets appropriate element of blackMoves to address of moves vector of that piece
+                    blackMoves[(id * -1) - 1] = &get_piece(i, j).get_moves();
+                    // Sets appropriate element of aliveBlack to location of that piece
+                    aliveBlack[(id * -1) - 1] = get_piece(i, j).get_location();
+                    //printf("BLACK: %d\t", id);
+                    //get_piece(i, j).get_location().print_pair();
+                }
+            }
+        }
+    }
+    /*printf("ALIVEWHITE:\n");
+    for (int i = 0; i < 16; i++) {
+        aliveWhite[i].print_pair();
+    }
+    printf("ALIVEBLACK:\n");
+    for (int i = 0; i < 16; i++) {
+        aliveBlack[i].print_pair();
+    }
+    */
+}
+
+
+// End Game Methods
+void Board::staleMate() {
+    printf("Game Over: Stalemate\n");
+}
+void Board::checkMate(char c) {
+    // Many variables for advance future use
+    char winnerChar;
+    char loserChar;
+    std::string winnerName;
+    std::string loserName;
+    if (c == 'w') {
+        winnerChar = 'w';
+        loserChar = 'b';
+        winnerName = "White";
+        loserName = "Black";
+    } 
+    else {
+        winnerChar = 'b';
+        loserChar = 'w';
+        winnerName = "Black";
+        loserName = "White";
+    }
+    printf("Game Over: Checkmate\n");
+    printf("%s Wins!\n", winnerName.c_str());
+}
+
+
 // ============= Debug ==============
 // This will print board piece ids
 void Board::print_id() {
@@ -184,7 +306,7 @@ void Board::print_id() {
 void Board::print_board() {
     BTools::debug("void Board::print_board()");
 
-    std::printf("    A B C D E F G H\n  +-----------------+\n");
+    std::printf("\n    A B C D E F G H\n  +-----------------+\n");
 
     for (int i = 0; i < SIZE; i++) {
         std::printf("%d | ", SIZE - i);

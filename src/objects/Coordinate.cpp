@@ -13,7 +13,7 @@ Coordinate::Coordinate(char c, int y) {
     c = BTools::to_upper(c);
     int x = c - 65;
     
-    // build standard coord
+    // Build standard coord
     this->y = SIZE - y;
     this->x = x;
 }
@@ -53,7 +53,7 @@ int Coordinate::get_x() const {
 }
 
 // ============ Methods ===============
-// Returns if this and b are equal
+// Returns true if this and b are equal
 bool Coordinate::equals(Coordinate b) {
     BTools::debug("bool Coordinate::equals(Coordinate)");
     if (this->y == b.get_y() && this->x == b.get_x()) {
@@ -69,6 +69,10 @@ void Coordinate::copy_from(Coordinate a) {
     x = a.get_x();
 }
 
+// Returns true if Coordinate is (-1, -1)
+bool Coordinate::is_blank() {
+    return (y == -1 && x == -1);
+}
 // ================ Debug ================
 // Prints pair in (x, y) format to the command line
 void Coordinate::print_pair() {

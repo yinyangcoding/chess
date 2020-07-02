@@ -46,9 +46,14 @@ class Coordinate {
         int get_y() const;
 
         // ============ Methods ===============
-        // Returns if this and b are equal
+        // Returns true if this and b are equal
         bool equals(Coordinate b);
+
+        // Copies from a to this
         void copy_from(Coordinate a);
+
+        // Returns true if Coordinate is (-1, -1)
+        bool is_blank();
 
         // ================ Debug ================
         // Prints pair in (x, y) format to the command line

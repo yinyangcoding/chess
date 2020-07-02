@@ -30,30 +30,36 @@ class Move {
         static void update_queen(Board& board, Piece& piece);
         static void update_king(Board& board, Piece& piece);
 
-        // checks if one pos is btwn -1 and SIZE
+        // Checks if one pos is btwn -1 and SIZE
         static bool on_board(int c);
-        // checks if both pos are btwn -1 and SIZE
+        // Checks if both pos are btwn -1 and SIZE
         static bool on_board(int y, int x);
+        // Checks if both pos are btwn -1 and SIZE from Coordinate
+        static bool on_board(Coordinate loc);
 
-        // checks if king is in check, checkmate, or stalemate
-        // none = -1, stalemate = 0, check = 1, checkmate = 2
+        // checks if king of color c is in check, checkmate, or stalemate
+        // neutral = -1, stalemate = 0, check = 1, checkmate = 2
         static int game_status(Board& board, char c);
         // returns true if in check
-        static bool in_check(Board& board, Coordinate king);
+        static bool in_check(Board& board, char color, Coordinate king);
         // return true if Coordinates surrounding king are all in check
-        static bool surrounding_check(Board& board, Coordinate king);
+        static bool surrounding_check(Board& board, char color, Coordinate king, bool centerCheck);
 
         // A captures B
         // From piece references
-        static void replace(Piece& a, Piece& b);
+        static void replace(Board& board, Piece& a, Piece& b);
         // From coords
         static void replace(Board& board, Coordinate a, Coordinate b);
 
+        // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for indicated player
+        static void refresh(Board& board);
+
         // Main Move function that will consider all needed methods
-        // Returns a piece if captured. Returns blank if not
-        static void move(Board& board, Coordinate a, Coordinate b);
-
-
+        // Moves from a to b
+        // Returns int indicating result of the move
+        // invalid (against basic rules) = -2, invalid (moving to check) = -1,
+        // valid (nuetral) = 0, valid (stalemate) = 1, valid (checkmate) = 2
+        static int move(Board& board, Coordinate a, Coordinate b);
 };
 
 #endif

@@ -58,7 +58,7 @@ class Player {
         void set_points(int p);
 
         // Set king
-        void set_king(Piece p);
+        void set_king(Piece& p);
 
         // ================ Methods ================
         // Removes piece from onBoard and puts it in taken. Returns if successful

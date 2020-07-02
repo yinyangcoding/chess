@@ -62,7 +62,7 @@ void Player::set_points(int p) {
 }
 
 // Set king
-void Player::set_king(Piece p) {
+void Player::set_king(Piece& p) {
     king = &p;
 }
 

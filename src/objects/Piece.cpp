@@ -29,7 +29,7 @@ Piece::Piece(int t, char c) {
 
 // Creates blank piece
 Piece::Piece() {
-    BTools::debug("Piece::Piece()");
+    // BTools::debug("Piece::Piece()");
     make_blank();
 }
 
@@ -114,7 +114,7 @@ void Piece::assign_point() {
 
 // Copies a traits to this
 void Piece::copy_from(Piece a) {
-    BTools::debug("void Piece::copy_from(Piece)");
+    // BTools::debug("void Piece::copy_from(Piece)");
     id = a.get_id();
     type = a.get_type();
     color = a.get_color();
@@ -129,7 +129,7 @@ bool Piece::is_blank() {
 
 // Makes the piece a blank placeholder
 void Piece::make_blank() {
-    BTools::debug("void Piece::make_blank()");
+    // BTools::debug("void Piece::make_blank()");
     id = 0;
     type = -1;
     color = 'n';

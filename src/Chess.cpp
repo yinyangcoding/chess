@@ -52,6 +52,10 @@ int main() {
 		printf("TURN %d (%s):\n", turnNumber, playerName.c_str());
 		getline(cin, input);
 		input = BTools::trim(input);
+		if (BTools::to_upper(input.at(0)) == 'Q' || input == "QUIT" || input == "END") {
+			printf("Game Over: Force Quit\n");
+			break;
+		}
 		if ((input.size() != 5) || 
 		(!isalpha(input.at(0)) || !isdigit(input.at(1)) || input.at(2) != ' ' || !isalpha(input.at(3)) || !isdigit(input.at(4)))) {
 			BTools::debug("NOT VALID INPUT --> CONTINUE");

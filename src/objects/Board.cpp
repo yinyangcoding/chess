@@ -269,6 +269,7 @@ void Board::staleMate() {
     printf("Game Over: Stalemate\n");
 }
 void Board::checkMate(char c) {
+    BTools::debug("void Board::checkMate(char c)");
     // Many variables for advance future use
     char winnerChar;
     char loserChar;

@@ -510,6 +510,7 @@ void Move::promote(Board& board, Coordinate c, char n) {
 
 // Takes user input
 void Move::promote_prompt(Board& board, Coordinate c) {
+    BTools::debug("void Move::promote_prompt(Board& board, Coordinate c)");
     Piece& pawn = board.get_piece(c);
 
     // Exit if not a pawn

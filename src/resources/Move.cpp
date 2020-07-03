@@ -469,6 +469,89 @@ void Move::refresh(Board& board) {
     Move::update_player(board, 'b');
 }
 
+// Promotes a pawn
+void Move::promote(Board& board, Coordinate c, int n) {
+    BTools::debug("void Move::promote(Board& board, Coordinate c, int n)");
+    Piece& pawn = board.get_piece(c);
+
+    pawn.set_type(n);
+
+}
+
+// Promotes a pawn from char
+void Move::promote(Board& board, Coordinate c, char n) {
+    BTools::debug("void Move::promote(Board& board, Coordinate c, char n)");
+    n = BTools::to_lower(n);
+
+    // Grab the int of the piece
+    int nPiece;
+    switch (n) {
+        case 'n':
+            nPiece = 2;
+            break;
+        case 'b':
+            nPiece = 3;
+            break;
+        case 'r':
+            nPiece = 4;
+            break;
+        case 'q':
+            nPiece = 5;
+            break;
+        default:
+            return;
+            break;
+    }
+
+    // Run promote
+    Move::promote(board, c, nPiece);
+
+}
+
+// Takes user input
+void Move::promote_prompt(Board& board, Coordinate c) {
+    Piece& pawn = board.get_piece(c);
+
+    // Exit if not a pawn
+    std::cout << pawn.get_type() << std::endl;
+    if (pawn.get_type() != 1) {
+        return;
+    }
+
+    // Find maxY coord
+
+    int maxY = 0;
+    if (pawn.get_color() == 'b') {
+        maxY = SIZE - 1;
+    }
+    else if (pawn.get_color() == 'w') {
+        maxY = 0;
+    }
+    else {
+        return;
+
+    }
+    std::cout << maxY << std::endl;
+
+
+    // Check if piece is not at the end of the board
+    if (pawn.get_location().get_y() != maxY) {
+
+        return;
+    }
+
+    // Prompt for promote
+    char input;
+    do {
+        std::cout << "Pawn promotion...\nb = bishop, n = knight, r = rook, q = queen\nEnter choice:" << std::endl;
+        std::cin >> input;
+
+    } while (!(input == 'b' || input == 'n' || input == 'r' || input == 'q'));
+
+    // Promote piece
+    Move::promote(board, c, input);
+
+}
 
 // Main Move function that will consider all needed methods
 // Moves from a to b
@@ -489,7 +572,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
-    bool canMove = false; // True if it can move there
+    bool canMove = true; // True if it can move there
 
     if (!Move::on_board(a) || !Move::on_board(b)) {
         printf("INVALID: Location is off board\n"); // For Debug Purposes
@@ -549,6 +632,9 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Actually moves the piece
     Move::replace(board, moving, cap);
+
+    // Check if needs promotion
+    Move::promote_prompt(board, b);
 
     // Stores color and color names for future use
     char selfChar;

@@ -441,37 +441,11 @@ bool Move::surrounding_check(Board& board, char color, Coordinate king, bool cen
 void Move::replace(Board& board, Piece& a, Piece& b) {
     BTools::debug("void Move::replace(Board& board, Piece& a, Piece& b)");
 
-    /*
-    // Indicates if the moving piece (a) is a king so adjustments can be made later
-    bool later = 0;
-    // Checks if id = 6 indicating that piece a is a king
-    if (a.get_type() == 6) {
-        // Sets later to 1 if the color of a is white
-        if (a.get_color() == 'w') {
-            later = 1;
-        }
-        // Sets later to -1 if the color of a is black
-        else {
-            later = -1;
-        }
-    }
-    */
-
     // "Moves" a to b using copy_from
     b.copy_from(a);
     // Clears a by making it blank
     a.make_blank(); // (location is not changed in make_blank so location is already correctly set)
     
-    /*
-    // Sets king of white player to piece b if piece a was the white king
-    if (later == 1) {
-        board.get_player('w').set_king(b);
-    }
-    // Sets king of black player to piece b if piece a was the black king
-    else if (later == -1) {
-        board.get_player('b').set_king(b);
-    }
-    */
 }
 
 // From coords

@@ -34,21 +34,6 @@ Piece* Player::get_king() {
     return king;
 }
 
-// // Returns captured vector
-// vector<Piece>& Player::get_captured() {
-//     return captured;
-// }
-
-// // Returns onBoard vector
-// vector<Piece>& Player::get_onBoard() {
-//     return onBoard;
-// }
-
-// // Returns lost vector
-// vector<Piece>& Player::get_lost() {
-//     return lost;
-// }
-
 
 // ============== Setters ================
 // Sets color
@@ -68,20 +53,3 @@ void Player::set_king(Piece& p) {
 
 
 // ================ Methods ================
-// Removes piece from onBoard and puts it in taken. Returns if successful
-// bool Player::lose(Piece& a) {
-//     if(Tools::contains(onBoard, a)) {
-//         int index = Tools::index(onBoard, a);
-
-//         Piece temp;
-//         temp.copy_from(onBoard[index]);
-
-//         vector<Piece>::iterator it = onBoard.begin() + index;
-
-//         onBoard.erase(it);
-//         lost.push_back(temp);
-
-//         return true;
-//     }
-//     return false;
-// }

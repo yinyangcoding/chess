@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "Constants.h"
 #include "BlandTools.hpp"
@@ -53,6 +54,13 @@ class Move {
 
         // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for indicated player
         static void refresh(Board& board);
+
+        // Promotes a pawn
+        static void promote(Board& board, Coordinate c, int n);
+        // Promotes a pawn from char
+        static void promote(Board& board, Coordinate c, char n);
+        // Takes user input
+        static void promote_prompt(Board& board, Coordinate c);
 
         // Main Move function that will consider all needed methods
         // Moves from a to b

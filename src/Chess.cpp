@@ -6,6 +6,7 @@
 #include "../include/objects/Coordinate.hpp"
 #include "../include/objects/Piece.hpp"
 #include "../include/resources/Tools.hpp"
+#include "../include/resources/BlandTools.hpp"
 #include "../include/objects/Board.hpp"
 #include "../include/objects/Player.hpp"
 #include "../include/resources/Move.hpp"
@@ -52,10 +53,7 @@ int main() {
 		printf("TURN %d (%s):\n", turnNumber, playerName.c_str());
 		getline(cin, input);
 		input = BTools::trim(input);
-		if (BTools::to_upper(input.at(0)) == 'Q' || input == "QUIT" || input == "END") {
-			printf("Game Over: Force Quit\n");
-			break;
-		}
+
 		if ((input.size() != 5) || 
 		(!isalpha(input.at(0)) || !isdigit(input.at(1)) || input.at(2) != ' ' || !isalpha(input.at(3)) || !isdigit(input.at(4)))) {
 			BTools::debug("NOT VALID INPUT --> CONTINUE");
@@ -65,6 +63,7 @@ int main() {
 			printf("Invalid Input. Go Again (STILL %s)\n", playerName.c_str());
 			continue;
 		}
+
 
 		fromC = input.at(0);
 		fromI = input.at(1) - '0';
@@ -93,6 +92,7 @@ int main() {
 		}
 
 
+
 		// Moves Pieces & Stores Game State
 		state = Move::move(b, Coordinate(fromC, fromI), Coordinate(toC, toI));
 		// Regresses To Beginning Of Loop If Move Indicates Error
@@ -107,6 +107,7 @@ int main() {
 			printf("Invalid. Moving Into Check. Go Again (STILL %s)\n", playerName.c_str());
 			continue;
 		}
+
 		else if (state == -2) {
 			BTools::debug("MOVE ERROR --> GAME STATE: " + to_string(state) + " --> CONTINUE");
 			// Displays Board
@@ -127,6 +128,7 @@ int main() {
 		if (state != 2 && state != 3) {
 			b.print_board();
 		}
+
 	}
 	// Exits Eeturning 0
 	return 0;

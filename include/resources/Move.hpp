@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "Constants.h"
 #include "BlandTools.hpp"

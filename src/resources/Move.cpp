@@ -532,7 +532,6 @@ void Move::promote_prompt(Board& board, Coordinate c) {
         return;
 
     }
-    std::cout << maxY << std::endl;
 
 
     // Check if piece is not at the end of the board
@@ -542,10 +541,12 @@ void Move::promote_prompt(Board& board, Coordinate c) {
     }
 
     // Prompt for promote
+    std::string raw_input;
     char input;
     do {
         std::cout << "Pawn promotion...\nb = bishop, n = knight, r = rook, q = queen\nEnter choice:" << std::endl;
-        std::cin >> input;
+        std::getline(std::cin, raw_input);
+        input = raw_input.at(0);
 
     } while (!(input == 'b' || input == 'n' || input == 'r' || input == 'q'));
 
@@ -573,7 +574,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
-    bool canMove = true; // True if it can move there
+    bool canMove = false; // True if it can move there
 
     if (!Move::on_board(a) || !Move::on_board(b)) {
         printf("INVALID: Location is off board\n"); // For Debug Purposes

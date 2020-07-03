@@ -1,9 +1,5 @@
-Layout Move::move() to do:
-- Add capture processing
-- Add turn based
+En passant
 
-Move::update_moves():
-- Fix bishop going through pieces
-- Setup queen to run update_bishop() and update_rook()
+Pawn promotion
 
-Proper coord process
+Linting

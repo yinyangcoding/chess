@@ -41,15 +41,6 @@ class Player {
         // Returns pointer to king
         Piece* get_king();
 
-        // // Returns captured vector
-        // vector<Piece>& get_captured();
-
-        // // Returns onBoard vector
-        // vector<Piece>& get_onBoard();
-
-        // // Returns lost vector
-        // vector<Piece>& get_lost();
-
         // ============== Setters ================
         // Sets color
         void set_color(char c);
@@ -61,8 +52,7 @@ class Player {
         void set_king(Piece& p);
 
         // ================ Methods ================
-        // Removes piece from onBoard and puts it in taken. Returns if successful
-        // bool lose(Piece& a);
+
 };
 
 #endif

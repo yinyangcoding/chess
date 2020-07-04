@@ -1,5 +1,8 @@
 #include "../../include/resources/Move.hpp"
 
+// Saves all moves
+std::vector<Displace> turns;
+
 // ============= Methods =============
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Player specific updates
@@ -613,6 +616,9 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             break;
         }
     }
+
+    // Add to the moves vector
+    turns.emplace_back(board, a, b);
 
     // Exits if it cannot move
     if (!canMove) {

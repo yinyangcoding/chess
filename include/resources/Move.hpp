@@ -12,8 +12,25 @@
 #include "../objects/Board.hpp"
 #include "../objects/Player.hpp"
 
+// Build a struct that contains a translation
+struct Displace {
+    Coordinate from; // Contains where it moved from
+    Coordinate to; // Contains where it moved to
+
+    int id; // ID of the piece that moved
+
+    // Basic constructor
+    Displace(Board& b, Coordinate f, Coordinate t) {
+        from.copy_from(f);
+        to.copy_from(t);
+        id = b.get_piece(from).get_id();
+    }
+
+};
+
 // Will represent vector from initial coord to final coord
 namespace Move {
+
     // ============= Methods =============
     // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
     // Player specific update

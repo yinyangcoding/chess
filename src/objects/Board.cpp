@@ -24,6 +24,19 @@ Piece& Board::get_piece(int i, int j) {
 Piece& Board::get_piece(Coordinate c) {
     return Board::get_piece(c.get_y(), c.get_x());
 }
+// From id
+Piece& Board::get_piece(int id) {
+    // Loop through board
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (this->get_piece(i, j).get_id() == id) {
+                return this->get_piece(i, j);
+            }
+
+        }
+    }
+    return this->blank;
+}
 
 // Returns reference to Player
 Player& Board::get_player(char c) {
@@ -204,6 +217,9 @@ bool Board::has_piece(int i, int j) {
 }
 bool Board::has_piece(Coordinate c) {
     return Board::has_piece(c.get_y(), c.get_x());
+}
+bool Board::has_piece(int id) {
+    return !this->get_piece(id).is_blank();
 }
 
 

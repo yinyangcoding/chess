@@ -30,6 +30,9 @@ class Board {
 
 
     public:
+        // To return blank piece
+        Piece blank;
+
         // Creates a 2d array to represent a board
         // blank piece means no piece there
         Piece board[SIZE][SIZE];
@@ -44,6 +47,8 @@ class Board {
         Piece& get_piece(int i, int j);
         // From coord
         Piece& get_piece(Coordinate c);
+        // From id
+        Piece& get_piece(int id);
 
         // Returns reference to Player
         Player& get_player(char c);
@@ -83,6 +88,7 @@ class Board {
         // Returns true or false if there is a piece there
         bool has_piece(int i, int j);
         bool has_piece(Coordinate c);
+        bool has_piece(int id);
 
         // Runs through board refreshing whiteMoves and blackMoves + aliveWhite and aliveBlack
         void refresh_moves();

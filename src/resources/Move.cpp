@@ -557,6 +557,111 @@ void Move::promote_prompt(Board& board, Coordinate c) {
     Move::promote(board, c, input);
 
 }
+// Checks if it can castle and if the move is a castle, then castles
+bool Move::castle(Board& board, Coordinate from, Coordinate to) {
+    BTools::debug("void Move::castle(Board& board, Coordinate from, Coordinate to)");
+    // Pass it to castle with pieces
+    return Move::castle(board, board.get_piece(from), to);
+
+
+}
+// From piece
+bool Move::castle(Board& board, Piece& king, Coordinate to) {
+    BTools::debug("void Move::castle(Board& board, Piece& moving, Piece& to)");
+    char color;
+    bool kingSide;
+    bool queenSide;
+
+    // Check if it's not a king
+    if (king.get_type() != 6) {
+        return false;
+    }
+
+    // Check if the king has moved
+    if (king.hasMoved) {
+        return false;
+    }
+
+    // Grab it's color
+    color = king.get_color();
+
+    // Check if it's kingside or queenside
+    int y;
+    char x;
+
+    if (color == 'b') {
+        y = 8;
+    }
+    else if (color == 'w') {
+        y = 1;
+    }
+    else {
+        return false;
+    }
+
+    kingSide = to.equals(Coordinate('g', y));
+    queenSide = to.equals(Coordinate('c', y));
+    
+    // Exit if it's not a castle
+    if (!(kingSide && queenSide)) {
+        return false;
+    }
+
+    // Set the x char
+    if (kingSide) {
+        x = 'h';
+    }
+    else {
+        x = 'a';
+    }
+
+    // Save the rook as an alias
+    Piece& rook = board.get_piece(Coordinate(x, y));
+
+    // Check if the rook has moved
+    if (rook.hasMoved) {
+        return false;
+    }
+
+    // Exit if there are pieces in the way
+    if (kingSide) {
+        if (!(board.get_piece(Coordinate('f', y)).is_blank() && board.get_piece(Coordinate('g', y)).is_blank())) {
+            return false;
+        }
+    }
+    else {
+        if (!(board.get_piece(Coordinate('b', y)).is_blank() && board.get_piece(Coordinate('c', y)).is_blank() &&board.get_piece(Coordinate('d', y)).is_blank())) {
+            return false;
+        }
+    }
+
+    // Grab king and rook coords
+    Coordinate kingDest;
+    Coordinate rookDest;
+    
+    if (kingSide) {
+        kingDest.copy_from(Coordinate('g', y));
+        rookDest.copy_from(Coordinate('f', y));
+    }
+    else {
+        kingDest.copy_from(Coordinate('c', y));
+        rookDest.copy_from(Coordinate('d', y));
+
+    }
+
+    turns.emplace_back(board, king.get_location(), to);
+    king.hasMoved = true;
+    rook.hasMoved = true;
+
+    Move::replace(board, king, board.get_piece(kingDest));
+    Move::replace(board, rook, board.get_piece(rookDest));
+
+    return true;
+
+
+
+    
+}
 
 // Main Move function that will consider all needed methods
 // Moves from a to b
@@ -578,6 +683,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     // Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
     bool canMove = false; // True if it can move there
+    bool skip = false; // If theres another rule skipping checks
 
     if (!Move::on_board(a) || !Move::on_board(b)) {
         printf("INVALID: Location is off board\n"); // For Debug Purposes
@@ -597,31 +703,35 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     
     // Updates the moving piece's moves
     Move::update_moves(board, moving);
-    //vector<Coordinate> movesTest = board.get_piece(a).get_moves();
-	//for (int i = 0; i < movesTest.size(); i++) {
-	//	movesTest[i].print_pair();
-	//}
 
+    // Check for castling
+    skip = Move::castle(board, moving, b);
+
+    // Checks if move is legal and within moveset
+    if (!skip) {
+        vector<Coordinate>& moves = moving.get_moves();
+        for (int i = 0; i < moves.size(); i++) {
+            // moves[i].print_pair();
+            if (moves[i].equals(b)) {
+                canMove = true;
+                break;
+            }
+        }
+    }
+    
     // Sets capture to true if piece cap is not blank
     if (!cap.is_blank()) {
         capture = true;
     }
 
-    // Checks if move is legal and within moveset
-    vector<Coordinate>& moves = moving.get_moves();
-    for (int i = 0; i < moves.size(); i++) {
-        // moves[i].print_pair();
-        if (moves[i].equals(b)) {
-            canMove = true;
-            break;
-        }
+    // Add to the moves vector
+    if (!skip) {
+        turns.emplace_back(board, a, b);
+        moving.hasMoved = true;
     }
 
-    // Add to the moves vector
-    turns.emplace_back(board, a, b);
-
     // Exits if it cannot move
-    if (!canMove) {
+    if (!skip && !canMove) {
         printf("INVALID: Piece cannot move there\n"); // For Debug Purposes
         // Exits returning -2 indicating invalid (against basic rules)
         return -2;
@@ -635,11 +745,16 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Stores replicate of captured piece (cap) if undo is necessary
     Piece reverse;
-    reverse.copy_from(cap);
-    reverse.set_location(cap.get_location());
+    if (!skip) {
+        reverse.copy_from(cap);
+        reverse.set_location(cap.get_location());
+
+    }
 
     // Actually moves the piece
-    Move::replace(board, moving, cap);
+    if (!skip) {
+        Move::replace(board, moving, cap);
+    }
 
     // Check if needs promotion
     Move::promote_prompt(board, b);

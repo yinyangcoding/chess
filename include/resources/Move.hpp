@@ -78,6 +78,12 @@ namespace Move {
     // Takes user input
     void promote_prompt(Board& board, Coordinate c);
 
+    // Checks if it can castle and if the move is a castle, then castles
+    bool castle(Board& board, Coordinate from, Coordinate to);
+    // From piece
+    bool castle(Board& board, Piece& moving, Coordinate to);
+
+
     // Main Move function that will consider all needed methods
     // Moves from a to b
     // Returns int indicating result of the move

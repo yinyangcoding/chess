@@ -7,6 +7,7 @@ using namespace std;
 Piece::Piece(int t) {
     BTools::debug("Piece::Piece(int)");
     type = t;
+    hasMoved = false;
     assign_point();
     id = 0;
 }
@@ -15,6 +16,7 @@ Piece::Piece(int t) {
 Piece::Piece(int t, char c) {
     BTools::debug("Piece::Piece(int, char)");
     type = t;
+    hasMoved = false;
     assign_point();
     color = c;
     if (c == 'w') {
@@ -119,6 +121,7 @@ void Piece::copy_from(Piece a) {
     type = a.get_type();
     color = a.get_color();
     point = a.get_point();
+    hasMoved = a.hasMoved;
 }
 
 // Returns if the piece is a blank placeholder
@@ -134,6 +137,7 @@ void Piece::make_blank() {
     type = -1;
     color = 'n';
     point = -1;
+    hasMoved = false;
 }
 
 // swaps pieces

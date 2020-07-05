@@ -14,7 +14,7 @@ using namespace std;
 
 // Parent class of each piece
 class Piece {
-	protected:
+	private:
         static int idCountW; // Increments id for white
         static int idCountB; // Decrements id for black
         int id; // Unique id for each piece
@@ -25,6 +25,7 @@ class Piece {
         Coordinate location; // Contains current location
 
     public:
+        bool hasMoved; // true if it's moved, false otherwise
         // ============= Constructors ==============
         // Creates piece with given type
         Piece(int t);

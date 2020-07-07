@@ -517,7 +517,6 @@ void Move::promote_prompt(Board& board, Coordinate c) {
     Piece& pawn = board.get_piece(c);
 
     // Exit if not a pawn
-    std::cout << pawn.get_type() << std::endl;
     if (pawn.get_type() != 1) {
         return;
     }
@@ -603,7 +602,7 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
     queenSide = to.equals(Coordinate('c', y));
     
     // Exit if it's not a castle
-    if (!(kingSide && queenSide)) {
+    if (!(kingSide || queenSide)) {
         return false;
     }
 
@@ -617,6 +616,11 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
 
     // Save the rook as an alias
     Piece& rook = board.get_piece(Coordinate(x, y));
+
+    // Check if it's a rook
+    if (rook.get_type() != 4) {
+        return false;
+    }
 
     // Check if the rook has moved
     if (rook.hasMoved) {
@@ -781,6 +785,9 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for enemy player 
     Move::refresh(board);
     
+    if (skip) {
+        return 0;
+    }
     // Holds game status in regards to king with self color 
     // neutral = -1, stalemate = 0, check = 1, checkmate = 2
     int statusSelf = Move::game_status(board, selfChar);

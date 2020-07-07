@@ -630,7 +630,7 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
         }
     }
     else {
-        if (!(board.get_piece(Coordinate('b', y)).is_blank() && board.get_piece(Coordinate('c', y)).is_blank() &&board.get_piece(Coordinate('d', y)).is_blank())) {
+        if (!(board.get_piece(Coordinate('b', y)).is_blank() && board.get_piece(Coordinate('c', y)).is_blank() && board.get_piece(Coordinate('d', y)).is_blank())) {
             return false;
         }
     }

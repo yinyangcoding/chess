@@ -11,7 +11,7 @@
 #include "../objects/Piece.hpp"
 #include "../objects/Board.hpp"
 #include "../objects/Player.hpp"
-
+// NOTE: Basic position 2d data structure to compute for three time stalemate
 // Build a struct that contains a translation
 struct Displace {
     Coordinate from; // Contains where it moved from

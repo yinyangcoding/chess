@@ -324,7 +324,7 @@ int Move::game_status(Board& board, char c) {
     //printf("King location: "); king.print_pair();
 
     // Holds whether king is in check
-    bool check = Move::in_check(board, c, king);
+    bool check = Move::in_check(board, c, king, false);
     // Holds whether all locations around king are in check
     bool surround = Move::surrounding_check(board, c, king, check);
 
@@ -339,16 +339,21 @@ int Move::game_status(Board& board, char c) {
     // Returns 1 (check) if king is in check but not in surrounding check
     } else if (check && !surround) {
         return 1;
-    // Returns 2 (checkmate) if king is in check and surrounding check
+    // Checkmate possibility if king is in check and surrounding check
     } else {
-        return 2;
+        // Returns 2 (checkmate) if king cannot eat pieces putting it in check
+        if (Move::in_check(board, c, king, true)) {
+            return 2;
+        }
+        // Returns 1 (check) if king can eat pieces putting it in check
+        return 1;
     }
 }
 
 
 // returns true if in check
-bool Move::in_check(Board& board, char color, Coordinate king) {
-    BTools::debug("bool Move::in_check(Board& board, Coordinate king)");
+bool Move::in_check(Board& board, char color, Coordinate king, bool end) {
+    BTools::debug("bool Move::in_check(Board& board, char color, Coordinate king, bool end)");
 
     // Stores piece location so does not have to keep referencing for speed enhancements
     int y = king.get_y();
@@ -391,9 +396,22 @@ bool Move::in_check(Board& board, char color, Coordinate king) {
                 //  Checks if Coordinate king and the Coordinate from moves are the same
                 if (king.equals(moves[i]->at(j))) {
                     
-                    //alive[i].print_pair();
+                    // Returns true if no end game possibility
+                    if (!end) {
+                        return true;
+                    }
 
-                    return true;
+                    // Checks if the piece that is putting king in check can be eaten if end game possibility
+                    if (!Move::in_check(board, enemy, alive[i], false)) {
+                        
+//BIG LOGIC NOTE FOR LATER: if king is the only one who can eat then eat update everything if king is in check checkmate
+                        //alive[i].print_pair();
+                        //moves[i]->at(j).print_pair();
+                        //printf("Is Piece Putting King In Check, In Check: %d\n", Move::in_check(board, enemy, alive[i], false));
+                        
+                        return true;
+                    }
+                    
                 }
             }
         }
@@ -420,10 +438,13 @@ bool Move::surrounding_check(Board& board, char color, Coordinate king, bool cen
                 if ((i != y) || (j != x)) {
                     // Checks if x-position is on board
                     if (Move::on_board(j)) {
+
                         //printf("Surround:  ");
                         //Coordinate(i, j).print_pair();
+                        //printf("In Check: %d\n", Move::in_check(board, color, Coordinate(i, j), false));
+
                         // Exit returning false if (i,j) is not in check 
-                        if (!Move::in_check(board, color, Coordinate(i, j))) {
+                        if (!Move::in_check(board, color, Coordinate(i, j), false)) {
                             // Checks if piece is blank if centerCheck is false (king is not in check) 
                             if (!centerCheck || board.get_piece(i, j).is_blank()) {
                                 return false;
@@ -759,6 +780,11 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     if (!skip) {
         Move::replace(board, moving, cap);
     }
+    
+
+
+    // board.print_board();
+
 
     // Check if needs promotion
     Move::promote_prompt(board, b);
@@ -782,7 +808,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     }
     //printf("selfChar: %c\nenemyChar: %c\nselfName: %s\nenemyName: %s\n", selfChar, enemyChar, selfName.c_str(), enemyName.c_str());
 
-    // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for enemy player 
+    // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for both players 
     Move::refresh(board);
     
     if (skip) {
@@ -806,6 +832,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             return -1;
         // Stalemate
         case 0:
+            printf("First Stale");
             board.staleMate();
             // Exits returning 2 indicating valid (stalemate)
             return 2;
@@ -833,6 +860,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             return 1;
         // Stalemate
         case 0:
+            printf("Second Stale");
             board.staleMate();
             // Exits returning 2 indicating valid (stalemate)
             return 2;

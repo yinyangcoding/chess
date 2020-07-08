@@ -58,7 +58,7 @@ namespace Move {
     // neutral = -1, stalemate = 0, check = 1, checkmate = 2
     static int game_status(Board& board, char c);
     // returns true if in check
-    bool in_check(Board& board, char color, Coordinate king);
+    bool in_check(Board& board, char color, Coordinate king, bool end);
     // return true if Coordinates surrounding king are all in check
     bool surrounding_check(Board& board, char color, Coordinate king, bool centerCheck);
 

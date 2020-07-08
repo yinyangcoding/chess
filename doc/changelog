@@ -63,3 +63,7 @@ Files Changed: Move.cpp
 Notes:
 - Fixed bug that allowed bishop, rook, queen to move through pieces
 - Had queen consider rook and bishop to update, rather than its own method
+
+7/07/20 - Matt
+Notes:
+- Added castling feature

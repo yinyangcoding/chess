@@ -324,7 +324,7 @@ int Move::game_status(Board& board, char c) {
     //printf("King location: "); king.print_pair();
 
     // Holds whether king is in check
-    bool check = Move::in_check(board, c, king);
+    bool check = Move::in_check(board, c, king, false);
     // Holds whether all locations around king are in check
     bool surround = Move::surrounding_check(board, c, king, check);
 
@@ -339,16 +339,21 @@ int Move::game_status(Board& board, char c) {
     // Returns 1 (check) if king is in check but not in surrounding check
     } else if (check && !surround) {
         return 1;
-    // Returns 2 (checkmate) if king is in check and surrounding check
+    // Checkmate possibility if king is in check and surrounding check
     } else {
-        return 2;
+        // Returns 2 (checkmate) if king cannot eat pieces putting it in check
+        if (Move::in_check(board, c, king, true)) {
+            return 2;
+        }
+        // Returns 1 (check) if king can eat pieces putting it in check
+        return 1;
     }
 }
 
 
 // returns true if in check
-bool Move::in_check(Board& board, char color, Coordinate king) {
-    BTools::debug("bool Move::in_check(Board& board, Coordinate king)");
+bool Move::in_check(Board& board, char color, Coordinate king, bool end) {
+    BTools::debug("bool Move::in_check(Board& board, char color, Coordinate king, bool end)");
 
     // Stores piece location so does not have to keep referencing for speed enhancements
     int y = king.get_y();
@@ -391,9 +396,22 @@ bool Move::in_check(Board& board, char color, Coordinate king) {
                 //  Checks if Coordinate king and the Coordinate from moves are the same
                 if (king.equals(moves[i]->at(j))) {
                     
-                    //alive[i].print_pair();
+                    // Returns true if no end game possibility
+                    if (!end) {
+                        return true;
+                    }
 
-                    return true;
+                    // Checks if the piece that is putting king in check can be eaten if end game possibility
+                    if (!Move::in_check(board, enemy, alive[i], false)) {
+                        
+//BIG LOGIC NOTE FOR LATER: if king is the only one who can eat then eat update everything if king is in check checkmate
+                        //alive[i].print_pair();
+                        //moves[i]->at(j).print_pair();
+                        //printf("Is Piece Putting King In Check, In Check: %d\n", Move::in_check(board, enemy, alive[i], false));
+                        
+                        return true;
+                    }
+                    
                 }
             }
         }
@@ -420,10 +438,13 @@ bool Move::surrounding_check(Board& board, char color, Coordinate king, bool cen
                 if ((i != y) || (j != x)) {
                     // Checks if x-position is on board
                     if (Move::on_board(j)) {
+
                         //printf("Surround:  ");
                         //Coordinate(i, j).print_pair();
+                        //printf("In Check: %d\n", Move::in_check(board, color, Coordinate(i, j), false));
+
                         // Exit returning false if (i,j) is not in check 
-                        if (!Move::in_check(board, color, Coordinate(i, j))) {
+                        if (!Move::in_check(board, color, Coordinate(i, j), false)) {
                             // Checks if piece is blank if centerCheck is false (king is not in check) 
                             if (!centerCheck || board.get_piece(i, j).is_blank()) {
                                 return false;
@@ -517,7 +538,6 @@ void Move::promote_prompt(Board& board, Coordinate c) {
     Piece& pawn = board.get_piece(c);
 
     // Exit if not a pawn
-    std::cout << pawn.get_type() << std::endl;
     if (pawn.get_type() != 1) {
         return;
     }
@@ -557,6 +577,116 @@ void Move::promote_prompt(Board& board, Coordinate c) {
     Move::promote(board, c, input);
 
 }
+// Checks if it can castle and if the move is a castle, then castles
+bool Move::castle(Board& board, Coordinate from, Coordinate to) {
+    BTools::debug("void Move::castle(Board& board, Coordinate from, Coordinate to)");
+    // Pass it to castle with pieces
+    return Move::castle(board, board.get_piece(from), to);
+
+
+}
+// From piece
+bool Move::castle(Board& board, Piece& king, Coordinate to) {
+    BTools::debug("void Move::castle(Board& board, Piece& moving, Piece& to)");
+    char color;
+    bool kingSide;
+    bool queenSide;
+
+    // Check if it's not a king
+    if (king.get_type() != 6) {
+        return false;
+    }
+
+    // Check if the king has moved
+    if (king.hasMoved) {
+        return false;
+    }
+
+    // Grab it's color
+    color = king.get_color();
+
+    // Check if it's kingside or queenside
+    int y;
+    char x;
+
+    if (color == 'b') {
+        y = 8;
+    }
+    else if (color == 'w') {
+        y = 1;
+    }
+    else {
+        return false;
+    }
+
+    kingSide = to.equals(Coordinate('g', y));
+    queenSide = to.equals(Coordinate('c', y));
+    
+    // Exit if it's not a castle
+    if (!(kingSide || queenSide)) {
+        return false;
+    }
+
+    // Set the x char
+    if (kingSide) {
+        x = 'h';
+    }
+    else {
+        x = 'a';
+    }
+
+    // Save the rook as an alias
+    Piece& rook = board.get_piece(Coordinate(x, y));
+
+    // Check if it's a rook
+    if (rook.get_type() != 4) {
+        return false;
+    }
+
+    // Check if the rook has moved
+    if (rook.hasMoved) {
+        return false;
+    }
+
+    // Exit if there are pieces in the way
+    if (kingSide) {
+        if (!(board.get_piece(Coordinate('f', y)).is_blank() && board.get_piece(Coordinate('g', y)).is_blank())) {
+            return false;
+        }
+    }
+    else {
+        if (!(board.get_piece(Coordinate('b', y)).is_blank() && board.get_piece(Coordinate('c', y)).is_blank() && board.get_piece(Coordinate('d', y)).is_blank())) {
+            return false;
+        }
+    }
+
+    // Grab king and rook coords
+    Coordinate kingDest;
+    Coordinate rookDest;
+    
+    if (kingSide) {
+        kingDest.copy_from(Coordinate('g', y));
+        rookDest.copy_from(Coordinate('f', y));
+    }
+    else {
+        kingDest.copy_from(Coordinate('c', y));
+        rookDest.copy_from(Coordinate('d', y));
+
+    }
+
+    turns.emplace_back(board, king.get_location(), to);
+    king.hasMoved = true;
+    rook.hasMoved = true;
+
+    Move::replace(board, king, board.get_piece(kingDest));
+    Move::replace(board, rook, board.get_piece(rookDest));
+
+    return true;
+
+
+
+    
+}
 
 // Main Move function that will consider all needed methods
 // Moves from a to b
@@ -578,6 +708,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     // Piece blank; // Makes blank piece for future return needs
     bool capture = false; // True if the move is a capture
     bool canMove = false; // True if it can move there
+    bool skip = false; // If theres another rule skipping checks
 
     if (!Move::on_board(a) || !Move::on_board(b)) {
         printf("INVALID: Location is off board\n"); // For Debug Purposes
@@ -597,31 +728,35 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     
     // Updates the moving piece's moves
     Move::update_moves(board, moving);
-    //vector<Coordinate> movesTest = board.get_piece(a).get_moves();
-	//for (int i = 0; i < movesTest.size(); i++) {
-	//	movesTest[i].print_pair();
-	//}
 
+    // Check for castling
+    skip = Move::castle(board, moving, b);
+
+    // Checks if move is legal and within moveset
+    if (!skip) {
+        vector<Coordinate>& moves = moving.get_moves();
+        for (int i = 0; i < moves.size(); i++) {
+            // moves[i].print_pair();
+            if (moves[i].equals(b)) {
+                canMove = true;
+                break;
+            }
+        }
+    }
+    
     // Sets capture to true if piece cap is not blank
     if (!cap.is_blank()) {
         capture = true;
     }
 
-    // Checks if move is legal and within moveset
-    vector<Coordinate>& moves = moving.get_moves();
-    for (int i = 0; i < moves.size(); i++) {
-        // moves[i].print_pair();
-        if (moves[i].equals(b)) {
-            canMove = true;
-            break;
-        }
+    // Add to the moves vector
+    if (!skip) {
+        turns.emplace_back(board, a, b);
+        moving.hasMoved = true;
     }
 
-    // Add to the moves vector
-    turns.emplace_back(board, a, b);
-
     // Exits if it cannot move
-    if (!canMove) {
+    if (!skip && !canMove) {
         printf("INVALID: Piece cannot move there\n"); // For Debug Purposes
         // Exits returning -2 indicating invalid (against basic rules)
         return -2;
@@ -635,11 +770,21 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Stores replicate of captured piece (cap) if undo is necessary
     Piece reverse;
-    reverse.copy_from(cap);
-    reverse.set_location(cap.get_location());
+    if (!skip) {
+        reverse.copy_from(cap);
+        reverse.set_location(cap.get_location());
+
+    }
 
     // Actually moves the piece
-    Move::replace(board, moving, cap);
+    if (!skip) {
+        Move::replace(board, moving, cap);
+    }
+    
+
+
+    // board.print_board();
+
 
     // Check if needs promotion
     Move::promote_prompt(board, b);
@@ -663,9 +808,12 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     }
     //printf("selfChar: %c\nenemyChar: %c\nselfName: %s\nenemyName: %s\n", selfChar, enemyChar, selfName.c_str(), enemyName.c_str());
 
-    // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for enemy player 
+    // Refreshes whiteMoves and blackMoves + aliveWhite and aliveBlack + all moves for both players 
     Move::refresh(board);
     
+    if (skip) {
+        return 0;
+    }
     // Holds game status in regards to king with self color 
     // neutral = -1, stalemate = 0, check = 1, checkmate = 2
     int statusSelf = Move::game_status(board, selfChar);
@@ -684,6 +832,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             return -1;
         // Stalemate
         case 0:
+            printf("First Stale");
             board.staleMate();
             // Exits returning 2 indicating valid (stalemate)
             return 2;
@@ -711,6 +860,7 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             return 1;
         // Stalemate
         case 0:
+            printf("Second Stale");
             board.staleMate();
             // Exits returning 2 indicating valid (stalemate)
             return 2;

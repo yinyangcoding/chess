@@ -9,13 +9,12 @@
 #include "../objects/Coordinate.hpp"
 
 // Contains tools that are needed universally throughout code
-class Tools {
-    public:
-        // Checks if a Piece vector contains a piece
-        static bool contains(vector<Piece>& v, Piece& p);
+namespace Tools {
+    // Checks if a Piece vector contains a piece
+    static bool contains(vector<Piece>& v, Piece& p);
 
-        // Grabs the index of a piece from a piece vector
-        static int index(vector<Piece>& v, Piece& p);
+    // Grabs the index of a piece from a piece vector
+    static int index(vector<Piece>& v, Piece& p);
 
 };
 

@@ -11,7 +11,7 @@
 #include "../objects/Piece.hpp"
 #include "../objects/Board.hpp"
 #include "../objects/Player.hpp"
-
+// NOTE: Basic position 2d data structure to compute for three time stalemate
 // Build a struct that contains a translation
 struct Displace {
     Coordinate from; // Contains where it moved from
@@ -58,7 +58,7 @@ namespace Move {
     // neutral = -1, stalemate = 0, check = 1, checkmate = 2
     static int game_status(Board& board, char c);
     // returns true if in check
-    bool in_check(Board& board, char color, Coordinate king);
+    bool in_check(Board& board, char color, Coordinate king, bool end);
     // return true if Coordinates surrounding king are all in check
     bool surrounding_check(Board& board, char color, Coordinate king, bool centerCheck);
 
@@ -77,6 +77,12 @@ namespace Move {
     void promote(Board& board, Coordinate c, char n);
     // Takes user input
     void promote_prompt(Board& board, Coordinate c);
+
+    // Checks if it can castle and if the move is a castle, then castles
+    bool castle(Board& board, Coordinate from, Coordinate to);
+    // From piece
+    bool castle(Board& board, Piece& moving, Coordinate to);
+
 
     // Main Move function that will consider all needed methods
     // Moves from a to b

@@ -227,10 +227,10 @@ bool Board::has_piece(int id) {
 void Board::refresh_moves() {
     BTools::debug("void Board::refresh_moves()");
     // Clears aliveWhite and aliveBlack
-    //for (int i = 0; i < 16; i++) {
-    //    aliveWhite[i] = Coordinate(-1, -1);
-    //    aliveBlack[i] = Coordinate(-1, -1);
-    //}
+    for (int i = 0; i < 16; i++) {
+        aliveWhite[i] = Coordinate(-1, -1);
+        aliveBlack[i] = Coordinate(-1, -1);
+    }
     // Runs through board
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -282,6 +282,7 @@ void Board::refresh_moves() {
 
 // End Game Methods
 void Board::staleMate() {
+    print_board();
     printf("Game Over: Stalemate\n");
 }
 void Board::checkMate(char c) {
@@ -303,6 +304,7 @@ void Board::checkMate(char c) {
         winnerName = "Black";
         loserName = "White";
     }
+    print_board();
     printf("Game Over: Checkmate\n");
     printf("%s Wins!\n", winnerName.c_str());
 }

@@ -138,6 +138,7 @@ void Piece::make_blank() {
     color = 'n';
     point = -1;
     hasMoved = false;
+    moves.clear();
 }
 
 // swaps pieces

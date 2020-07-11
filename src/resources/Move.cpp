@@ -3,6 +3,11 @@
 // Saves all moves
 std::vector<Displace> turns;
 
+// En Passant resources
+bool enPassant = false;
+Piece* passantVic = NULL;
+Coordinate passantVicLoc;
+
 // ============= Methods =============
 // pawn: 1, knight: 2, bishop: 3, Rook: 4, Queen: 5, King: 6
 // Player specific updates
@@ -688,6 +693,103 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
     
 }
 
+// Deals with en passant
+// Checks if the moving piece is a pawn and if it moves two steps
+bool Move::passant_vic(Board& board, Coordinate a, Coordinate b) {
+    Piece& moving = board.get_piece(a);
+    Piece& dest = board.get_piece(b);
+
+    // Leave if it's not a pawn
+    if (moving.get_type() != 1) {
+        return false;
+    }
+
+    // Make sure it's moving forwards two places
+    if (abs(b.get_y() - a.get_y()) != 2) {
+        return false;
+    }
+
+    // Set needed vals
+    enPassant = true;
+    passantVic = &dest;
+    passantVicLoc.copy_from(b);
+
+    return true;
+    
+}
+// Checks if the moving piece is trying to en passant capture
+bool Move::passant_cap(Board& board, Coordinate a, Coordinate b) {
+    if (!enPassant) {
+        return false;
+    }
+
+    Piece& moving = board.get_piece(a);
+    Piece& dest = board.get_piece(b);
+
+    // Make sure colors are mismatched
+    if (moving.get_color() == passantVic->get_color()) {
+        return false;
+    }
+
+    // Leave if it's not a pawn
+    if (moving.get_type() != 1) {
+        return false;
+    }
+
+    // Make sure there's a value for passant_vic
+    if (!passantVic) {
+        return false;
+    }
+
+    // Assign Coords for passant location based on piece
+    Coordinate passantA(passantVicLoc.get_y(), passantVicLoc.get_x() - 1);
+    Coordinate passantB(passantVicLoc.get_y(), passantVicLoc.get_x() + 1);
+
+    // Check if the moving is not in a good location
+    bool allowed = false;
+    if (Move::on_board(passantA)) {
+        allowed = a.equals(passantA);
+    }
+    else if (Move::on_board(passantB)) {
+        allowed = a.equals(passantB);
+    }
+    else {
+        return false;
+    }
+
+
+    // Make sure it's moving to a good location
+    if (moving.get_color() == 'b') {
+        if (!(b.equals(Coordinate(passantVicLoc.get_y() + 1, passantVicLoc.get_x())))) {
+            return false;
+        }
+    }
+    else if (moving.get_color() == 'w') {
+        if (!(b.equals(Coordinate(passantVicLoc.get_y() - 1, passantVicLoc.get_x())))) {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+    
+    // Exit if not allowed
+    if (!allowed) {
+        return false;
+    }
+
+    // Now move the pieces!!
+    // Move the capturing
+    Move::replace(board, a, b);
+
+    // Drop the captured piece
+    passantVic->make_blank();
+
+    return true;
+
+
+}
+
 // Main Move function that will consider all needed methods
 // Moves from a to b
 // Returns int indicating overall game state
@@ -732,6 +834,9 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
     // Check for castling
     skip = Move::castle(board, moving, b);
 
+    // Check for en passant capture
+    skip = Move::passant_cap(board, a, b);
+
     // Checks if move is legal and within moveset
     if (!skip) {
         vector<Coordinate>& moves = moving.get_moves();
@@ -743,7 +848,10 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
             }
         }
     }
-    
+
+    // Check for en passant victim
+    bool passantSet = Move::passant_vic(board, a, b);
+
     // Sets capture to true if piece cap is not blank
     if (!cap.is_blank()) {
         capture = true;
@@ -788,6 +896,16 @@ int Move::move(Board& board, Coordinate a, Coordinate b) {
 
     // Check if needs promotion
     Move::promote_prompt(board, b);
+
+    // Check if needs en passant reset
+    if (!passantSet) {
+        enPassant = false;
+        passantVic = NULL;
+     
+    }
+
+
+    passantSet = false;
 
     // Stores color and color names for future use
     char selfChar;

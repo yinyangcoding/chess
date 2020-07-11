@@ -83,6 +83,11 @@ namespace Move {
     // From piece
     bool castle(Board& board, Piece& moving, Coordinate to);
 
+    // Deals with en passant
+    // Checks if the moving piece is a pawn and if it moves two steps
+    bool passant_vic(Board& board, Coordinate a, Coordinate b);
+    // Checks if the moving piece is trying to en passant capture
+    bool passant_cap(Board& board, Coordinate a, Coordinate b);
 
     // Main Move function that will consider all needed methods
     // Moves from a to b

@@ -609,6 +609,16 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
 
     // Grab it's color
     color = king.get_color();
+    char opColor;
+    if (color == 'w') {
+        opColor = 'b';
+    }
+    else if (color == 'b') {
+        opColor = 'w';
+    }
+    else {
+        return false;
+    }
 
     // Check if it's kingside or queenside
     int y;
@@ -661,6 +671,19 @@ bool Move::castle(Board& board, Piece& king, Coordinate to) {
     }
     else {
         if (!(board.get_piece(Coordinate('b', y)).is_blank() && board.get_piece(Coordinate('c', y)).is_blank() && board.get_piece(Coordinate('d', y)).is_blank())) {
+            return false;
+        }
+    }
+
+
+    // Exit if moving out of check
+    if (kingSide) {
+        if (board.in_moves(Coordinate('e', y), opColor) || board.in_moves(Coordinate('f', y), opColor) || board.in_moves(Coordinate('g', y), opColor)) {
+            return false;
+        }
+    }
+    else {
+        if (board.in_moves(Coordinate('e', y), opColor) || board.in_moves(Coordinate('d', y), opColor) || board.in_moves(Coordinate('c', y), opColor)) {
             return false;
         }
     }
@@ -757,7 +780,7 @@ bool Move::passant_cap(Board& board, Coordinate a, Coordinate b) {
         return false;
     }
 
-
+    Move::refresh(board);
     // Make sure it's moving to a good location
     if (moving.get_color() == 'b') {
         if (!(b.equals(Coordinate(passantVicLoc.get_y() + 1, passantVicLoc.get_x())))) {
@@ -775,6 +798,11 @@ bool Move::passant_cap(Board& board, Coordinate a, Coordinate b) {
     
     // Exit if not allowed
     if (!allowed) {
+        return false;
+    }
+
+    // Exit if the capturing is trying to capture two pieces
+    if (!board.get_piece(b).is_blank()) {
         return false;
     }
 

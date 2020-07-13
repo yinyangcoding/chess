@@ -210,6 +210,44 @@ void Board::build_board(bool basic) {
     }
 }
 
+// Check if there is a move in white moves;
+bool Board::in_whiteMoves(Coordinate c) {
+    for (int i = 0; i < 16; i++) { // Loop through array of vectors
+        vector<Coordinate>& moves = *whiteMoves[i];
+        for (int j = 0; j < moves.size(); j++) { // Loop through each vector
+            if (moves[j].equals(c)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Check if there is a move in black moves;
+bool Board::in_blackMoves(Coordinate c) {
+    for (int i = 0; i < 16; i++) { // Loop through array of vectors
+        vector<Coordinate>& moves = *blackMoves[i];
+        for (int j = 0; j < moves.size(); j++) { // Loop through each vector
+            if (moves[j].equals(c)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Check if there is a move in x color;
+bool Board::in_moves(Coordinate c, char color) {
+    if (color == 'b') {
+        return Board::in_blackMoves(c);
+    }
+    else if (color == 'w') {
+        return Board::in_whiteMoves(c);
+    }
+    else {
+        return false;
+    }
+}
 
 // Returns true or false if there is a piece there
 bool Board::has_piece(int i, int j) {

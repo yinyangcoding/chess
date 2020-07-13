@@ -82,6 +82,15 @@ class Board {
         // Builds starting board
         void build_board(bool basic);
 
+        // Check if there is a move in white moves;
+        bool in_whiteMoves(Coordinate c);
+
+        // Check if there is a move in black moves;
+        bool in_blackMoves(Coordinate c);
+
+        // Check if there is a move in x color;
+        bool in_moves(Coordinate c, char color);
+
         // sets up Players vectors: captured, onBoard, lost
         void set_Players();
 
